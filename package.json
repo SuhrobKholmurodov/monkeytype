@@ -12,6 +12,7 @@
   "dependencies": {
     "@mui/icons-material": "^6.4.6",
     "@mui/material": "^6.4.6",
+    "lucide-react": "^0.476.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0"

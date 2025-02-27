@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
 import NameModal from './components/NameModal'
+import Layout from './layouts/Layout'
+import Home from './pages/Home'
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -21,7 +22,9 @@ const App = () => {
     <Router>
       <NameModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
       </Routes>
     </Router>
   )
