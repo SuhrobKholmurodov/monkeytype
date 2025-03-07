@@ -7,7 +7,7 @@ interface TypedWordData {
   isCorrect: boolean
 }
 
-interface TestResult {
+export interface TestResult {
   wpm: number
   accuracy: number
   correct: number
@@ -77,10 +77,6 @@ const TypingTest = () => {
   const [finished, setFinished] = useState<boolean>(false)
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [endTime, setEndTime] = useState<Date | null>(null)
-  const [pastResults, setPastResults] = useState<TestResult[]>(() => {
-    const saved = localStorage.getItem('typingTestResults')
-    return saved ? JSON.parse(saved) : []
-  })
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -100,11 +96,10 @@ const TypingTest = () => {
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000)
       }
 
-      setPastResults(prev => {
-        const updated = [newResult, ...prev]
-        localStorage.setItem('typingTestResults', JSON.stringify(updated))
-        return updated
-      })
+      const savedResults = localStorage.getItem('typingTestResults')
+      const pastResults = savedResults ? JSON.parse(savedResults) : []
+      const updatedResults = [newResult, ...pastResults]
+      localStorage.setItem('typingTestResults', JSON.stringify(updatedResults))
     }
   }, [finished])
 
@@ -235,55 +230,6 @@ const TypingTest = () => {
             <div className='text-center text-gray-400 text-sm'>
               Press space after each word. ESC to restart.
             </div>
-            {pastResults.length > 0 && (
-              <div className='mt-12 w-full'>
-                <h3 className='text-xl font-bold mb-4 text-gray-300'>
-                  Past Results
-                </h3>
-                <table className='w-full border-collapse'>
-                  <thead>
-                    <tr className='bg-gray-800'>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        WPM
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Accuracy
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Correct
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Incorrect
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Time
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pastResults.map((result, index) => (
-                      <tr key={index}>
-                        <td className='p-3 border border-gray-700'>
-                          {result.wpm}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {result.accuracy}%
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {result.correct}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {result.incorrect}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {result.time}s
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
           </div>
         ) : (
           <div className='flex flex-col items-center'>

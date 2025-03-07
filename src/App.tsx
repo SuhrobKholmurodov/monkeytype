@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NameModal from './components/NameModal'
 import Layout from './layouts/Layout'
 import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,6 +25,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
     </Router>
