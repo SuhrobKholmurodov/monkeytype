@@ -104,7 +104,6 @@ const TypingTest = () => {
         })
       }
 
-      // Save to localStorage
       const savedResults = localStorage.getItem('typingTestResults')
       const pastResults = savedResults ? JSON.parse(savedResults) : []
       const updatedResults = [newResult, ...pastResults]
@@ -114,7 +113,7 @@ const TypingTest = () => {
 
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
-    setWords(mixed.slice(0, 5))
+    setWords(mixed.slice(0, 35))
     setCurrentWordIndex(0)
     setTypedWord('')
     setTypedWords([])
@@ -212,7 +211,7 @@ const TypingTest = () => {
     >
       <div className='w-full max-w-7xl'>
         {!finished ? (
-          <div>
+          <div className='flex flex-col'>
             <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
               <div className='text-xl font-mono leading-relaxed space-y-1'>
                 <div className='flex flex-wrap gap-2'>
@@ -235,7 +234,15 @@ const TypingTest = () => {
                 </div>
               </div>
             </div>
-
+            <div className='w-full flex items-center justify-center mb-4'>
+              <button
+                onClick={getRandomWords}
+                className='flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200'
+              >
+                <RotateCw size={16} />
+                Restart Test
+              </button>
+            </div>
             <div className='text-center text-gray-400 text-sm'>
               Press space after each word. ESC to restart.
             </div>
