@@ -70,11 +70,11 @@ const wordsArray: string[] = [
 
 const TypingTest = () => {
   const [words, setWords] = useState<string[]>([])
-  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0)
-  const [typedWord, setTypedWord] = useState<string>('')
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [typedWord, setTypedWord] = useState('')
   const [typedWords, setTypedWords] = useState<TypedWordData[]>([])
-  const [started, setStarted] = useState<boolean>(false)
-  const [finished, setFinished] = useState<boolean>(false)
+  const [started, setStarted] = useState(false)
+  const [finished, setFinished] = useState(false)
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [endTime, setEndTime] = useState<Date | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -103,7 +103,7 @@ const TypingTest = () => {
     }
   }, [finished])
 
-  function getRandomWords (): void {
+  function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
     setWords(mixed.slice(0, 5))
     setCurrentWordIndex(0)
@@ -115,7 +115,7 @@ const TypingTest = () => {
     setEndTime(null)
   }
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (finished) return
 
     if (!started) {
@@ -147,7 +147,7 @@ const TypingTest = () => {
     }
   }
 
-  const getCompletedWordClass = (index: number): string => {
+  const getCompletedWordClass = (index: number) => {
     if (index >= typedWords.length) return ''
     return typedWords[index].isCorrect ? 'text-gray-400' : 'text-red-500'
   }
@@ -180,7 +180,7 @@ const TypingTest = () => {
     )
   }
 
-  const calculateWPM = (): number => {
+  const calculateWPM = () => {
     if (!startTime || !endTime) return 0
     const durationInMinutes =
       (endTime.getTime() - startTime.getTime()) / 1000 / 60
@@ -188,7 +188,7 @@ const TypingTest = () => {
     return Math.round(correctWords / durationInMinutes)
   }
 
-  const calculateAccuracy = (): number => {
+  const calculateAccuracy = () => {
     if (typedWords.length === 0) return 0
     const correctWords = typedWords.filter(item => item.isCorrect).length
     return Math.round((correctWords / typedWords.length) * 100)
