@@ -68,7 +68,6 @@ const wordsArray: string[] = [
   'however',
   'order'
 ]
-
 const TypingTest = () => {
   const [words, setWords] = useState<string[]>([])
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
@@ -208,6 +207,7 @@ const TypingTest = () => {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       ref={containerRef}
+      onClick={() => containerRef.current?.focus()}
     >
       <div className='w-full max-w-7xl'>
         {!finished ? (
