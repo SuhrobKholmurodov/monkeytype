@@ -68,6 +68,7 @@ const wordsArray: string[] = [
   'however',
   'order'
 ]
+
 const TypingTest = () => {
   const [words, setWords] = useState<string[]>([])
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
@@ -78,6 +79,7 @@ const TypingTest = () => {
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [endTime, setEndTime] = useState<Date | null>(null)
   const [pastResults, setPastResults] = useState<TestResult[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults')
@@ -89,7 +91,6 @@ const TypingTest = () => {
       containerRef.current.focus()
     }
   }, [])
-  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (finished && startTime && endTime) {
@@ -209,7 +210,7 @@ const TypingTest = () => {
 
   return (
     <div
-      className='flex flex-col items-center outline-none text-gray-200 px-6 py-8'
+      className='flex flex-col items-center outline-none h-[92vh] text-gray-200 overflow-hidden'
       tabIndex={0}
       onKeyDown={handleKeyDown}
       ref={containerRef}
@@ -217,9 +218,9 @@ const TypingTest = () => {
         if (containerRef.current) containerRef.current.focus()
       }}
     >
-      <div className='w-full max-w-7xl'>
+      <div className='w-full max-w-7xl h-full flex flex-col justify-between overflow-hidden'>
         {!finished ? (
-          <div className='flex flex-col'>
+          <div className='flex flex-col mt-16 flex-grow overflow-y-auto p-6'>
             <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
               <div className='text-xl font-mono leading-relaxed space-y-1'>
                 <div className='flex flex-wrap gap-2'>
@@ -309,7 +310,7 @@ const TypingTest = () => {
             )}
           </div>
         ) : (
-          <div className='flex flex-col items-center'>
+          <div className='flex flex-col items-center flex-grow overflow-y-auto p-6'>
             <div className='flex gap-8 mb-8'>
               <div className='text-center'>
                 <div className='text-4xl font-bold text-green-500'>
