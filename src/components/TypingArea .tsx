@@ -77,14 +77,19 @@ const TypingTest = () => {
   const [finished, setFinished] = useState(false)
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [endTime, setEndTime] = useState<Date | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [pastResults, setPastResults] = useState<TestResult[]>([])
 
   useEffect(() => {
+    const savedResults = localStorage.getItem('typingTestResults')
+    if (savedResults) {
+      setPastResults(JSON.parse(savedResults))
+    }
     getRandomWords()
     if (containerRef.current) {
       containerRef.current.focus()
     }
   }, [])
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (finished && startTime && endTime) {
@@ -106,6 +111,7 @@ const TypingTest = () => {
       const savedResults = localStorage.getItem('typingTestResults')
       const pastResults = savedResults ? JSON.parse(savedResults) : []
       const updatedResults = [newResult, ...pastResults]
+      setPastResults(updatedResults)
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults))
     }
   }, [finished])
@@ -207,7 +213,9 @@ const TypingTest = () => {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       ref={containerRef}
-      onClick={() => containerRef.current?.focus()}
+      onClick={() => {
+        if (containerRef.current) containerRef.current.focus()
+      }}
     >
       <div className='w-full max-w-7xl'>
         {!finished ? (
@@ -246,6 +254,59 @@ const TypingTest = () => {
             <div className='text-center text-gray-400 text-sm'>
               Press space after each word. ESC to restart.
             </div>
+            {pastResults[0] && (
+              <div className='mt-12 w-full'>
+                <h3 className='text-xl font-bold mb-4 text-gray-300'>
+                  Last Test Result
+                </h3>
+                <table className='w-full border-collapse'>
+                  <thead>
+                    <tr className='bg-gray-800'>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        WPM
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Accuracy
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Correct Words
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Incorrect Words
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Total Time
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Completed At
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].wpm}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].accuracy}%
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].correct}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].incorrect}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].time} sec
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {pastResults[0].completionTime}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         ) : (
           <div className='flex flex-col items-center'>
