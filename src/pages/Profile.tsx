@@ -32,6 +32,9 @@ const Profile = () => {
                   Incorrect
                 </th>
                 <th className='p-3 border border-gray-700 text-left'>Time</th>
+                <th className='p-3 border border-gray-700 text-left'>
+                  Completed At
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +51,9 @@ const Profile = () => {
                     {result.incorrect}
                   </td>
                   <td className='p-3 border border-gray-700'>{result.time}s</td>
+                  <td className='p-3 border border-gray-700'>
+                    {result.completionTime}
+                  </td>
                 </tr>
               ))}
             </tbody>

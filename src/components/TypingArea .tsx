@@ -13,6 +13,7 @@ export interface TestResult {
   correct: number
   incorrect: number
   time: number
+  completionTime: string
 }
 
 const wordsArray: string[] = [
@@ -93,9 +94,17 @@ const TypingTest = () => {
         accuracy: calculateAccuracy(),
         correct: typedWords.filter(w => w.isCorrect).length,
         incorrect: typedWords.filter(w => !w.isCorrect).length,
-        time: Math.round((endTime.getTime() - startTime.getTime()) / 1000)
+        time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
+        completionTime: new Date().toLocaleString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        })
       }
 
+      // Save to localStorage
       const savedResults = localStorage.getItem('typingTestResults')
       const pastResults = savedResults ? JSON.parse(savedResults) : []
       const updatedResults = [newResult, ...pastResults]
