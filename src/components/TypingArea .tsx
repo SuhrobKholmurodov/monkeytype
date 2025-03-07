@@ -1,21 +1,69 @@
 import { RotateCw } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
-const TypingArea = () => {
-  const [words, setWords] = useState([])
-  const [loading, setLoading] = useState(true)
+const wordsArray = [
+  'still',
+  'child',
+  'very',
+  'with',
+  'want',
+  'seem',
+  'need',
+  'large',
+  'there',
+  'people',
+  'place',
+  'before',
+  'again',
+  'need',
+  'late',
+  'any',
+  'to',
+  'no',
+  'person',
+  'again',
+  'not',
+  'at',
+  'come',
+  'good',
+  'get',
+  'begin',
+  'which',
+  'when',
+  'do',
+  'what',
+  'would',
+  'eye',
+  'some',
+  'house',
+  'also',
+  'about',
+  'than',
+  'people',
+  'both',
+  'another',
+  'because',
+  'down',
+  'nation',
+  'lead',
+  'should',
+  'during',
+  'interest',
+  'those',
+  'however',
+  'order'
+]
 
-  async function fetchFilteredWords () {
-    const response = await fetch(
-      'https://random-word-api.vercel.app/api?words=20'
-    )
-    const words = await response.json()
-    setWords(words)
-    setLoading(false) 
+const TypingArea = () => {
+  const [words, setWords] = useState<string[]>([])
+
+  function getRandomWords () {
+    const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
+    setWords(mixed.slice(0, 25))
   }
 
   useEffect(() => {
-    fetchFilteredWords()
+    getRandomWords()
   }, [])
 
   return (
@@ -25,11 +73,9 @@ const TypingArea = () => {
           <li key={index}>{word}</li>
         ))}
       </ul>
-      {!loading && (
-        <div className='flex justify-center mt-4'>
-          <RotateCw />
-        </div>
-      )}
+      <div className='flex justify-center mt-4'>
+        <RotateCw className='cursor-pointer' onClick={getRandomWords} />
+      </div>
     </div>
   )
 }
