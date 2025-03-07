@@ -113,7 +113,7 @@ const TypingTest = () => {
 
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
-    setWords(mixed.slice(0, 35))
+    setWords(mixed.slice(0, 10))
     setCurrentWordIndex(0)
     setTypedWord('')
     setTypedWords([])
