@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
 import { RotateCw } from 'lucide-react'
+import { wordsArray } from '../constants'
 
 interface TypedWordData {
   word: string
@@ -15,59 +16,6 @@ export interface TestResult {
   time: number
   completionTime: string
 }
-
-const wordsArray: string[] = [
-  'still',
-  'child',
-  'very',
-  'with',
-  'want',
-  'seem',
-  'need',
-  'large',
-  'there',
-  'people',
-  'place',
-  'before',
-  'again',
-  'need',
-  'late',
-  'any',
-  'to',
-  'no',
-  'person',
-  'again',
-  'not',
-  'at',
-  'come',
-  'good',
-  'get',
-  'begin',
-  'which',
-  'when',
-  'do',
-  'what',
-  'would',
-  'eye',
-  'some',
-  'house',
-  'also',
-  'about',
-  'than',
-  'people',
-  'both',
-  'another',
-  'because',
-  'down',
-  'nation',
-  'lead',
-  'should',
-  'during',
-  'interest',
-  'those',
-  'however',
-  'order'
-]
 
 const TypingArea = () => {
   const [words, setWords] = useState<string[]>([])
