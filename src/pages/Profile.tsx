@@ -3,6 +3,8 @@ import { Pencil, UserRound } from 'lucide-react'
 import Tooltip from '@mui/material/Tooltip'
 import Zoom from '@mui/material/Zoom'
 import { TestResult } from '../components/TypingArea '
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
@@ -45,6 +47,21 @@ const Profile = () => {
     localStorage.setItem('userName', newUserName)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsEditing(false)
+      toast.success('Username updated successfully!', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+  }
+
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
       <div className='flex mt-[70px] justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
@@ -58,7 +75,7 @@ const Profile = () => {
                 type='text'
                 value={userName}
                 onChange={handleNameChange}
-                onKeyDown={e => e.key === 'Enter' && setIsEditing(false)}
+                onKeyDown={handleKeyDown}
                 autoFocus
                 className='bg-gray-700 text-gray-50 font-[600] mt-[-2px] text-[24px] rounded-md p-[3px] focus:outline-none'
               />
