@@ -69,7 +69,7 @@ const wordsArray: string[] = [
   'order'
 ]
 
-const TypingTest = () => {
+const TypingArea = () => {
   const [words, setWords] = useState<string[]>([])
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [typedWord, setTypedWord] = useState('')
@@ -357,6 +357,9 @@ const TypingTest = () => {
                       WPM
                     </th>
                     <th className='p-3 border border-gray-700 text-left'>
+                      Accuracy
+                    </th>
+                    <th className='p-3 border border-gray-700 text-left'>
                       Correct Words
                     </th>
                     <th className='p-3 border border-gray-700 text-left'>
@@ -365,12 +368,18 @@ const TypingTest = () => {
                     <th className='p-3 border border-gray-700 text-left'>
                       Total Time
                     </th>
+                    <th className='p-3 border border-gray-700 text-left'>
+                      Completed At
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td className='p-3 border border-gray-700'>
                       {calculateWPM()}
+                    </td>
+                    <td className='p-3 border border-gray-700'>
+                      {calculateAccuracy()}%
                     </td>
                     <td className='p-3 border border-gray-700'>
                       {typedWords.filter(w => w.isCorrect).length}
@@ -386,6 +395,15 @@ const TypingTest = () => {
                         : 0}{' '}
                       sec
                     </td>
+                    <td className='p-3 border border-gray-700'>
+                      {new Date().toLocaleString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -397,4 +415,4 @@ const TypingTest = () => {
   )
 }
 
-export default TypingTest
+export default TypingArea
