@@ -21,6 +21,13 @@ const Profile = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('userName')
+    if (storedUserName) {
+      setUserName(storedUserName)
+    }
+  }, [])
+
   const userJoinDate = localStorage.getItem('userJoinDate')
 
   const getJoinDateDifference = (joinDate: string) => {
@@ -51,6 +58,7 @@ const Profile = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setIsEditing(false)
+      localStorage.setItem('userName', userName)
       toast.success('Username updated successfully!', {
         position: 'top-center',
         autoClose: 3000,
@@ -60,6 +68,9 @@ const Profile = () => {
         draggable: true,
         progress: undefined
       })
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000) 
     }
   }
 
@@ -166,7 +177,10 @@ const Profile = () => {
               </thead>
               <tbody>
                 {pastResults.map((el, index) => (
-                  <tr key={index} className='text-gray-200 hover:bg-gray-800 transition-colors'>
+                  <tr
+                    key={index}
+                    className='text-gray-200 hover:bg-gray-800 transition-colors'
+                  >
                     <td className='p-3 border border-gray-700'>{el.wpm}</td>
                     <td className='p-3 border border-gray-700'>
                       {el.accuracy}%
