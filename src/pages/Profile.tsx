@@ -66,7 +66,15 @@ const Profile = () => {
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
       <Helmet>
-        <title>Account - Monkeytype</title>
+        <title>Account | Monkeytype</title>
+        <meta
+          name='description'
+          content='Manage your Monkeytype account. View your typing test history, update your profile, and track your progress.'
+        />
+        <meta
+          name='keywords'
+          content='Monkeytype account, typing test history, profile settings, typing progress, typing statistics'
+        />
       </Helmet>
       <div className='flex mt-[70px] justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
         <div className='flex gap-4'>

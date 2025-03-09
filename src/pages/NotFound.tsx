@@ -14,6 +14,14 @@ const NotFound = () => {
     >
       <Helmet>
         <title>404 - Page Not Found</title>
+        <meta
+          name='description'
+          content='The page you are looking for does not exist. Return to the homepage and continue your typing test journey.'
+        />
+        <meta
+          name='keywords'
+          content='404, page not found, typing test, Monkeytype, typing practice'
+        />
       </Helmet>
       <div className='text-center'>
         <motion.h1
