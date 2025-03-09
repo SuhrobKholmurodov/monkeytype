@@ -46,8 +46,8 @@ const Profile = () => {
   }
 
   return (
-    <div className='p-6 bg-gray-900'>
-      <div className='flex justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
+    <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
+      <div className='flex mt-[70px] justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
         <div className='flex gap-4'>
           <div className='p-5 text-gray-200 bg-gray-900 rounded-full'>
             <UserRound size={30} />

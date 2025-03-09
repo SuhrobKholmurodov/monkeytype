@@ -2,7 +2,7 @@ import TypingArea from "../components/TypingArea "
 
 const Home = () => {
   return (
-    <div className="bg-gray-900">
+    <div>
       <TypingArea />
     </div>
   )

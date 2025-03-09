@@ -210,17 +210,18 @@ const TypingArea = () => {
 
   return (
     <div
-      className='flex flex-col items-center outline-none h-[92vh] text-gray-200 overflow-hidden'
+      className='fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden'
       tabIndex={0}
+      style={{ margin: 0, padding: 0 }}
       onKeyDown={handleKeyDown}
       ref={containerRef}
       onClick={() => {
         if (containerRef.current) containerRef.current.focus()
       }}
     >
-      <div className='w-full max-w-7xl h-full flex flex-col justify-between overflow-hidden'>
+      <div className='w-full max-w-7xl mt-[140px] h-full flex flex-col justify-between overflow-hidden'>
         {!finished ? (
-          <div className='flex flex-col mt-16 flex-grow overflow-y-auto p-6'>
+          <div className='flex flex-col flex-grow overflow-y-auto p-6'>
             <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
               <div className='text-xl font-mono leading-relaxed space-y-1'>
                 <div className='flex flex-wrap gap-2'>
