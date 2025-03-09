@@ -89,7 +89,7 @@ const Profile = () => {
                 onChange={handleNameChange}
                 onKeyDown={handleKeyDown}
                 autoFocus
-                className='bg-gray-700 text-gray-50 font-[600] mt-[-2px] text-[24px] rounded-md p-[3px] focus:outline-none'
+                className='bg-gray-700 text-gray-50 font-[600] mt-[-2px] text-[24px] rounded-md pr-[3px] pt-[3px] pl-[2px] pb-[3px] focus:outline-none'
               />
             ) : (
               <p className='font-[600] text-gray-50 text-[24px]'>
@@ -166,7 +166,7 @@ const Profile = () => {
               </thead>
               <tbody>
                 {pastResults.map((el, index) => (
-                  <tr key={index} className='text-gray-200 transition-colors'>
+                  <tr key={index} className='text-gray-200 hover:bg-gray-800 transition-colors'>
                     <td className='p-3 border border-gray-700'>{el.wpm}</td>
                     <td className='p-3 border border-gray-700'>
                       {el.accuracy}%
