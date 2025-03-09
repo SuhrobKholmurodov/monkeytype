@@ -4,6 +4,10 @@ import { Pencil, UserRound } from 'lucide-react'
 
 const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
+  const [userName, setUserName] = useState(
+    localStorage.getItem('userName') || ''
+  )
+  const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults')
@@ -11,8 +15,18 @@ const Profile = () => {
       setPastResults(JSON.parse(savedResults))
     }
   }, [])
-  const userName = localStorage.getItem('userName')
+
   const userJoinDate = localStorage.getItem('userJoinDate')
+
+  const handleEdit = () => {
+    setIsEditing(true)
+  }
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUserName = e.target.value.trim()
+    setUserName(newUserName)
+    localStorage.setItem('userName', newUserName)
+  }
 
   return (
     <div className='p-6 bg-gray-900'>
@@ -21,12 +35,29 @@ const Profile = () => {
           <div className='p-5 text-gray-200 bg-gray-900 rounded-full'>
             <UserRound size={30} />
           </div>
-          <div className='flex flex-col '>
-            <p className='font-[600] text-gray-50 text-[24px]'>{userName}</p>
+          <div className='flex flex-col'>
+            {isEditing ? (
+              <input
+                type='text'
+                value={userName}
+                onChange={handleNameChange}
+                onKeyDown={e => e.key === 'Enter' && setIsEditing(false)}
+                autoFocus
+                className='bg-gray-700 text-gray-50 font-[600] mt-[-2px] text-[24px] rounded-md p-[3px] focus:outline-none'
+              />
+            ) : (
+              <p className='font-[600] text-gray-50 text-[24px]'>
+                {userName || 'Your Name'}
+              </p>
+            )}
             <p className='text-gray-500'>Joined {userJoinDate}</p>
           </div>
         </div>
-        <div className='text-gray-300'>
+        <div
+          id='editDiv'
+          className='text-gray-300 cursor-pointer'
+          onClick={handleEdit}
+        >
           <Pencil />
         </div>
       </div>
