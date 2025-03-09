@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import { TestResult } from '../components/TypingArea '
 import { Pencil, UserRound } from 'lucide-react'
+import Tooltip from '@mui/material/Tooltip'
+import Zoom from '@mui/material/Zoom'
+import { TestResult } from '../components/TypingArea '
 
 const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
@@ -17,6 +19,21 @@ const Profile = () => {
   }, [])
 
   const userJoinDate = localStorage.getItem('userJoinDate')
+
+  const getJoinDateDifference = (joinDate: string) => {
+    const joinDateObj = new Date(joinDate)
+    const currentDate = new Date()
+    const timeDifference = currentDate.getTime() - joinDateObj.getTime()
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+
+    if (daysDifference === 0) {
+      return 'today'
+    } else if (daysDifference === 1) {
+      return 'yesterday'
+    } else {
+      return `${daysDifference} days ago`
+    }
+  }
 
   const handleEdit = () => {
     setIsEditing(true)
@@ -50,7 +67,39 @@ const Profile = () => {
                 {userName || 'Your Name'}
               </p>
             )}
-            <p className='text-gray-500'>Joined {userJoinDate}</p>
+            <Tooltip
+              title={
+                userJoinDate
+                  ? 'Joined ' + getJoinDateDifference(userJoinDate)
+                  : 'No join date found'
+              }
+              slots={{
+                transition: Zoom
+              }}
+              slotProps={{
+                transition: { timeout: 300 }
+              }}
+              arrow
+              placement='right'
+              componentsProps={{
+                tooltip: {
+                  style: {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    fontSize: '14px'
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: 'black'
+                  }
+                }
+              }}
+            >
+              <p className='text-gray-500 hover:cursor-pointer'>
+                Joined {userJoinDate}
+              </p>
+            </Tooltip>
           </div>
         </div>
         <div
