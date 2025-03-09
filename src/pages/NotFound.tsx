@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Helmet } from 'react-helmet-async'
 
 const NotFound = () => {
   return (
@@ -11,6 +12,9 @@ const NotFound = () => {
       className='fixed inset-0 flex flex-col justify-center items-center bg-gray-900 text-white p-6 overflow-hidden'
       style={{ margin: 0, padding: 0 }}
     >
+      <Helmet>
+        <title>404 - Page Not Found</title>
+      </Helmet>
       <div className='text-center'>
         <motion.h1
           initial={{ scale: 0 }}

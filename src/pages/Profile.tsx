@@ -5,6 +5,7 @@ import Zoom from '@mui/material/Zoom'
 import { TestResult } from '../components/TypingArea '
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Helmet } from 'react-helmet-async'
 
 const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
@@ -64,6 +65,9 @@ const Profile = () => {
 
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
+      <Helmet>
+        <title>Account - Monkeytype</title>
+      </Helmet>
       <div className='flex mt-[70px] justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
         <div className='flex gap-4'>
           <div className='p-5 text-gray-200 bg-gray-900 rounded-full'>
