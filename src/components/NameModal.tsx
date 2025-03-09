@@ -11,6 +11,15 @@ const NameModal = ({ isOpen, onClose }: NameModalProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     localStorage.setItem('userName', localName)
+
+    if (!localStorage.getItem('userJoinDate')) {
+      const currentDate = new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      })
+      localStorage.setItem('userJoinDate', currentDate)
+    }
     onClose()
   }
 

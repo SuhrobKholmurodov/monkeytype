@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { TestResult } from '../components/TypingArea '
+import { Pencil, UserRound } from 'lucide-react'
 
 const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
@@ -10,11 +11,27 @@ const Profile = () => {
       setPastResults(JSON.parse(savedResults))
     }
   }, [])
+  const userName = localStorage.getItem('userName')
+  const userJoinDate = localStorage.getItem('userJoinDate')
 
   return (
     <div className='p-6 bg-gray-900'>
+      <div className='flex justify-between gap-4 bg-gray-800 p-4 rounded-lg'>
+        <div className='flex gap-4'>
+          <div className='p-5 text-gray-200 bg-gray-900 rounded-full'>
+            <UserRound size={30} />
+          </div>
+          <div className='flex flex-col '>
+            <p className='font-[600] text-gray-50 text-[24px]'>{userName}</p>
+            <p className='text-gray-500'>Joined {userJoinDate}</p>
+          </div>
+        </div>
+        <div className='text-gray-300'>
+          <Pencil />
+        </div>
+      </div>
       {pastResults.length > 0 ? (
-        <div>
+        <div className='mt-5'>
           <h1 className='text-2xl font-bold mb-6 text-gray-200'>
             Your Past Results
           </h1>
