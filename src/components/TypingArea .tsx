@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
-import { RotateCw } from 'lucide-react'
+import { ALargeSmall, Clock, RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
 
 interface TypedWordData {
@@ -157,42 +157,164 @@ export const TypingArea = () => {
   }
 
   return (
-    <div
-      className='fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden'
-      tabIndex={0}
-      style={{ margin: 0, padding: 0 }}
-      onKeyDown={handleKeyDown}
-      ref={containerRef}
-      onClick={() => {
-        if (containerRef.current) containerRef.current.focus()
-      }}
-    >
-      <div className='w-full max-w-7xl mt-[140px] h-full flex flex-col justify-between overflow-hidden'>
-        {!finished ? (
-          <div className='flex flex-col flex-grow overflow-y-auto p-6'>
-            <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
-              <div className='text-xl font-mono leading-relaxed space-y-1'>
-                <div className='flex flex-wrap gap-2'>
-                  {words.map((word, index) => (
-                    <span
-                      key={index}
-                      className={`px-1 ${
-                        index === currentWordIndex
-                          ? 'bg-gray-700 rounded'
-                          : index < currentWordIndex
-                          ? getCompletedWordClass(index)
-                          : ''
-                      }`}
-                    >
-                      {index === currentWordIndex
-                        ? renderCurrentWord(word, typedWord)
-                        : word}
-                    </span>
-                  ))}
+    <div>
+      <div
+        className='fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden'
+        tabIndex={0}
+        style={{ margin: 0, padding: 0 }}
+        onKeyDown={handleKeyDown}
+        ref={containerRef}
+        onClick={() => {
+          if (containerRef.current) containerRef.current.focus()
+        }}
+      >
+        <div className='w-full max-w-7xl mt-[140px] h-full flex flex-col justify-between overflow-hidden'>
+          {!finished ? (
+            <div className='flex flex-col flex-grow overflow-y-auto p-6'>
+              <div
+                id='filter'
+                className='flex items-center justify-between px-[340px]'
+              >
+                <div className='flex rounded-lg bg-gray-800 items-center mb-10 p-4 gap-4'>
+                  <div id='left'>
+                    <div className='flex items-center gap-2'>
+                      <Clock />
+                      <p>time</p>
+                    </div>
+                  </div>
+                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                  <div className='right'>
+                    <div className='flex items-center gap-2'>
+                      <ALargeSmall />
+                      <p>words</p>
+                    </div>
+                  </div>
+                </div>
+                <div className='flex rounded-lg bg-gray-800 items-center mb-10 py-4 px-8 gap-10'>
+                  <p>15</p>
+                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                  <p>30</p>
+                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                  <p>60</p>
                 </div>
               </div>
+              <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
+                <div className='text-xl font-mono leading-relaxed space-y-1'>
+                  <div className='flex flex-wrap gap-2'>
+                    {words.map((word, index) => (
+                      <span
+                        key={index}
+                        className={`px-1 ${
+                          index === currentWordIndex
+                            ? 'bg-gray-700 rounded'
+                            : index < currentWordIndex
+                            ? getCompletedWordClass(index)
+                            : ''
+                        }`}
+                      >
+                        {index === currentWordIndex
+                          ? renderCurrentWord(word, typedWord)
+                          : word}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className='w-full flex items-center justify-center mb-4'>
+                <button
+                  onClick={getRandomWords}
+                  className='flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200'
+                >
+                  <RotateCw size={16} />
+                  Restart Test
+                </button>
+              </div>
+              <div className='text-center text-gray-400 text-sm'>
+                Press space after each word. ESC to restart.
+              </div>
+              {pastResults[0] && (
+                <div className='mt-12 w-full'>
+                  <h3 className='text-xl font-bold mb-4 text-gray-300'>
+                    Last Test Result
+                  </h3>
+                  <table className='w-full border-collapse'>
+                    <thead>
+                      <tr className='bg-gray-800'>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          WPM
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Accuracy
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Correct Words
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Incorrect Words
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Total Time
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Completed At
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].wpm}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].accuracy}%
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].correct}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].incorrect}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].time} sec
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].completionTime}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
-            <div className='w-full flex items-center justify-center mb-4'>
+          ) : (
+            <div className='flex flex-col items-center flex-grow overflow-y-auto p-6'>
+              <div className='flex gap-8 mb-8'>
+                <div className='text-center'>
+                  <div className='text-4xl font-bold text-green-500'>
+                    {calculateWPM()}
+                  </div>
+                  <div className='text-sm text-gray-400'>WPM</div>
+                </div>
+
+                <div className='text-center'>
+                  <div className='text-4xl font-bold text-blue-500'>
+                    {calculateAccuracy()}%
+                  </div>
+                  <div className='text-sm text-gray-400'>Accuracy</div>
+                </div>
+
+                <div className='text-center'>
+                  <div className='text-4xl font-bold text-purple-500'>
+                    {startTime && endTime
+                      ? Math.round(
+                          (endTime.getTime() - startTime.getTime()) / 1000
+                        )
+                      : 0}
+                  </div>
+                  <div className='text-sm text-gray-400'>Seconds</div>
+                </div>
+              </div>
+
               <button
                 onClick={getRandomWords}
                 className='flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200'
@@ -200,14 +322,10 @@ export const TypingArea = () => {
                 <RotateCw size={16} />
                 Restart Test
               </button>
-            </div>
-            <div className='text-center text-gray-400 text-sm'>
-              Press space after each word. ESC to restart.
-            </div>
-            {pastResults[0] && (
+
               <div className='mt-12 w-full'>
                 <h3 className='text-xl font-bold mb-4 text-gray-300'>
-                  Last Test Result
+                  Detailed Results
                 </h3>
                 <table className='w-full border-collapse'>
                   <thead>
@@ -235,130 +353,41 @@ export const TypingArea = () => {
                   <tbody>
                     <tr>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].wpm}
+                        {calculateWPM()}
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].accuracy}%
+                        {calculateAccuracy()}%
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].correct}
+                        {typedWords.filter(w => w.isCorrect).length}
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].incorrect}
+                        {typedWords.filter(w => !w.isCorrect).length}
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].time} sec
+                        {startTime && endTime
+                          ? Math.round(
+                              (endTime.getTime() - startTime.getTime()) / 1000
+                            )
+                          : 0}{' '}
+                        sec
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {pastResults[0].completionTime}
+                        {new Date().toLocaleString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        })}
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className='flex flex-col items-center flex-grow overflow-y-auto p-6'>
-            <div className='flex gap-8 mb-8'>
-              <div className='text-center'>
-                <div className='text-4xl font-bold text-green-500'>
-                  {calculateWPM()}
-                </div>
-                <div className='text-sm text-gray-400'>WPM</div>
-              </div>
-
-              <div className='text-center'>
-                <div className='text-4xl font-bold text-blue-500'>
-                  {calculateAccuracy()}%
-                </div>
-                <div className='text-sm text-gray-400'>Accuracy</div>
-              </div>
-
-              <div className='text-center'>
-                <div className='text-4xl font-bold text-purple-500'>
-                  {startTime && endTime
-                    ? Math.round(
-                        (endTime.getTime() - startTime.getTime()) / 1000
-                      )
-                    : 0}
-                </div>
-                <div className='text-sm text-gray-400'>Seconds</div>
-              </div>
             </div>
-
-            <button
-              onClick={getRandomWords}
-              className='flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200'
-            >
-              <RotateCw size={16} />
-              Restart Test
-            </button>
-
-            <div className='mt-12 w-full'>
-              <h3 className='text-xl font-bold mb-4 text-gray-300'>
-                Detailed Results
-              </h3>
-              <table className='w-full border-collapse'>
-                <thead>
-                  <tr className='bg-gray-800'>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      WPM
-                    </th>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      Accuracy
-                    </th>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      Correct Words
-                    </th>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      Incorrect Words
-                    </th>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      Total Time
-                    </th>
-                    <th className='p-3 border border-gray-700 text-left'>
-                      Completed At
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className='p-3 border border-gray-700'>
-                      {calculateWPM()}
-                    </td>
-                    <td className='p-3 border border-gray-700'>
-                      {calculateAccuracy()}%
-                    </td>
-                    <td className='p-3 border border-gray-700'>
-                      {typedWords.filter(w => w.isCorrect).length}
-                    </td>
-                    <td className='p-3 border border-gray-700'>
-                      {typedWords.filter(w => !w.isCorrect).length}
-                    </td>
-                    <td className='p-3 border border-gray-700'>
-                      {startTime && endTime
-                        ? Math.round(
-                            (endTime.getTime() - startTime.getTime()) / 1000
-                          )
-                        : 0}{' '}
-                      sec
-                    </td>
-                    <td className='p-3 border border-gray-700'>
-                      {new Date().toLocaleString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )
