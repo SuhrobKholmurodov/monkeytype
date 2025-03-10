@@ -195,7 +195,7 @@ export const TypingArea = () => {
           if (containerRef.current) containerRef.current.focus()
         }}
       >
-        <div className='w-full max-w-7xl mt-[120px] h-full flex flex-col justify-between overflow-hidden'>
+        <div className='w-full max-w-7xl mt-[90px] h-full flex flex-col justify-between overflow-hidden'>
           {!finished ? (
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
               <div
@@ -282,11 +282,27 @@ export const TypingArea = () => {
               </div>
               <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
                 <div className='text-xl font-mono leading-relaxed space-y-1'>
-                  <div className='flex flex-wrap gap-2'>
+                  <div
+                    className='flex flex-wrap gap-2 overflow-y-auto no-scrollbar'
+                    style={{ height: '110px' }} 
+                    ref={el => {
+                      if (el && currentWordIndex >= 0) {
+                        const currentWordElement = el.children[
+                          currentWordIndex
+                        ] as HTMLElement
+                        if (currentWordElement) {
+                          el.scrollTo({
+                            top: currentWordElement.offsetTop - el.offsetTop,
+                            behavior: 'smooth'
+                          })
+                        }
+                      }
+                    }}
+                  >
                     {words.map((word, index) => (
                       <span
                         key={index}
-                        className={`px-1 ${
+                        className={`px-1 h-8 ${
                           index === currentWordIndex
                             ? 'bg-gray-700 rounded'
                             : index < currentWordIndex
@@ -312,7 +328,7 @@ export const TypingArea = () => {
                 </button>
               </div>
               {pastResults[0] && (
-                <div className='mt-6 w-full'>
+                <div className='w-full'>
                   <h3 className='text-xl font-bold mb-4 text-gray-300'>
                     Last Test Result
                   </h3>
@@ -350,7 +366,9 @@ export const TypingArea = () => {
                               {pastResults[0].duration}
                             </div>
                             <div className='text-gray-400'>
-                              {pastResults[0].type === 'time' ? 'Seconds' : 'Words'}
+                              {pastResults[0].type === 'time'
+                                ? 'Seconds'
+                                : 'Words'}
                             </div>
                           </div>
                         </td>
