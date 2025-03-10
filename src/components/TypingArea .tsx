@@ -175,12 +175,12 @@ export const TypingArea = () => {
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
               <div
                 id='filter'
-                className='flex items-center justify-between px-[300px] mb-[80px]'
+                className='flex items-center justify-between px-[250px] mb-[80px]'
               >
                 <div className='flex rounded-lg bg-gray-800 items-center p-3 gap-4'>
                   <div
                     id='left'
-                    className={`flex items-center p-[5px] gap-2 cursor-pointer ${
+                    className={`flex items-center py-[5px] px-[12px] gap-2 cursor-pointer ${
                       activeType === 'time'
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -192,7 +192,7 @@ export const TypingArea = () => {
                   </div>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <div
-                    className={`flex items-center p-[5px] gap-2 cursor-pointer ${
+                    className={`flex items-center py-[5px] px-[12px] gap-2 cursor-pointer ${
                       activeType === 'words'
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -206,7 +206,7 @@ export const TypingArea = () => {
 
                 <div className='flex rounded-lg bg-gray-800 items-center py-3 px-8 gap-10'>
                   <p
-                    className={`cursor-pointer py-[5px] px-[8px] ${
+                    className={`cursor-pointer py-[5px] px-[12px] ${
                       activeDuration === 15
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -217,7 +217,7 @@ export const TypingArea = () => {
                   </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <p
-                    className={`cursor-pointer py-[5px] px-[8px] ${
+                    className={`cursor-pointer py-[5px] px-[12px] ${
                       activeDuration === 30
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -228,7 +228,7 @@ export const TypingArea = () => {
                   </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <p
-                    className={`cursor-pointer py-[5px] px-[8px] ${
+                    className={`cursor-pointer py-[5px] px-[12px] ${
                       activeDuration === 60
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
