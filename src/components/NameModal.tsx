@@ -36,15 +36,14 @@ export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
             clipPath: 'polygon(0 0, 9% 0, 58% 44%, 6% 100%, 0 100%, 0% 50%)'
           }}
         ></div>
-        <h2 className='text-2xl text-black mb-4 relative z-10'>
-          Typing Test!
-        </h2>
+        <h2 className='text-2xl text-black mb-4 relative z-10'>Typing Test!</h2>
         <form onSubmit={handleSubmit} className='relative z-10'>
           <input
             type='text'
             value={localName}
             onChange={e => setLocalName(e.target.value)}
             placeholder='Enter your name'
+            autoFocus
             className='p-3 mb-4 w-full rounded-md border border-gray-300 text-base focus:outline-none focus:ring-1 focus:ring-[#6d93d9]'
           />
           <button

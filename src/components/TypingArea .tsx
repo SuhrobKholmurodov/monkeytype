@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
-import { ALargeSmall, Clock, RotateCw } from 'lucide-react'
+import { Clock, RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
+import TextFormatIcon from '@mui/icons-material/TextFormat'
 
 interface TypedWordData {
   word: string
@@ -30,6 +31,7 @@ export const TypingArea = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeType, setActiveType] = useState<'time' | 'words'>('time')
   const [activeDuration, setActiveDuration] = useState(15)
+  const [timeLeft, setTimeLeft] = useState(activeDuration)
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults')
@@ -67,9 +69,27 @@ export const TypingArea = () => {
     }
   }, [finished])
 
+  useEffect(() => {
+    if (activeType === 'time' && started && !finished) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            clearInterval(timer)
+            setEndTime(new Date())
+            setFinished(true)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(timer)
+    }
+  }, [activeType, started, finished])
+
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
-    setWords(mixed.slice(0, 10))
+    setWords(mixed.slice(0, activeType === 'words' ? activeDuration : 100))
     setCurrentWordIndex(0)
     setTypedWord('')
     setTypedWords([])
@@ -77,6 +97,7 @@ export const TypingArea = () => {
     setFinished(false)
     setStartTime(null)
     setEndTime(null)
+    setTimeLeft(activeDuration)
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -96,12 +117,12 @@ export const TypingArea = () => {
           { word: words[currentWordIndex], typed: typedWord, isCorrect }
         ])
 
-        if (currentWordIndex < words.length - 1) {
-          setCurrentWordIndex(currentWordIndex + 1)
-          setTypedWord('')
-        } else {
+        if (activeType === 'words' && currentWordIndex >= activeDuration - 1) {
           setEndTime(new Date())
           setFinished(true)
+        } else if (currentWordIndex < words.length - 1) {
+          setCurrentWordIndex(currentWordIndex + 1)
+          setTypedWord('')
         }
       }
     } else if (e.key === 'Backspace') {
@@ -175,7 +196,7 @@ export const TypingArea = () => {
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
               <div
                 id='filter'
-                className='flex items-center justify-between px-[250px] mb-[80px]'
+                className='flex items-center justify-between px-[250px] mb-[50px]'
               >
                 <div className='flex rounded-lg bg-gray-800 items-center p-3 gap-4'>
                   <div
@@ -187,8 +208,10 @@ export const TypingArea = () => {
                     }`}
                     onClick={() => setActiveType('time')}
                   >
-                    <Clock />
-                    <p>time</p>
+                    <p>
+                      <Clock />
+                    </p>
+                    <p className='font-bold'>time</p>
                   </div>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <div
@@ -199,14 +222,16 @@ export const TypingArea = () => {
                     }`}
                     onClick={() => setActiveType('words')}
                   >
-                    <ALargeSmall />
-                    <p>words</p>
+                    <p>
+                      <TextFormatIcon />
+                    </p>
+                    <p className='font-bold'>words</p>
                   </div>
                 </div>
 
                 <div className='flex rounded-lg bg-gray-800 items-center py-3 px-8 gap-10'>
                   <p
-                    className={`cursor-pointer py-[5px] px-[12px] ${
+                    className={`cursor-pointer font-bold py-[5px] px-[12px] ${
                       activeDuration === 15
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -217,7 +242,7 @@ export const TypingArea = () => {
                   </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <p
-                    className={`cursor-pointer py-[5px] px-[12px] ${
+                    className={`cursor-pointer  font-bold py-[5px] px-[12px] ${
                       activeDuration === 30
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -228,7 +253,7 @@ export const TypingArea = () => {
                   </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
                   <p
-                    className={`cursor-pointer py-[5px] px-[12px] ${
+                    className={`cursor-pointer  font-bold py-[5px] px-[12px] ${
                       activeDuration === 60
                         ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                         : ''
@@ -239,7 +264,18 @@ export const TypingArea = () => {
                   </p>
                 </div>
               </div>
-
+              <div className='flex items-center justify-between mb-2'>
+                <div className='flex items-center gap-4'>
+                  <div className='text-4xl font-bold'>
+                    {activeType === 'time'
+                      ? timeLeft
+                      : currentWordIndex + 1 + '/' + activeDuration}
+                  </div>
+                  <div className='text-gray-400'>
+                    {activeType === 'time' ? 'Seconds' : 'Words'}
+                  </div>
+                </div>
+              </div>
               <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
                 <div className='text-xl font-mono leading-relaxed space-y-1'>
                   <div className='flex flex-wrap gap-2'>
@@ -271,17 +307,17 @@ export const TypingArea = () => {
                   Restart Test
                 </button>
               </div>
-              <div className='text-center text-gray-400 text-sm'>
-                Press space after each word. ESC to restart.
-              </div>
               {pastResults[0] && (
-                <div className='mt-12 w-full'>
+                <div className='mt-6 w-full'>
                   <h3 className='text-xl font-bold mb-4 text-gray-300'>
                     Last Test Result
                   </h3>
                   <table className='w-full border-collapse'>
                     <thead>
                       <tr className='bg-gray-800'>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Type
+                        </th>
                         <th className='p-3 border border-gray-700 text-left'>
                           WPM
                         </th>
@@ -304,6 +340,18 @@ export const TypingArea = () => {
                     </thead>
                     <tbody>
                       <tr>
+                        <td className='p-3 border border-gray-700'>
+                          <div className='flex items-center gap-1'>
+                            <div className=' text-[20px] font-bold'>
+                              {activeDuration}
+                            </div>
+                            <div className='text-gray-400'>
+                              {activeType === 'time'
+                                ? 'Seconds'
+                                : 'Words'}
+                            </div>
+                          </div>
+                        </td>
                         <td className='p-3 border border-gray-700'>
                           {pastResults[0].wpm}
                         </td>
@@ -373,6 +421,9 @@ export const TypingArea = () => {
                   <thead>
                     <tr className='bg-gray-800'>
                       <th className='p-3 border border-gray-700 text-left'>
+                        Type
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
                         WPM
                       </th>
                       <th className='p-3 border border-gray-700 text-left'>
@@ -394,6 +445,16 @@ export const TypingArea = () => {
                   </thead>
                   <tbody>
                     <tr>
+                      <td className='p-3 border border-gray-700'>
+                        <div className='flex items-center gap-1'>
+                          <div className=' text-[20px] font-bold'>
+                            {activeDuration}
+                          </div>
+                          <div className='text-gray-400'>
+                            {activeType === 'time' ? 'Seconds' : 'Words'}
+                          </div>
+                        </div>
+                      </td>
                       <td className='p-3 border border-gray-700'>
                         {calculateWPM()}
                       </td>

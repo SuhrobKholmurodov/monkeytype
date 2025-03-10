@@ -70,7 +70,7 @@ export const Profile = () => {
       })
       setTimeout(() => {
         window.location.reload()
-      }, 3000) 
+      }, 3000)
     }
   }
 
@@ -159,6 +159,7 @@ export const Profile = () => {
             <table className='w-full border-collapse'>
               <thead>
                 <tr className='bg-gray-800 text-gray-50'>
+                  <th className='p-3 border border-gray-700 text-left'>Type</th>
                   <th className='p-3 border border-gray-700 text-left'>WPM</th>
                   <th className='p-3 border border-gray-700 text-left'>
                     Accuracy
@@ -181,6 +182,16 @@ export const Profile = () => {
                     key={index}
                     className='text-gray-200 hover:bg-gray-800 transition-colors'
                   >
+                    <td className='p-3 border border-gray-700'>
+                      <div className='flex items-center gap-1'>
+                        <div className=' text-[20px] font-bold'>
+                          {el.duration}
+                        </div>
+                        <div className='text-gray-400'>
+                          {el.type === 'time' ? 'Seconds' : 'Words'}
+                        </div>
+                      </div>
+                    </td>
                     <td className='p-3 border border-gray-700'>{el.wpm}</td>
                     <td className='p-3 border border-gray-700'>
                       {el.accuracy}%
