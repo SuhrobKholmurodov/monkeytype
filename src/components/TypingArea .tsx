@@ -10,6 +10,8 @@ interface TypedWordData {
 }
 
 export interface TestResult {
+  type: 'time' | 'words'
+  duration: number
   wpm: number
   accuracy: number
   correct: number
@@ -47,6 +49,8 @@ export const TypingArea = () => {
   useEffect(() => {
     if (finished && startTime && endTime) {
       const newResult: TestResult = {
+        type: activeType,
+        duration: activeDuration,
         wpm: calculateWPM(),
         accuracy: calculateAccuracy(),
         correct: typedWords.filter(w => w.isCorrect).length,
@@ -343,12 +347,10 @@ export const TypingArea = () => {
                         <td className='p-3 border border-gray-700'>
                           <div className='flex items-center gap-1'>
                             <div className=' text-[20px] font-bold'>
-                              {activeDuration}
+                              {pastResults[0].duration}
                             </div>
                             <div className='text-gray-400'>
-                              {activeType === 'time'
-                                ? 'Seconds'
-                                : 'Words'}
+                              {pastResults[0].type === 'time' ? 'Seconds' : 'Words'}
                             </div>
                           </div>
                         </td>
