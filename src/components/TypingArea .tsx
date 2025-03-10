@@ -28,6 +28,8 @@ export const TypingArea = () => {
   const [endTime, setEndTime] = useState<Date | null>(null)
   const [pastResults, setPastResults] = useState<TestResult[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activeType, setActiveType] = useState<'time' | 'words'>('time')
+  const [activeDuration, setActiveDuration] = useState(15)
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults')
@@ -168,36 +170,76 @@ export const TypingArea = () => {
           if (containerRef.current) containerRef.current.focus()
         }}
       >
-        <div className='w-full max-w-7xl mt-[140px] h-full flex flex-col justify-between overflow-hidden'>
+        <div className='w-full max-w-7xl mt-[120px] h-full flex flex-col justify-between overflow-hidden'>
           {!finished ? (
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
               <div
                 id='filter'
-                className='flex items-center justify-between px-[340px]'
+                className='flex items-center justify-between px-[300px] mb-[80px]'
               >
-                <div className='flex rounded-lg bg-gray-800 items-center mb-10 p-4 gap-4'>
-                  <div id='left'>
-                    <div className='flex items-center gap-2'>
-                      <Clock />
-                      <p>time</p>
-                    </div>
+                <div className='flex rounded-lg bg-gray-800 items-center p-3 gap-4'>
+                  <div
+                    id='left'
+                    className={`flex items-center p-[5px] gap-2 cursor-pointer ${
+                      activeType === 'time'
+                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                        : ''
+                    }`}
+                    onClick={() => setActiveType('time')}
+                  >
+                    <Clock />
+                    <p>time</p>
                   </div>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <div className='right'>
-                    <div className='flex items-center gap-2'>
-                      <ALargeSmall />
-                      <p>words</p>
-                    </div>
+                  <div
+                    className={`flex items-center p-[5px] gap-2 cursor-pointer ${
+                      activeType === 'words'
+                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                        : ''
+                    }`}
+                    onClick={() => setActiveType('words')}
+                  >
+                    <ALargeSmall />
+                    <p>words</p>
                   </div>
                 </div>
-                <div className='flex rounded-lg bg-gray-800 items-center mb-10 py-4 px-8 gap-10'>
-                  <p>15</p>
+
+                <div className='flex rounded-lg bg-gray-800 items-center py-3 px-8 gap-10'>
+                  <p
+                    className={`cursor-pointer py-[5px] px-[8px] ${
+                      activeDuration === 15
+                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                        : ''
+                    }`}
+                    onClick={() => setActiveDuration(15)}
+                  >
+                    15
+                  </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <p>30</p>
+                  <p
+                    className={`cursor-pointer py-[5px] px-[8px] ${
+                      activeDuration === 30
+                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                        : ''
+                    }`}
+                    onClick={() => setActiveDuration(30)}
+                  >
+                    30
+                  </p>
                   <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <p>60</p>
+                  <p
+                    className={`cursor-pointer py-[5px] px-[8px] ${
+                      activeDuration === 60
+                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                        : ''
+                    }`}
+                    onClick={() => setActiveDuration(60)}
+                  >
+                    60
+                  </p>
                 </div>
               </div>
+
               <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
                 <div className='text-xl font-mono leading-relaxed space-y-1'>
                   <div className='flex flex-wrap gap-2'>
