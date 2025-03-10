@@ -2,7 +2,7 @@ import { UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-const Header = () => {
+export const Header = () => {
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
@@ -25,4 +25,3 @@ const Header = () => {
   )
 }
 
-export default Header

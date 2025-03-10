@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 
-const NotFound = () => {
+export const NotFound = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -56,5 +56,3 @@ const NotFound = () => {
     </motion.div>
   )
 }
-
-export default NotFound

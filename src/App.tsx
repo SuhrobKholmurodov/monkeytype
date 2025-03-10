@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import NameModal from './components/NameModal'
 import RoutesConfig from './routes'
+import { NameModal } from '~/components'
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

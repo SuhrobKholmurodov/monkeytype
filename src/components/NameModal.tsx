@@ -5,7 +5,7 @@ interface NameModalProps {
   onClose: () => void
 }
 
-const NameModal = ({ isOpen, onClose }: NameModalProps) => {
+export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
   const [localName, setLocalName] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,5 +58,3 @@ const NameModal = ({ isOpen, onClose }: NameModalProps) => {
     </div>
   )
 }
-
-export default NameModal

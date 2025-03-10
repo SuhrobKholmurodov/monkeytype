@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Pencil, UserRound } from 'lucide-react'
 import Tooltip from '@mui/material/Tooltip'
 import Zoom from '@mui/material/Zoom'
-import { TestResult } from '../components/TypingArea '
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Helmet } from 'react-helmet-async'
+import { TestResult } from '~/components'
 
-const Profile = () => {
+export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
   const [userName, setUserName] = useState(
     localStorage.getItem('userName') || ''
@@ -208,5 +208,3 @@ const Profile = () => {
     </div>
   )
 }
-
-export default Profile

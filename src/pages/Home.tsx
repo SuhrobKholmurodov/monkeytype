@@ -1,7 +1,7 @@
-import TypingArea from '../components/TypingArea '
 import { Helmet } from 'react-helmet-async'
+import { TypingArea } from '~/components'
 
-const Home = () => {
+export const Home = () => {
   return (
     <div>
       <Helmet>
@@ -19,5 +19,3 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home

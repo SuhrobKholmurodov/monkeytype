@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
 import { RotateCw } from 'lucide-react'
-import { wordsArray } from '../constants'
+import { wordsArray } from '~/constants'
 
 interface TypedWordData {
   word: string
@@ -17,7 +17,7 @@ export interface TestResult {
   completionTime: string
 }
 
-const TypingArea = () => {
+export const TypingArea = () => {
   const [words, setWords] = useState<string[]>([])
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [typedWord, setTypedWord] = useState('')
@@ -363,5 +363,3 @@ const TypingArea = () => {
     </div>
   )
 }
-
-export default TypingArea
