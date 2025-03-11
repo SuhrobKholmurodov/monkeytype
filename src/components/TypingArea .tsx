@@ -275,9 +275,6 @@ export const TypingArea = () => {
                       ? timeLeft
                       : currentWordIndex + 1 + '/' + activeDuration}
                   </div>
-                  <div className='text-gray-400'>
-                    {activeType === 'time' ? 'Seconds' : 'Words'}
-                  </div>
                 </div>
               </div>
               <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
