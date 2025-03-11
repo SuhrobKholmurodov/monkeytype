@@ -447,7 +447,9 @@ export const TypingArea = () => {
                           {pastResults[0].correct}
                         </td>
                         <td className='p-3 border border-gray-700'>
-                          {pastResults[0].incorrect}
+                          {pastResults[0].incorrect == 0
+                            ? '-'
+                            : pastResults[0].incorrect}
                         </td>
                         <td className='p-3 border border-gray-700'>
                           {pastResults[0].time} sec
@@ -552,7 +554,9 @@ export const TypingArea = () => {
                         {typedWords.filter(w => w.isCorrect).length}
                       </td>
                       <td className='p-3 border border-gray-700'>
-                        {typedWords.filter(w => !w.isCorrect).length}
+                        {typedWords.filter(w => !w.isCorrect).length == 0
+                          ? '-'
+                          : typedWords.filter(w => !w.isCorrect).length}
                       </td>
                       <td className='p-3 border border-gray-700'>
                         {startTime && endTime

@@ -309,7 +309,7 @@ export const Profile = () => {
                     </td>
                     <td className='p-3 border border-gray-700'>{el.correct}</td>
                     <td className='p-3 border border-gray-700'>
-                      {el.incorrect}
+                      {el.incorrect==0?"-":el.incorrect}
                     </td>
                     <td className='p-3 border border-gray-700'>{el.time}s</td>
                     <td className='p-3 border border-gray-700'>
