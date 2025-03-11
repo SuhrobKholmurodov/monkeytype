@@ -510,8 +510,8 @@ export const TypingArea = () => {
                       <th className='p-3 border border-gray-700 text-left'>
                         Type
                       </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        WPM
+                      <th className='p-3 flex items-center gap-4 border border-gray-700 text-left'>
+                        <p>WPM</p>
                       </th>
                       <th className='p-3 border border-gray-700 text-left'>
                         Accuracy
