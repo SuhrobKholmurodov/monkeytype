@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, KeyboardEvent } from 'react'
 import { RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
 import { Filter } from './Filter'
+import { ResultsTable } from './ResultsTable'
 
 interface TypedWordData {
   word: string
@@ -90,7 +91,7 @@ export const TypingArea = () => {
 
       return () => clearInterval(timer)
     }
-  }, [activeType, started, finished]) 
+  }, [activeType, started, finished])
 
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
@@ -278,73 +279,18 @@ export const TypingArea = () => {
                 </button>
               </div>
               {pastResults[0] && (
-                <div className='w-full'>
+                <div>
                   <h3 className='text-xl font-bold mb-4 text-gray-300'>
                     Last Test Result
                   </h3>
-                  <table className='w-full border-collapse'>
-                    <thead>
-                      <tr className='bg-gray-800'>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Type
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          WPM
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Accuracy
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Correct Words
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Incorrect Words
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Total Time
-                        </th>
-                        <th className='p-3 border border-gray-700 text-left'>
-                          Completed At
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className='p-3 border border-gray-700'>
-                          <div className='flex items-center gap-1'>
-                            <div className=' text-[20px] font-bold'>
-                              {pastResults[0].duration}
-                            </div>
-                            <div className='text-gray-400'>
-                              {pastResults[0].type === 'time'
-                                ? 'Seconds'
-                                : 'Words'}
-                            </div>
-                          </div>
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].wpm}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].accuracy}%
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].correct}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].incorrect == 0
-                            ? '-'
-                            : pastResults[0].incorrect}
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].time} sec
-                        </td>
-                        <td className='p-3 border border-gray-700'>
-                          {pastResults[0].completionTime}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <ResultsTable
+                    activeType={pastResults[0].type}
+                    activeDuration={pastResults[0].duration}
+                    activeWordsCount={pastResults[0].duration}
+                    typedWords={typedWords}
+                    startTime={new Date(pastResults[0].completionTime)}
+                    endTime={new Date(pastResults[0].completionTime)}
+                  />
                 </div>
               )}
             </div>
@@ -389,80 +335,14 @@ export const TypingArea = () => {
                 <h3 className='text-xl font-bold mb-4 text-gray-300'>
                   Detailed Results
                 </h3>
-                <table className='w-full border-collapse'>
-                  <thead>
-                    <tr className='bg-gray-800'>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Type
-                      </th>
-                      <th className='p-3 flex items-center gap-4 border border-gray-700 text-left'>
-                        <p>WPM</p>
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Accuracy
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Correct Words
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Incorrect Words
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Total Time
-                      </th>
-                      <th className='p-3 border border-gray-700 text-left'>
-                        Completed At
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className='p-3 border border-gray-700'>
-                        <div className='flex items-center gap-1'>
-                          <div className='text-[20px] font-bold'>
-                            {activeType === 'time'
-                              ? activeDuration
-                              : activeWordsCount}
-                          </div>
-                          <div className='text-gray-400'>
-                            {activeType === 'time' ? 'Seconds' : 'Words'}
-                          </div>
-                        </div>
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {calculateWPM()}
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {calculateAccuracy()}%
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {typedWords.filter(w => w.isCorrect).length}
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {typedWords.filter(w => !w.isCorrect).length == 0
-                          ? '-'
-                          : typedWords.filter(w => !w.isCorrect).length}
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {startTime && endTime
-                          ? Math.round(
-                              (endTime.getTime() - startTime.getTime()) / 1000
-                            )
-                          : 0}{' '}
-                        sec
-                      </td>
-                      <td className='p-3 border border-gray-700'>
-                        {new Date().toLocaleString('en-US', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric'
-                        })}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <ResultsTable
+                  activeType={activeType}
+                  activeDuration={activeDuration}
+                  activeWordsCount={activeWordsCount}
+                  typedWords={typedWords}
+                  startTime={startTime}
+                  endTime={endTime}
+                />
               </div>
             </div>
           )}
