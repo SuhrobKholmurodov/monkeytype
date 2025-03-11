@@ -104,6 +104,10 @@ export const TypingArea = () => {
     setTimeLeft(activeDuration)
   }
 
+  useEffect(() => {
+    getRandomWords()
+  }, [activeDuration, activeType])
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (finished) return
 
@@ -280,8 +284,7 @@ export const TypingArea = () => {
               <div className='mb-8 p-4 bg-gray-800 rounded-lg shadow-md'>
                 <div className='text-xl font-mono leading-relaxed space-y-1'>
                   <div
-                    className='flex flex-wrap gap-2 overflow-y-auto no-scrollbar'
-                    style={{ height: '110px' }} 
+                    className='flex flex-wrap h-[110px] gap-2 overflow-y-auto no-scrollbar'
                     ref={el => {
                       if (el && currentWordIndex >= 0) {
                         const currentWordElement = el.children[
