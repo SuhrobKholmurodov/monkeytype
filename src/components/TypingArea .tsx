@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react'
-import { Clock, RotateCw } from 'lucide-react'
+import { RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
-import TextFormatIcon from '@mui/icons-material/TextFormat'
+import { Filter } from './Filter'
 
 interface TypedWordData {
   word: string
@@ -90,7 +90,7 @@ export const TypingArea = () => {
 
       return () => clearInterval(timer)
     }
-  }, [activeType, started, finished])
+  }, [activeType, started, finished]) 
 
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
@@ -191,6 +191,16 @@ export const TypingArea = () => {
     return Math.round((correctWords / typedWords.length) * 100)
   }
 
+  const handleFilterChange = (type: 'time' | 'words', value: number) => {
+    if (type === 'time') {
+      setActiveType('time')
+      setActiveDuration(value)
+    } else {
+      setActiveType('words')
+      setActiveWordsCount(value)
+    }
+  }
+
   return (
     <div>
       <div
@@ -206,137 +216,12 @@ export const TypingArea = () => {
         <div className='w-full max-w-7xl mt-[90px] h-full flex flex-col justify-between overflow-hidden'>
           {!finished ? (
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
-              <div
-                id='filter'
-                className='flex items-center justify-between px-[180px] mb-[50px]'
-              >
-                <div className='flex rounded-lg bg-gray-800 items-center p-3 gap-4'>
-                  <div
-                    id='left'
-                    className={`flex items-center py-[5px] px-[12px] gap-2 cursor-pointer ${
-                      activeType === 'time'
-                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                        : ''
-                    }`}
-                    onClick={() => setActiveType('time')}
-                  >
-                    <p>
-                      <Clock />
-                    </p>
-                    <p className='font-bold'>time</p>
-                  </div>
-                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <div
-                    className={`flex items-center py-[5px] px-[12px] gap-2 cursor-pointer ${
-                      activeType === 'words'
-                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                        : ''
-                    }`}
-                    onClick={() => setActiveType('words')}
-                  >
-                    <p>
-                      <TextFormatIcon />
-                    </p>
-                    <p className='font-bold'>words</p>
-                  </div>
-                </div>
-
-                <div className='flex rounded-lg bg-gray-800 items-center py-3 px-8 gap-10'>
-                  {activeType === 'time' ? (
-                    <>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeDuration === 15
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveDuration(15)}
-                      >
-                        15
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeDuration === 30
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveDuration(30)}
-                      >
-                        30
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeDuration === 60
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveDuration(60)}
-                      >
-                        60
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeDuration === 120
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveDuration(120)}
-                      >
-                        120
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeWordsCount === 10
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveWordsCount(10)}
-                      >
-                        10
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeWordsCount === 25
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveWordsCount(25)}
-                      >
-                        25
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeWordsCount === 50
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveWordsCount(50)}
-                      >
-                        50
-                      </p>
-                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                      <p
-                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                          activeWordsCount === 100
-                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                            : ''
-                        }`}
-                        onClick={() => setActiveWordsCount(100)}
-                      >
-                        100
-                      </p>
-                    </>
-                  )}
-                </div>
-              </div>
+              <Filter
+                type={activeType}
+                duration={activeDuration}
+                wordsCount={activeWordsCount}
+                onChange={handleFilterChange}
+              />
               <div className='flex items-center justify-between mb-2'>
                 <div className='flex items-center gap-4'>
                   <div className='text-4xl font-bold'>
