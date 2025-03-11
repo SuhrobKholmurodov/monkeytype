@@ -3,6 +3,7 @@ import { RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
 import { Filter } from './Filter'
 import { ResultsTable } from './ResultsTable'
+import { calculateAccuracy, calculateWPM } from '~/utils'
 
 interface TypedWordData {
   word: string
@@ -50,11 +51,12 @@ export const TypingArea = () => {
 
   useEffect(() => {
     if (finished && startTime && endTime) {
+      const correctWords = typedWords.filter(w => w.isCorrect).length
       const newResult: TestResult = {
         type: activeType,
         duration: activeType === 'time' ? activeDuration : activeWordsCount,
-        wpm: calculateWPM(),
-        accuracy: calculateAccuracy(),
+        wpm: calculateWPM(startTime, endTime, correctWords),
+        accuracy: calculateAccuracy(typedWords),
         correct: typedWords.filter(w => w.isCorrect).length,
         incorrect: typedWords.filter(w => !w.isCorrect).length,
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
@@ -178,20 +180,6 @@ export const TypingArea = () => {
     )
   }
 
-  const calculateWPM = () => {
-    if (!startTime || !endTime) return 0
-    const durationInMinutes =
-      (endTime.getTime() - startTime.getTime()) / 1000 / 60
-    const correctWords = typedWords.filter(item => item.isCorrect).length
-    return Math.round(correctWords / durationInMinutes)
-  }
-
-  const calculateAccuracy = () => {
-    if (typedWords.length === 0) return 0
-    const correctWords = typedWords.filter(item => item.isCorrect).length
-    return Math.round((correctWords / typedWords.length) * 100)
-  }
-
   const handleFilterChange = (type: 'time' | 'words', value: number) => {
     if (type === 'time') {
       setActiveType('time')
@@ -299,14 +287,18 @@ export const TypingArea = () => {
               <div className='flex gap-8 mb-8'>
                 <div className='text-center'>
                   <div className='text-4xl font-bold text-green-500'>
-                    {calculateWPM()}
+                    {calculateWPM(
+                      startTime,
+                      endTime,
+                      typedWords.filter(w => w.isCorrect).length
+                    )}
                   </div>
                   <div className='text-sm text-gray-400'>WPM</div>
                 </div>
 
                 <div className='text-center'>
                   <div className='text-4xl font-bold text-blue-500'>
-                    {calculateAccuracy()}%
+                    {calculateAccuracy(typedWords)}%
                   </div>
                   <div className='text-sm text-gray-400'>Accuracy</div>
                 </div>
