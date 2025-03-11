@@ -1,4 +1,5 @@
 import { TestResult } from './TypingArea '
+import { calculateWPM, calculateAccuracy } from '~/utils'
 
 interface ResultsTableProps {
   activeType: 'time' | 'words'
@@ -17,31 +18,24 @@ export const ResultsTable = ({
   startTime,
   endTime
 }: ResultsTableProps) => {
-  const calculateWPM = () => {
-    if (!startTime || !endTime) return 0
-    const durationInMinutes =
-      (endTime.getTime() - startTime.getTime()) / 1000 / 60
-    const correctWords = typedWords.filter(item => item.isCorrect).length
-    return Math.round(correctWords / durationInMinutes)
-  }
-
-  const calculateAccuracy = () => {
-    if (typedWords.length === 0) return 0
-    const correctWords = typedWords.filter(item => item.isCorrect).length
-    return Math.round((correctWords / typedWords.length) * 100)
-  }
+  const wpm = calculateWPM(
+    startTime,
+    endTime,
+    typedWords.filter(item => item.isCorrect).length
+  )
+  const accuracy = calculateAccuracy(typedWords)
 
   const results: TestResult[] = [
     {
       type: activeType,
       duration: activeType === 'time' ? activeDuration : activeWordsCount,
-      wpm: calculateWPM(),
-      accuracy: calculateAccuracy(),
+      wpm,
+      accuracy,
       correct: typedWords.filter(w => w.isCorrect).length,
       incorrect: typedWords.filter(w => !w.isCorrect).length,
       time:
         startTime && endTime
-          ? Math.round(endTime.getTime() - startTime.getTime()) / 1000
+          ? Math.round((endTime.getTime() - startTime.getTime()) / 1000)
           : 0,
       completionTime: new Date().toLocaleString('en-US', {
         hour: '2-digit',
