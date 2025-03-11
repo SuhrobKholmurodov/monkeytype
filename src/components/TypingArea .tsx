@@ -3,7 +3,7 @@ import { RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
 import { Filter } from './Filter'
 import { ResultsTable } from './ResultsTable'
-import { calculateAccuracy, calculateWPM } from '~/utils'
+import { calculateAccuracy, calculateWPM } from '~/utils/Common'
 
 interface TypedWordData {
   word: string

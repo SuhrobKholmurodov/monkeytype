@@ -1,5 +1,5 @@
 import { TestResult } from './TypingArea '
-import { calculateWPM, calculateAccuracy } from '~/utils'
+import { calculateWPM, calculateAccuracy } from '~/utils/Common'
 
 interface ResultsTableProps {
   activeType: 'time' | 'words'
