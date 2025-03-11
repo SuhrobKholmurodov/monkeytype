@@ -74,7 +74,6 @@ export const Profile = () => {
     }
   }
 
-  // Function to get max WPM and accuracy for a specific duration and type
   const getMaxWPMAndAccuracy = (duration: number, type: 'time' | 'words') => {
     const filteredResults = pastResults.filter(
       result => result.duration === duration && result.type === type
@@ -91,13 +90,14 @@ export const Profile = () => {
     return { maxWPM: maxResult.wpm, accuracy: maxResult.accuracy }
   }
 
-  // Get max WPM and accuracy for each category
   const max15Seconds = getMaxWPMAndAccuracy(15, 'time')
   const max30Seconds = getMaxWPMAndAccuracy(30, 'time')
   const max60Seconds = getMaxWPMAndAccuracy(60, 'time')
+  const max120Seconds = getMaxWPMAndAccuracy(120, 'time')
   const max10Words = getMaxWPMAndAccuracy(10, 'words')
   const max25Words = getMaxWPMAndAccuracy(25, 'words')
   const max50Words = getMaxWPMAndAccuracy(50, 'words')
+  const max100Words = getMaxWPMAndAccuracy(100, 'words')
 
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
@@ -179,7 +179,7 @@ export const Profile = () => {
       <div className='flex justify-between mt-10'>
         <div
           id='maxScoreBySeconds'
-          className='flex justify-between text-gray-200 gap-[160px] bg-gray-800 p-4 rounded-lg'
+          className='flex justify-between text-gray-200 gap-[100px] bg-gray-800 p-4 rounded-lg'
         >
           <div className='flex flex-col items-center'>
             <p className='text-gray-500'>15 seconds</p>
@@ -208,10 +208,19 @@ export const Profile = () => {
               {max60Seconds.accuracy ? `${max60Seconds.accuracy}%` : '-'}
             </p>
           </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>120 seconds</p>
+            <p className='text-[40px] font-[500]'>
+              {max120Seconds.maxWPM ? max120Seconds.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max120Seconds.accuracy ? `${max120Seconds.accuracy}%` : '-'}
+            </p>
+          </div>
         </div>
         <div
           id='maxsScoreByWords'
-          className='flex justify-between text-white gap-[160px] bg-gray-800 p-4 rounded-lg'
+          className='flex justify-between text-white gap-[100px] bg-gray-800 p-4 rounded-lg'
         >
           <div className='flex flex-col items-center'>
             <p className='text-gray-500'>10 words</p>
@@ -238,6 +247,15 @@ export const Profile = () => {
             </p>
             <p className='text-gray-400 text-[22px]'>
               {max50Words.accuracy ? `${max50Words.accuracy}%` : '-'}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>100 words</p>
+            <p className='text-[40px] font-[500]'>
+              {max100Words.maxWPM ? max100Words.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max100Words.accuracy ? `${max100Words.accuracy}%` : '-'}
             </p>
           </div>
         </div>

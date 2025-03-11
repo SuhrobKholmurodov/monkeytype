@@ -32,8 +32,8 @@ export const TypingArea = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeType, setActiveType] = useState<'time' | 'words'>('time')
-  const [activeDuration, setActiveDuration] = useState(15) // Time durations: 15, 30, 60
-  const [activeWordsCount, setActiveWordsCount] = useState(10) // Word counts: 10, 25, 50
+  const [activeDuration, setActiveDuration] = useState(15)
+  const [activeWordsCount, setActiveWordsCount] = useState(10)
   const [timeLeft, setTimeLeft] = useState(activeDuration)
 
   useEffect(() => {
@@ -208,7 +208,7 @@ export const TypingArea = () => {
             <div className='flex flex-col flex-grow overflow-y-auto p-6'>
               <div
                 id='filter'
-                className='flex items-center justify-between px-[250px] mb-[50px]'
+                className='flex items-center justify-between px-[180px] mb-[50px]'
               >
                 <div className='flex rounded-lg bg-gray-800 items-center p-3 gap-4'>
                   <div
@@ -276,6 +276,17 @@ export const TypingArea = () => {
                       >
                         60
                       </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeDuration === 120
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveDuration(120)}
+                      >
+                        120
+                      </p>
                     </>
                   ) : (
                     <>
@@ -310,6 +321,17 @@ export const TypingArea = () => {
                         onClick={() => setActiveWordsCount(50)}
                       >
                         50
+                      </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeWordsCount === 100
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveWordsCount(100)}
+                      >
+                        100
                       </p>
                     </>
                   )}
