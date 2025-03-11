@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Helmet } from 'react-helmet-async'
 import { TestResult } from '~/components'
-
+import { getJoinDateDifference, getMaxWPMAndAccuracy } from '~/utils/ProfileUtils'
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
   const [userName, setUserName] = useState(
@@ -29,21 +29,6 @@ export const Profile = () => {
   }, [])
 
   const userJoinDate = localStorage.getItem('userJoinDate')
-
-  const getJoinDateDifference = (joinDate: string) => {
-    const joinDateObj = new Date(joinDate)
-    const currentDate = new Date()
-    const timeDifference = currentDate.getTime() - joinDateObj.getTime()
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
-
-    if (daysDifference === 0) {
-      return 'today'
-    } else if (daysDifference === 1) {
-      return 'yesterday'
-    } else {
-      return `${daysDifference} days ago`
-    }
-  }
 
   const handleEdit = () => {
     setIsEditing(true)
@@ -74,30 +59,14 @@ export const Profile = () => {
     }
   }
 
-  const getMaxWPMAndAccuracy = (duration: number, type: 'time' | 'words') => {
-    const filteredResults = pastResults.filter(
-      result => result.duration === duration && result.type === type
-    )
-
-    if (filteredResults.length === 0) {
-      return { maxWPM: 0, accuracy: 0 }
-    }
-
-    const maxResult = filteredResults.reduce((prev, current) =>
-      prev.wpm > current.wpm ? prev : current
-    )
-
-    return { maxWPM: maxResult.wpm, accuracy: maxResult.accuracy }
-  }
-
-  const max15Seconds = getMaxWPMAndAccuracy(15, 'time')
-  const max30Seconds = getMaxWPMAndAccuracy(30, 'time')
-  const max60Seconds = getMaxWPMAndAccuracy(60, 'time')
-  const max120Seconds = getMaxWPMAndAccuracy(120, 'time')
-  const max10Words = getMaxWPMAndAccuracy(10, 'words')
-  const max25Words = getMaxWPMAndAccuracy(25, 'words')
-  const max50Words = getMaxWPMAndAccuracy(50, 'words')
-  const max100Words = getMaxWPMAndAccuracy(100, 'words')
+  const max15Seconds = getMaxWPMAndAccuracy(pastResults, 15, 'time')
+  const max30Seconds = getMaxWPMAndAccuracy(pastResults, 30, 'time')
+  const max60Seconds = getMaxWPMAndAccuracy(pastResults, 60, 'time')
+  const max120Seconds = getMaxWPMAndAccuracy(pastResults, 120, 'time')
+  const max10Words = getMaxWPMAndAccuracy(pastResults, 10, 'words')
+  const max25Words = getMaxWPMAndAccuracy(pastResults, 25, 'words')
+  const max50Words = getMaxWPMAndAccuracy(pastResults, 50, 'words')
+  const max100Words = getMaxWPMAndAccuracy(pastResults, 100, 'words')
 
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
@@ -309,7 +278,7 @@ export const Profile = () => {
                     </td>
                     <td className='p-3 border border-gray-700'>{el.correct}</td>
                     <td className='p-3 border border-gray-700'>
-                      {el.incorrect==0?"-":el.incorrect}
+                      {el.incorrect === 0 ? '-' : el.incorrect}
                     </td>
                     <td className='p-3 border border-gray-700'>{el.time}s</td>
                     <td className='p-3 border border-gray-700'>
