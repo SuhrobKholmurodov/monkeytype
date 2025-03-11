@@ -74,6 +74,7 @@ export const Profile = () => {
     }
   }
 
+  // Function to get max WPM and accuracy for a specific duration and type
   const getMaxWPMAndAccuracy = (duration: number, type: 'time' | 'words') => {
     const filteredResults = pastResults.filter(
       result => result.duration === duration && result.type === type
@@ -90,12 +91,13 @@ export const Profile = () => {
     return { maxWPM: maxResult.wpm, accuracy: maxResult.accuracy }
   }
 
+  // Get max WPM and accuracy for each category
   const max15Seconds = getMaxWPMAndAccuracy(15, 'time')
   const max30Seconds = getMaxWPMAndAccuracy(30, 'time')
   const max60Seconds = getMaxWPMAndAccuracy(60, 'time')
-  const max15Words = getMaxWPMAndAccuracy(15, 'words')
-  const max30Words = getMaxWPMAndAccuracy(30, 'words')
-  const max60Words = getMaxWPMAndAccuracy(60, 'words')
+  const max10Words = getMaxWPMAndAccuracy(10, 'words')
+  const max25Words = getMaxWPMAndAccuracy(25, 'words')
+  const max50Words = getMaxWPMAndAccuracy(50, 'words')
 
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
@@ -177,7 +179,7 @@ export const Profile = () => {
       <div className='flex justify-between mt-10'>
         <div
           id='maxScoreBySeconds'
-          className='flex justify-between text-white gap-[160px] bg-gray-800 p-4 rounded-lg'
+          className='flex justify-between text-gray-200 gap-[160px] bg-gray-800 p-4 rounded-lg'
         >
           <div className='flex flex-col items-center'>
             <p className='text-gray-500'>15 seconds</p>
@@ -212,30 +214,30 @@ export const Profile = () => {
           className='flex justify-between text-white gap-[160px] bg-gray-800 p-4 rounded-lg'
         >
           <div className='flex flex-col items-center'>
-            <p className='text-gray-500'>15 words</p>
+            <p className='text-gray-500'>10 words</p>
             <p className='text-[40px] font-[500]'>
-              {max15Words.maxWPM ? max15Words.maxWPM : '-'}
+              {max10Words.maxWPM ? max10Words.maxWPM : '-'}
             </p>
             <p className='text-gray-400 text-[22px]'>
-              {max15Words.accuracy ? `${max15Words.accuracy}%` : '-'}
+              {max10Words.accuracy ? `${max10Words.accuracy}%` : '-'}
             </p>
           </div>
           <div className='flex flex-col items-center'>
-            <p className='text-gray-500'>30 words</p>
+            <p className='text-gray-500'>25 words</p>
             <p className='text-[40px] font-[500]'>
-              {max30Words.maxWPM ? max30Words.maxWPM : '-'}
+              {max25Words.maxWPM ? max25Words.maxWPM : '-'}
             </p>
             <p className='text-gray-400 text-[22px]'>
-              {max30Words.accuracy ? `${max30Words.accuracy}%` : '-'}
+              {max25Words.accuracy ? `${max25Words.accuracy}%` : '-'}
             </p>
           </div>
           <div className='flex flex-col items-center'>
-            <p className='text-gray-500'>60 words</p>
+            <p className='text-gray-500'>50 words</p>
             <p className='text-[40px] font-[500]'>
-              {max60Words.maxWPM ? max60Words.maxWPM : '-'}
+              {max50Words.maxWPM ? max50Words.maxWPM : '-'}
             </p>
             <p className='text-gray-400 text-[22px]'>
-              {max60Words.accuracy ? `${max60Words.accuracy}%` : '-'}
+              {max50Words.accuracy ? `${max50Words.accuracy}%` : '-'}
             </p>
           </div>
         </div>

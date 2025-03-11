@@ -32,7 +32,8 @@ export const TypingArea = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeType, setActiveType] = useState<'time' | 'words'>('time')
-  const [activeDuration, setActiveDuration] = useState(15)
+  const [activeDuration, setActiveDuration] = useState(15) // Time durations: 15, 30, 60
+  const [activeWordsCount, setActiveWordsCount] = useState(10) // Word counts: 10, 25, 50
   const [timeLeft, setTimeLeft] = useState(activeDuration)
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export const TypingArea = () => {
     if (finished && startTime && endTime) {
       const newResult: TestResult = {
         type: activeType,
-        duration: activeDuration,
+        duration: activeType === 'time' ? activeDuration : activeWordsCount,
         wpm: calculateWPM(),
         accuracy: calculateAccuracy(),
         correct: typedWords.filter(w => w.isCorrect).length,
@@ -93,7 +94,7 @@ export const TypingArea = () => {
 
   function getRandomWords () {
     const mixed = [...wordsArray].sort(() => 0.5 - Math.random())
-    setWords(mixed.slice(0, activeType === 'words' ? activeDuration : 100))
+    setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100))
     setCurrentWordIndex(0)
     setTypedWord('')
     setTypedWords([])
@@ -106,7 +107,7 @@ export const TypingArea = () => {
 
   useEffect(() => {
     getRandomWords()
-  }, [activeDuration, activeType])
+  }, [activeDuration, activeType, activeWordsCount])
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (finished) return
@@ -125,7 +126,10 @@ export const TypingArea = () => {
           { word: words[currentWordIndex], typed: typedWord, isCorrect }
         ])
 
-        if (activeType === 'words' && currentWordIndex >= activeDuration - 1) {
+        if (
+          activeType === 'words' &&
+          currentWordIndex >= activeWordsCount - 1
+        ) {
           setEndTime(new Date())
           setFinished(true)
         } else if (currentWordIndex < words.length - 1) {
@@ -238,38 +242,77 @@ export const TypingArea = () => {
                 </div>
 
                 <div className='flex rounded-lg bg-gray-800 items-center py-3 px-8 gap-10'>
-                  <p
-                    className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                      activeDuration === 15
-                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                        : ''
-                    }`}
-                    onClick={() => setActiveDuration(15)}
-                  >
-                    15
-                  </p>
-                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <p
-                    className={`cursor-pointer  font-bold py-[5px] px-[12px] ${
-                      activeDuration === 30
-                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                        : ''
-                    }`}
-                    onClick={() => setActiveDuration(30)}
-                  >
-                    30
-                  </p>
-                  <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
-                  <p
-                    className={`cursor-pointer  font-bold py-[5px] px-[12px] ${
-                      activeDuration === 60
-                        ? 'bg-gray-700 text-[#e2b714] rounded-lg'
-                        : ''
-                    }`}
-                    onClick={() => setActiveDuration(60)}
-                  >
-                    60
-                  </p>
+                  {activeType === 'time' ? (
+                    <>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeDuration === 15
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveDuration(15)}
+                      >
+                        15
+                      </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeDuration === 30
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveDuration(30)}
+                      >
+                        30
+                      </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeDuration === 60
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveDuration(60)}
+                      >
+                        60
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeWordsCount === 10
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveWordsCount(10)}
+                      >
+                        10
+                      </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeWordsCount === 25
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveWordsCount(25)}
+                      >
+                        25
+                      </p>
+                      <div className='h-6 w-2 bg-gray-600 rounded-md'></div>
+                      <p
+                        className={`cursor-pointer font-bold py-[5px] px-[12px] ${
+                          activeWordsCount === 50
+                            ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                            : ''
+                        }`}
+                        onClick={() => setActiveWordsCount(50)}
+                      >
+                        50
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
               <div className='flex items-center justify-between mb-2'>
@@ -277,7 +320,7 @@ export const TypingArea = () => {
                   <div className='text-4xl font-bold'>
                     {activeType === 'time'
                       ? timeLeft
-                      : currentWordIndex + 1 + '/' + activeDuration}
+                      : currentWordIndex + 1 + '/' + activeWordsCount}
                   </div>
                 </div>
               </div>
@@ -467,8 +510,10 @@ export const TypingArea = () => {
                     <tr>
                       <td className='p-3 border border-gray-700'>
                         <div className='flex items-center gap-1'>
-                          <div className=' text-[20px] font-bold'>
-                            {activeDuration}
+                          <div className='text-[20px] font-bold'>
+                            {activeType === 'time'
+                              ? activeDuration
+                              : activeWordsCount}
                           </div>
                           <div className='text-gray-400'>
                             {activeType === 'time' ? 'Seconds' : 'Words'}
