@@ -74,6 +74,29 @@ export const Profile = () => {
     }
   }
 
+  const getMaxWPMAndAccuracy = (duration: number, type: 'time' | 'words') => {
+    const filteredResults = pastResults.filter(
+      result => result.duration === duration && result.type === type
+    )
+
+    if (filteredResults.length === 0) {
+      return { maxWPM: 0, accuracy: 0 }
+    }
+
+    const maxResult = filteredResults.reduce((prev, current) =>
+      prev.wpm > current.wpm ? prev : current
+    )
+
+    return { maxWPM: maxResult.wpm, accuracy: maxResult.accuracy }
+  }
+
+  const max15Seconds = getMaxWPMAndAccuracy(15, 'time')
+  const max30Seconds = getMaxWPMAndAccuracy(30, 'time')
+  const max60Seconds = getMaxWPMAndAccuracy(60, 'time')
+  const max15Words = getMaxWPMAndAccuracy(15, 'words')
+  const max30Words = getMaxWPMAndAccuracy(30, 'words')
+  const max60Words = getMaxWPMAndAccuracy(60, 'words')
+
   return (
     <div className='p-6 overflow-y-scroll fixed inset-0 bg-gray-900'>
       <Helmet>
@@ -150,6 +173,74 @@ export const Profile = () => {
           <Pencil />
         </div>
       </div>
+
+      <div className='flex justify-between mt-10'>
+        <div
+          id='maxScoreBySeconds'
+          className='flex justify-between text-white gap-[160px] bg-gray-800 p-4 rounded-lg'
+        >
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>15 seconds</p>
+            <p className='text-[40px] font-[500]'>
+              {max15Seconds.maxWPM ? max15Seconds.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max15Seconds.accuracy ? `${max15Seconds.accuracy}%` : '-'}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>30 seconds</p>
+            <p className='text-[40px] font-[500]'>
+              {max30Seconds.maxWPM ? max30Seconds.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max30Seconds.accuracy ? `${max30Seconds.accuracy}%` : '-'}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>60 seconds</p>
+            <p className='text-[40px] font-[500]'>
+              {max60Seconds.maxWPM ? max60Seconds.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max60Seconds.accuracy ? `${max60Seconds.accuracy}%` : '-'}
+            </p>
+          </div>
+        </div>
+        <div
+          id='maxsScoreByWords'
+          className='flex justify-between text-white gap-[160px] bg-gray-800 p-4 rounded-lg'
+        >
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>15 words</p>
+            <p className='text-[40px] font-[500]'>
+              {max15Words.maxWPM ? max15Words.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max15Words.accuracy ? `${max15Words.accuracy}%` : '-'}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>30 words</p>
+            <p className='text-[40px] font-[500]'>
+              {max30Words.maxWPM ? max30Words.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max30Words.accuracy ? `${max30Words.accuracy}%` : '-'}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <p className='text-gray-500'>60 words</p>
+            <p className='text-[40px] font-[500]'>
+              {max60Words.maxWPM ? max60Words.maxWPM : '-'}
+            </p>
+            <p className='text-gray-400 text-[22px]'>
+              {max60Words.accuracy ? `${max60Words.accuracy}%` : '-'}
+            </p>
+          </div>
+        </div>
+      </div>
+
       {pastResults.length > 0 ? (
         <div className='mt-5'>
           <h1 className='text-2xl font-bold mb-6 text-gray-200'>
