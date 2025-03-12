@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, KeyboardEvent } from 'react'
 import { RotateCw } from 'lucide-react'
 import { wordsArray } from '~/constants'
 import { Filter } from './Filter'
-import { ResultsTable } from './ResultsTable'
-import { calculateAccuracy, calculateWPM } from '~/utils/Common'
 
 interface TypedWordData {
   word: string
@@ -51,12 +49,11 @@ export const TypingArea = () => {
 
   useEffect(() => {
     if (finished && startTime && endTime) {
-      const correctWords = typedWords.filter(w => w.isCorrect).length
       const newResult: TestResult = {
         type: activeType,
         duration: activeType === 'time' ? activeDuration : activeWordsCount,
-        wpm: calculateWPM(startTime, endTime, correctWords),
-        accuracy: calculateAccuracy(typedWords),
+        wpm: calculateWPM(),
+        accuracy: calculateAccuracy(),
         correct: typedWords.filter(w => w.isCorrect).length,
         incorrect: typedWords.filter(w => !w.isCorrect).length,
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
@@ -180,6 +177,20 @@ export const TypingArea = () => {
     )
   }
 
+  const calculateWPM = () => {
+    if (!startTime || !endTime) return 0
+    const durationInMinutes =
+      (endTime.getTime() - startTime.getTime()) / 1000 / 60
+    const correctWords = typedWords.filter(item => item.isCorrect).length
+    return Math.round(correctWords / durationInMinutes)
+  }
+
+  const calculateAccuracy = () => {
+    if (typedWords.length === 0) return 0
+    const correctWords = typedWords.filter(item => item.isCorrect).length
+    return Math.round((correctWords / typedWords.length) * 100)
+  }
+
   const handleFilterChange = (type: 'time' | 'words', value: number) => {
     if (type === 'time') {
       setActiveType('time')
@@ -271,14 +282,69 @@ export const TypingArea = () => {
                   <h3 className='text-xl font-bold mb-4 text-gray-300'>
                     Last Test Result
                   </h3>
-                  <ResultsTable
-                    activeType={pastResults[0].type}
-                    activeDuration={pastResults[0].duration}
-                    activeWordsCount={pastResults[0].duration}
-                    typedWords={typedWords}
-                    startTime={new Date(pastResults[0].completionTime)}
-                    endTime={new Date(pastResults[0].completionTime)}
-                  />
+                  <table className='w-full border-collapse'>
+                    <thead>
+                      <tr className='bg-gray-800'>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Type
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          WPM
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Accuracy
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Correct Words
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Incorrect Words
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Total Time
+                        </th>
+                        <th className='p-3 border border-gray-700 text-left'>
+                          Completed At
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className='p-3 border border-gray-700'>
+                          <div className='flex items-center gap-1'>
+                            <div className=' text-[20px] font-bold'>
+                              {pastResults[0].duration}
+                            </div>
+                            <div className='text-gray-400'>
+                              {pastResults[0].type === 'time'
+                                ? 'Seconds'
+                                : 'Words'}
+                            </div>
+                          </div>
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].wpm}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].accuracy}%
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].correct}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].incorrect == 0
+                            ? '-'
+                            : pastResults[0].incorrect}
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].time} sec
+                        </td>
+                        <td className='p-3 border border-gray-700'>
+                          {pastResults[0].completionTime}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
@@ -287,18 +353,14 @@ export const TypingArea = () => {
               <div className='flex gap-8 mb-8'>
                 <div className='text-center'>
                   <div className='text-4xl font-bold text-green-500'>
-                    {calculateWPM(
-                      startTime,
-                      endTime,
-                      typedWords.filter(w => w.isCorrect).length
-                    )}
+                    {calculateWPM()}
                   </div>
                   <div className='text-sm text-gray-400'>WPM</div>
                 </div>
 
                 <div className='text-center'>
                   <div className='text-4xl font-bold text-blue-500'>
-                    {calculateAccuracy(typedWords)}%
+                    {calculateAccuracy()}%
                   </div>
                   <div className='text-sm text-gray-400'>Accuracy</div>
                 </div>
@@ -327,14 +389,80 @@ export const TypingArea = () => {
                 <h3 className='text-xl font-bold mb-4 text-gray-300'>
                   Detailed Results
                 </h3>
-                <ResultsTable
-                  activeType={activeType}
-                  activeDuration={activeDuration}
-                  activeWordsCount={activeWordsCount}
-                  typedWords={typedWords}
-                  startTime={startTime}
-                  endTime={endTime}
-                />
+                <table className='w-full border-collapse'>
+                  <thead>
+                    <tr className='bg-gray-800'>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Type
+                      </th>
+                      <th className='p-3 flex items-center gap-4 border border-gray-700 text-left'>
+                        <p>WPM</p>
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Accuracy
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Correct Words
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Incorrect Words
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Total Time
+                      </th>
+                      <th className='p-3 border border-gray-700 text-left'>
+                        Completed At
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className='p-3 border border-gray-700'>
+                        <div className='flex items-center gap-1'>
+                          <div className='text-[20px] font-bold'>
+                            {activeType === 'time'
+                              ? activeDuration
+                              : activeWordsCount}
+                          </div>
+                          <div className='text-gray-400'>
+                            {activeType === 'time' ? 'Seconds' : 'Words'}
+                          </div>
+                        </div>
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {calculateWPM()}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {calculateAccuracy()}%
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {typedWords.filter(w => w.isCorrect).length}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {typedWords.filter(w => !w.isCorrect).length == 0
+                          ? '-'
+                          : typedWords.filter(w => !w.isCorrect).length}
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {startTime && endTime
+                          ? Math.round(
+                              (endTime.getTime() - startTime.getTime()) / 1000
+                            )
+                          : 0}{' '}
+                        sec
+                      </td>
+                      <td className='p-3 border border-gray-700'>
+                        {new Date().toLocaleString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        })}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           )}
