@@ -20,10 +20,10 @@ const App = () => {
 
   return (
     <Router>
-    <ToastContainer />
-    <NameModal isOpen={isModalOpen} onClose={handleCloseModal} />
-    <RoutesConfig /> 
-  </Router>
+      <ToastContainer />
+      <NameModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <RoutesConfig />
+    </Router>
   )
 }
 
