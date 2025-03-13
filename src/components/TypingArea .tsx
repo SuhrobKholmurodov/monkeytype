@@ -224,7 +224,7 @@ export const TypingArea = () => {
               />
               <div className='flex items-center justify-between mb-2'>
                 <div className='flex items-center gap-4'>
-                  <div className='text-4xl font-bold'>
+                  <div className='text-3xl text-[#e2b714] font-[600]'>
                     {activeType === 'time'
                       ? timeLeft
                       : currentWordIndex + 1 + '/' + activeWordsCount}
