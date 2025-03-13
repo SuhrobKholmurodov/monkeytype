@@ -1,4 +1,4 @@
-# 📝 MonkeyType Clone (https://monkeytypegame.vercel.app/)
+# 📝 MonkeyType Clone
 
 A fast and minimalistic typing speed test inspired by [MonkeyType](https://monkeytype.com/). This project helps users improve their typing speed and accuracy with an engaging and responsive interface.
 
@@ -18,7 +18,7 @@ A fast and minimalistic typing speed test inspired by [MonkeyType](https://monke
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/suhrobKholmurodov/monkeytype-clone.git
+git clone https://github.com/suhrobKholmurodov/monkeytype.git
 pnpm install
 pnpm run dev
 pnpm run dev --host gives a link to connect via mobile.
