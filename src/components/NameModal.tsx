@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Loader2 } from 'lucide-react' 
 
 interface NameModalProps {
   isOpen: boolean
@@ -7,20 +8,26 @@ interface NameModalProps {
 
 export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
   const [localName, setLocalName] = useState('')
+  const [isLoading, setIsLoading] = useState(false) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    localStorage.setItem('userName', localName)
+    setIsLoading(true) 
 
-    if (!localStorage.getItem('userJoinDate')) {
-      const currentDate = new Date().toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-      })
-      localStorage.setItem('userJoinDate', currentDate)
-    }
-    onClose()
+    setTimeout(() => {
+      localStorage.setItem('userName', localName)
+
+      if (!localStorage.getItem('userJoinDate')) {
+        const currentDate = new Date().toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        })
+        localStorage.setItem('userJoinDate', currentDate)
+      }
+      setIsLoading(false) 
+      onClose() 
+    }, 1000) 
   }
 
   if (!isOpen) {
@@ -45,12 +52,21 @@ export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
             placeholder='Enter your name'
             autoFocus
             className='p-3 mb-4 w-full rounded-md border border-gray-300 text-base focus:outline-none focus:ring-1 focus:ring-[#6d93d9]'
+            disabled={isLoading} 
           />
           <button
             type='submit'
-            className='w-full p-3 bg-[#2c4779] text-white rounded-md font-semibold hover:bg-[#3f609c] focus:outline-none'
+            className='w-full p-3 bg-[#2c4779] text-white rounded-md font-semibold hover:bg-[#3f609c] focus:outline-none flex items-center justify-center'
+            disabled={isLoading} 
           >
-            Start Typing Test
+            {isLoading ? (
+              <>
+                <Loader2 className='animate-spin mr-2' />{' '}
+                Loading...
+              </>
+            ) : (
+              'Start Typing Test'
+            )}
           </button>
         </form>
       </div>
