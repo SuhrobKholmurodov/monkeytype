@@ -19,18 +19,22 @@ export const getMaxWPMAndAccuracy = (
   pastResults: TestResult[],
   duration: number,
   type: 'time' | 'words'
-): { maxWPM: number; accuracy: number } => {
+): { maxWPM: number; accuracy: number; completedAt: string } => {
   const filteredResults = pastResults.filter(
     result => result.duration === duration && result.type === type
   )
 
   if (filteredResults.length === 0) {
-    return { maxWPM: 0, accuracy: 0 }
+    return { maxWPM: 0, accuracy: 0, completedAt: '-' }
   }
 
   const maxResult = filteredResults.reduce((prev, current) =>
     prev.wpm > current.wpm ? prev : current
   )
 
-  return { maxWPM: maxResult.wpm, accuracy: maxResult.accuracy }
+  return {
+    maxWPM: maxResult.wpm,
+    accuracy: maxResult.accuracy,
+    completedAt: maxResult.completionTime
+  }
 }
