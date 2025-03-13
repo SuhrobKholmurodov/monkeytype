@@ -268,6 +268,7 @@ export const TypingArea = () => {
                   </div>
                 </div>
               </div>
+
               <div className='w-full flex items-center justify-center mb-4'>
                 <button
                   onClick={getRandomWords}
@@ -277,7 +278,7 @@ export const TypingArea = () => {
                   Restart Test
                 </button>
               </div>
-              {pastResults[0] && (
+              {(!started || finished) && pastResults[0] && (
                 <div>
                   <h3 className='text-xl font-bold mb-4 text-gray-300'>
                     Last Test Result

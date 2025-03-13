@@ -12,7 +12,7 @@ export const wordsArray: string[] = [
   'that',
   'for',
   'they',
-  'I',
+  'i',
   'with',
   'as',
   'not',
