@@ -5,7 +5,7 @@ import Zoom from '@mui/material/Zoom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Helmet } from 'react-helmet-async'
-import { TestResult } from '~/components'
+import { ScoreTooltip, TestResult } from '~/components'
 import {
   getJoinDateDifference,
   getMaxWPMAndAccuracy
@@ -154,44 +154,12 @@ export const Profile = () => {
           className='flex justify-between text-gray-200 gap-[100px] bg-gray-800 p-4 rounded-lg'
         >
           {max15Seconds.maxWPM > 0 && max15Seconds.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max15Seconds.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max15Seconds.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max15Seconds.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2937'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>15 seconds</p>
-                <p className='text-[40px] font-[500]'>{max15Seconds.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max15Seconds.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max15Seconds.maxWPM}
+              accuracy={max15Seconds.accuracy}
+              completedAt={max15Seconds.completedAt}
+              label='15 seconds'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>15 seconds</p>
@@ -200,44 +168,12 @@ export const Profile = () => {
             </div>
           )}
           {max30Seconds.maxWPM > 0 && max30Seconds.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max30Seconds.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max30Seconds.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max30Seconds.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>30 seconds</p>
-                <p className='text-[40px] font-[500]'>{max30Seconds.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max30Seconds.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max30Seconds.maxWPM}
+              accuracy={max30Seconds.accuracy}
+              completedAt={max30Seconds.completedAt}
+              label='30 seconds'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>30 seconds</p>
@@ -246,44 +182,12 @@ export const Profile = () => {
             </div>
           )}
           {max60Seconds.maxWPM > 0 && max60Seconds.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max60Seconds.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max60Seconds.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max60Seconds.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>60 seconds</p>
-                <p className='text-[40px] font-[500]'>{max60Seconds.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max60Seconds.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max60Seconds.maxWPM}
+              accuracy={max60Seconds.accuracy}
+              completedAt={max60Seconds.completedAt}
+              label='60 seconds'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>60 seconds</p>
@@ -292,44 +196,12 @@ export const Profile = () => {
             </div>
           )}
           {max120Seconds.maxWPM > 0 && max120Seconds.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max120Seconds.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max120Seconds.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max120Seconds.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>120 seconds</p>
-                <p className='text-[40px] font-[500]'>{max120Seconds.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max120Seconds.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max120Seconds.maxWPM}
+              accuracy={max120Seconds.accuracy}
+              completedAt={max120Seconds.completedAt}
+              label='120 seconds'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>120 seconds</p>
@@ -343,44 +215,12 @@ export const Profile = () => {
           className='flex justify-between text-white gap-[100px] bg-gray-800 p-4 rounded-lg'
         >
           {max10Words.maxWPM > 0 && max10Words.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max10Words.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max10Words.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max10Words.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>10 words</p>
-                <p className='text-[40px] font-[500]'>{max10Words.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max10Words.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max10Words.maxWPM}
+              accuracy={max10Words.accuracy}
+              completedAt={max10Words.completedAt}
+              label='10 words'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>10 words</p>
@@ -389,44 +229,12 @@ export const Profile = () => {
             </div>
           )}
           {max25Words.maxWPM > 0 && max25Words.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center  flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max25Words.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max25Words.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max25Words.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>25 words</p>
-                <p className='text-[40px] font-[500]'>{max25Words.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max25Words.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max25Words.maxWPM}
+              accuracy={max25Words.accuracy}
+              completedAt={max25Words.completedAt}
+              label='25 words'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>25 words</p>
@@ -435,44 +243,12 @@ export const Profile = () => {
             </div>
           )}
           {max50Words.maxWPM > 0 && max50Words.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max50Words.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max50Words.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max50Words.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>50 words</p>
-                <p className='text-[40px] font-[500]'>{max50Words.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max50Words.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max50Words.maxWPM}
+              accuracy={max50Words.accuracy}
+              completedAt={max50Words.completedAt}
+              label='50 words'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>50 words</p>
@@ -481,44 +257,12 @@ export const Profile = () => {
             </div>
           )}
           {max100Words.maxWPM > 0 && max100Words.accuracy > 0 ? (
-            <Tooltip
-              title={
-                <div className='flex items-center  flex-col gap-1 p-2'>
-                  <p className='text-gray-200'>{max100Words.maxWPM} WPM</p>
-                  <p className='text-gray-200'>
-                    {max100Words.accuracy}% Accuracy
-                  </p>
-                  <p className='text-gray-200'>{max100Words.completedAt}</p>
-                </div>
-              }
-              placement='top'
-              arrow
-              TransitionComponent={Zoom}
-              slotProps={{
-                tooltip: {
-                  style: {
-                    backgroundColor: '#1F2960',
-                    color: 'white',
-                    fontSize: '14px',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }
-                },
-                arrow: {
-                  style: {
-                    color: '#1F2960'
-                  }
-                }
-              }}
-            >
-              <div className='flex flex-col items-center cursor-pointer'>
-                <p className='text-gray-500'>100 words</p>
-                <p className='text-[40px] font-[500]'>{max100Words.maxWPM}</p>
-                <p className='text-gray-400 text-[22px]'>
-                  {max100Words.accuracy}%
-                </p>
-              </div>
-            </Tooltip>
+            <ScoreTooltip
+              maxWPM={max100Words.maxWPM}
+              accuracy={max100Words.accuracy}
+              completedAt={max100Words.completedAt}
+              label='100 words'
+            />
           ) : (
             <div className='flex flex-col items-center'>
               <p className='text-gray-500'>100 words</p>
