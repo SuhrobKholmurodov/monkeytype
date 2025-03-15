@@ -1,10 +1,11 @@
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
+import { TypedWordData } from './TypingArea';
 
 interface DetailedResultProps {
   activeType: 'time' | 'words';
   activeDuration: number;
   activeWordsCount: number;
-  typedWords: { word: string; typed: string; isCorrect: boolean }[];
+  typedWords: TypedWordData[];
   startTime: Date | null;
   endTime: Date | null;
 }

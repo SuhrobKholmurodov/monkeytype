@@ -4,6 +4,7 @@ import { wordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { DetailedResult } from './DetailedResult';
+import { LastTestResult } from './LastResult';
 
 export interface TypedWordData {
   word: string;
@@ -261,44 +262,7 @@ export const TypingArea = () => {
                 </button>
               </div>
               {(!started || finished) && pastResults[0] && (
-                <div>
-                  <h3 className="text-xl font-bold mb-4 text-gray-300">Last Test Result</h3>
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="bg-gray-800">
-                        <th className="p-3 border border-gray-700 text-left">Type</th>
-                        <th className="p-3 border border-gray-700 text-left">WPM</th>
-                        <th className="p-3 border border-gray-700 text-left">Accuracy</th>
-                        <th className="p-3 border border-gray-700 text-left">Correct Words</th>
-                        <th className="p-3 border border-gray-700 text-left">Incorrect Words</th>
-                        <th className="p-3 border border-gray-700 text-left">Total Time</th>
-                        <th className="p-3 border border-gray-700 text-left">Completed At</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="p-3 border border-gray-700">
-                          <div className="flex items-center gap-1">
-                            <div className=" text-[20px] font-bold">{pastResults[0].duration}</div>
-                            <div className="text-gray-400">
-                              {pastResults[0].type === 'time' ? 'Seconds' : 'Words'}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="p-3 border border-gray-700">{pastResults[0].wpm}</td>
-                        <td className="p-3 border border-gray-700">{pastResults[0].accuracy}%</td>
-                        <td className="p-3 border border-gray-700">{pastResults[0].correct}</td>
-                        <td className="p-3 border border-gray-700">
-                          {pastResults[0].incorrect == 0 ? '-' : pastResults[0].incorrect}
-                        </td>
-                        <td className="p-3 border border-gray-700">{pastResults[0].time} sec</td>
-                        <td className="p-3 border border-gray-700">
-                          {pastResults[0].completionTime}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+               <LastTestResult lastResult={pastResults[0]} />
               )}
             </div>
           ) : (
