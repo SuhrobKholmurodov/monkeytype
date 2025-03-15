@@ -5,6 +5,7 @@ import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
 import Confetti from 'react-confetti';
+import { toast } from 'react-toastify';
 
 export interface TypedWordData {
   word: string;
@@ -39,7 +40,6 @@ export const TypingArea = () => {
   const [activeWordsCount, setActiveWordsCount] = useState(10);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [recordMessage, setRecordMessage] = useState('');
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -86,13 +86,22 @@ export const TypingArea = () => {
 
       if (previousRecord && wpm > previousRecord.wpm) {
         setShowConfetti(true);
-        setRecordMessage(
+        toast.success(
           `🎉 You broke your record! Previous: ${previousRecord.wpm} WPM, New: ${wpm} WPM`,
+          {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: 'dark',
+            style: { width: '550px' },
+          },
         );
         setTimeout(() => {
           setShowConfetti(false);
-          setRecordMessage('');
-        }, 5000);
+        }, 4000);
       }
 
       setPastResults(updatedResults);
@@ -213,12 +222,6 @@ export const TypingArea = () => {
   return (
     <div>
       {showConfetti && <Confetti />}
-      {recordMessage && (
-        <div className="fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
-          {recordMessage}
-        </div>
-      )}
-
       <div
         className="fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden"
         tabIndex={0}
