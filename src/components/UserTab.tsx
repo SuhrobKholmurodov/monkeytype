@@ -97,7 +97,27 @@ export const UserTab = () => {
         </div>
       </div>
       <div className="text-gray-300 cursor-pointer" onClick={handleEdit}>
-        <Pencil />
+        <Tooltip
+          title="Edit username"
+          placement="right"
+          arrow
+          componentsProps={{
+            tooltip: {
+              style: {
+                backgroundColor: 'black',
+                color: 'white',
+                fontSize: '14px',
+              },
+            },
+            arrow: {
+              style: {
+                color: 'black',
+              },
+            },
+          }}
+        >
+          <Pencil />
+        </Tooltip>
       </div>
     </div>
   );
