@@ -48,6 +48,16 @@ export const TypingArea = () => {
     }
   }, []);
 
+  const formatCompletionTime = (date: Date): string => {
+    return date.toLocaleString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   useEffect(() => {
     if (finished && startTime && endTime) {
       const newResult: TestResult = {
@@ -58,13 +68,7 @@ export const TypingArea = () => {
         correct: typedWords.filter((w) => w.isCorrect).length,
         incorrect: typedWords.filter((w) => !w.isCorrect).length,
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
-        completionTime: new Date().toLocaleString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        }),
+        completionTime: formatCompletionTime(new Date()),
       };
 
       const savedResults = localStorage.getItem('typingTestResults');
@@ -293,7 +297,7 @@ export const TypingArea = () => {
                 <RotateCw size={16} />
                 Restart Test
               </button>
-              <div className='w-full'>
+              <div className="w-full">
                 <Result
                   title="Detailed Results"
                   results={[
@@ -308,13 +312,7 @@ export const TypingArea = () => {
                         startTime && endTime
                           ? Math.round((endTime.getTime() - startTime.getTime()) / 1000)
                           : 0,
-                      completionTime: new Date().toLocaleString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                      }),
+                      completionTime: formatCompletionTime(new Date()),
                     },
                   ]}
                 />
