@@ -78,37 +78,39 @@ export const TypingArea = () => {
       const savedResults = localStorage.getItem('typingTestResults');
       const pastResults = savedResults ? JSON.parse(savedResults) : [];
       const updatedResults = [newResult, ...pastResults];
-      const previousRecord = pastResults.find(
+
+      const previousResultsOfSameType = pastResults.filter(
         (result: TestResult) =>
           result.type === activeType &&
           result.duration === (activeType === 'time' ? activeDuration : activeWordsCount),
       );
 
-      if (previousRecord && wpm > previousRecord.wpm) {
-        setShowConfetti(true);
-        toast.success(
-          `🎉 You broke your record! Previous: ${previousRecord.wpm} WPM, New: ${wpm} WPM`,
-          {
+      if (previousResultsOfSameType.length > 0) {
+        const maxWPM = Math.max(
+          ...previousResultsOfSameType.map((result: TestResult) => result.wpm),
+        );
+        if (wpm > maxWPM) {
+          setShowConfetti(true);
+          toast.success(`🎉 You broke your record! Previous: ${maxWPM} WPM, New: ${wpm} WPM`, {
             position: 'top-center',
-            autoClose: 5000,
+            autoClose: 4000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             theme: 'dark',
             style: { width: '550px' },
-          },
-        );
-        setTimeout(() => {
-          setShowConfetti(false);
-        }, 4000);
+          });
+          setTimeout(() => {
+            setShowConfetti(false);
+          }, 5000);
+        }
       }
 
       setPastResults(updatedResults);
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));
     }
   }, [finished]);
-
   useEffect(() => {
     if (activeType === 'time' && started && !finished) {
       const timer = setInterval(() => {
