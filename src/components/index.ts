@@ -1,4 +1,5 @@
 export * from './Filter'
+export * from './HeaderTooltip'
 export * from './Header'
 export * from './MaxScores'
 export * from './MetaTags'
