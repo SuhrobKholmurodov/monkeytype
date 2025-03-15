@@ -1,10 +1,10 @@
-import { TestResult } from './TypingArea';
+import { TestResult } from "../TypingArea";
 
-interface LastTestResultProps {
+interface LastResultProps {
   lastResult: TestResult | undefined;
 }
 
-export const LastTestResult = ({ lastResult }: LastTestResultProps) => {
+export const LastResult = ({ lastResult }: LastResultProps) => {
   if (!lastResult) return null;
 
   return (

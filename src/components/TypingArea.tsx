@@ -3,9 +3,7 @@ import { RotateCw } from 'lucide-react';
 import { wordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
-import { DetailedResult } from './DetailedResult';
-import { LastTestResult } from './LastResult';
-
+import { CurrentResult, LastResult } from './Tables';
 export interface TypedWordData {
   word: string;
   typed: string;
@@ -262,7 +260,7 @@ export const TypingArea = () => {
                 </button>
               </div>
               {(!started || finished) && pastResults[0] && (
-               <LastTestResult lastResult={pastResults[0]} />
+               <LastResult lastResult={pastResults[0]} />
               )}
             </div>
           ) : (
@@ -295,7 +293,7 @@ export const TypingArea = () => {
                 <RotateCw size={16} />
                 Restart Test
               </button>
-              <DetailedResult
+              <CurrentResult
                 activeType={activeType}
                 activeDuration={activeDuration}
                 activeWordsCount={activeWordsCount}

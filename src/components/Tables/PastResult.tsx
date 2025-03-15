@@ -1,13 +1,13 @@
 import { TestResult } from '~/components';
 
-interface PastResultTableProps {
+interface PastResultProps {
   pastResults: TestResult[];
 }
 
-export const PastResultTable = ({ pastResults }: PastResultTableProps) => {
+export const PastResult = ({ pastResults }: PastResultProps) => {
   return (
     <div className="mt-5">
-      <h1 className="text-2xl font-bold mb-6 text-gray-200">Your Past Results</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-200">Your Results Table</h1>
       <div className="w-full overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>

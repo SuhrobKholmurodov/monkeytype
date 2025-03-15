@@ -1,7 +1,7 @@
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
-import { TypedWordData } from './TypingArea';
+import { TypedWordData } from '../TypingArea';
 
-interface DetailedResultProps {
+interface CurrentResultProps {
   activeType: 'time' | 'words';
   activeDuration: number;
   activeWordsCount: number;
@@ -10,19 +10,19 @@ interface DetailedResultProps {
   endTime: Date | null;
 }
 
-export const DetailedResult = ({
+export const CurrentResult = ({
   activeType,
   activeDuration,
   activeWordsCount,
   typedWords,
   startTime,
   endTime,
-}: DetailedResultProps) => {
+}: CurrentResultProps) => {
   const wpm = calculateWPM(startTime, endTime, typedWords);
   const accuracy = calculateAccuracy(typedWords);
 
   return (
-    <div id="detailedResult" className="mt-12 w-full">
+    <div className="mt-12 w-full">
       <h3 className="text-xl font-bold mb-4 text-gray-300">Detailed Results</h3>
       <table className="w-full border-collapse">
         <thead>
