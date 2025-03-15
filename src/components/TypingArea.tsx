@@ -4,6 +4,8 @@ import { wordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
+import Confetti from 'react-confetti';
+
 export interface TypedWordData {
   word: string;
   typed: string;
@@ -36,6 +38,8 @@ export const TypingArea = () => {
   const [activeDuration, setActiveDuration] = useState(15);
   const [activeWordsCount, setActiveWordsCount] = useState(10);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [recordMessage, setRecordMessage] = useState('');
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -74,6 +78,23 @@ export const TypingArea = () => {
       const savedResults = localStorage.getItem('typingTestResults');
       const pastResults = savedResults ? JSON.parse(savedResults) : [];
       const updatedResults = [newResult, ...pastResults];
+      const previousRecord = pastResults.find(
+        (result: TestResult) =>
+          result.type === activeType &&
+          result.duration === (activeType === 'time' ? activeDuration : activeWordsCount),
+      );
+
+      if (previousRecord && wpm > previousRecord.wpm) {
+        setShowConfetti(true);
+        setRecordMessage(
+          `🎉 You broke your record! Previous: ${previousRecord.wpm} WPM, New: ${wpm} WPM`,
+        );
+        setTimeout(() => {
+          setShowConfetti(false);
+          setRecordMessage('');
+        }, 5000);
+      }
+
       setPastResults(updatedResults);
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));
     }
@@ -157,7 +178,6 @@ export const TypingArea = () => {
         {word.split('').map((char, idx) => {
           const typed = typedText[idx] || '';
           const isCorrect = typed === char;
-
           return (
             <span
               key={idx}
@@ -192,6 +212,13 @@ export const TypingArea = () => {
 
   return (
     <div>
+      {showConfetti && <Confetti />}
+      {recordMessage && (
+        <div className="fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
+          {recordMessage}
+        </div>
+      )}
+
       <div
         className="fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden"
         tabIndex={0}
