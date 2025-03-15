@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { MetaTags } from '~/components';
 
 export const NotFound = () => {
   return (
@@ -9,26 +9,20 @@ export const NotFound = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className='fixed inset-0 flex flex-col justify-center items-center bg-gray-900 text-white p-6 overflow-hidden'
+      className="fixed inset-0 flex flex-col justify-center items-center bg-gray-900 text-white p-6 overflow-hidden"
       style={{ margin: 0, padding: 0 }}
     >
-      <Helmet>
-        <title>404 - Page Not Found</title>
-        <meta
-          name='description'
-          content='The page you are looking for does not exist. Return to the homepage and continue your typing test journey.'
-        />
-        <meta
-          name='keywords'
-          content='404, page not found, typing test, Monkeytype, typing practice'
-        />
-      </Helmet>
-      <div className='text-center'>
+      <MetaTags
+        title="404 - Page Not Found"
+        description="The page you are looking for does not exist. Return to the homepage and continue your typing test journey."
+        keywords="404, page not found, typing test, Monkeytype, typing practice"
+      />
+      <div className="text-center">
         <motion.h1
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
-          className='text-9xl font-bold text-[#6d93d9] mb-4'
+          className="text-9xl font-bold text-[#6d93d9] mb-4"
         >
           404
         </motion.h1>
@@ -36,7 +30,7 @@ export const NotFound = () => {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className='text-2xl mb-6'
+          className="text-2xl mb-6"
         >
           Oops! The page you're looking for doesn't exist.
         </motion.p>
@@ -46,13 +40,13 @@ export const NotFound = () => {
           transition={{ delay: 0.8 }}
         >
           <Link
-            to='/'
-            className='inline-block bg-[#6d93d9] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#5a7bb5] transition-colors'
+            to="/"
+            className="inline-block bg-[#6d93d9] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#5a7bb5] transition-colors"
           >
             Go Back Home
           </Link>
         </motion.div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
