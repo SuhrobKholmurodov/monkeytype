@@ -1,4 +1,7 @@
+export * from './Filter'
 export * from './Header'
+export * from './MaxScores'
 export * from './NameModal'
+export * from './PastResultTable'
 export * from './ScoreTooltip'
 export * from './TypingArea '
