@@ -3,7 +3,7 @@ import { RotateCw } from 'lucide-react';
 import { wordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
-import { CurrentResult, LastResult } from './Tables';
+import { Result } from './Result';
 export interface TypedWordData {
   word: string;
   typed: string;
@@ -260,7 +260,7 @@ export const TypingArea = () => {
                 </button>
               </div>
               {(!started || finished) && pastResults[0] && (
-               <LastResult lastResult={pastResults[0]} />
+                <Result title="Last Test Result" results={[pastResults[0]]} />
               )}
             </div>
           ) : (
@@ -293,14 +293,32 @@ export const TypingArea = () => {
                 <RotateCw size={16} />
                 Restart Test
               </button>
-              <CurrentResult
-                activeType={activeType}
-                activeDuration={activeDuration}
-                activeWordsCount={activeWordsCount}
-                typedWords={typedWords}
-                startTime={startTime}
-                endTime={endTime}
-              />
+              <div className='w-full'>
+                <Result
+                  title="Detailed Results"
+                  results={[
+                    {
+                      type: activeType,
+                      duration: activeType === 'time' ? activeDuration : activeWordsCount,
+                      wpm: wpm,
+                      accuracy: accuracy,
+                      correct: typedWords.filter((w) => w.isCorrect).length,
+                      incorrect: typedWords.filter((w) => !w.isCorrect).length,
+                      time:
+                        startTime && endTime
+                          ? Math.round((endTime.getTime() - startTime.getTime()) / 1000)
+                          : 0,
+                      completionTime: new Date().toLocaleString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      }),
+                    },
+                  ]}
+                />
+              </div>
             </div>
           )}
         </div>

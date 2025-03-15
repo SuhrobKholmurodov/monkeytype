@@ -1,13 +1,16 @@
-import { TestResult } from '~/components';
+import { TestResult } from './TypingArea';
 
-interface PastResultProps {
-  pastResults: TestResult[];
+interface ResultProps {
+  title: string;
+  results: TestResult[]; 
 }
 
-export const PastResult = ({ pastResults }: PastResultProps) => {
+export const Result = ({ title, results }: ResultProps) => {
+  if (results.length === 0) return null; 
+
   return (
     <div className="mt-5">
-      <h1 className="text-2xl font-bold mb-6 text-gray-200">Your Results Table</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-200">{title}</h1>
       <div className="w-full overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
@@ -22,22 +25,24 @@ export const PastResult = ({ pastResults }: PastResultProps) => {
             </tr>
           </thead>
           <tbody>
-            {pastResults.map((el, index) => (
+            {results.map((result, index) => (
               <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
                 <td className="p-3 border border-gray-700">
                   <div className="flex items-center gap-1">
-                    <div className=" text-[20px] font-bold">{el.duration}</div>
-                    <div className="text-gray-400">{el.type === 'time' ? 'Seconds' : 'Words'}</div>
+                    <div className="text-[20px] font-bold">{result.duration}</div>
+                    <div className="text-gray-400">
+                      {result.type === 'time' ? 'Seconds' : 'Words'}
+                    </div>
                   </div>
                 </td>
-                <td className="p-3 border border-gray-700">{el.wpm}</td>
-                <td className="p-3 border border-gray-700">{el.accuracy}%</td>
-                <td className="p-3 border border-gray-700">{el.correct}</td>
+                <td className="p-3 border border-gray-700">{result.wpm}</td>
+                <td className="p-3 border border-gray-700">{result.accuracy}%</td>
+                <td className="p-3 border border-gray-700">{result.correct}</td>
                 <td className="p-3 border border-gray-700">
-                  {el.incorrect === 0 ? '-' : el.incorrect}
+                  {result.incorrect === 0 ? '-' : result.incorrect}
                 </td>
-                <td className="p-3 border border-gray-700">{el.time}s</td>
-                <td className="p-3 border border-gray-700">{el.completionTime}</td>
+                <td className="p-3 border border-gray-700">{result.time}s</td>
+                <td className="p-3 border border-gray-700">{result.completionTime}</td>
               </tr>
             ))}
           </tbody>
