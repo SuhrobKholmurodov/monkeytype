@@ -1,4 +1,5 @@
-import { ScoreTooltip, TestResult } from '~/components';
+import { TestResult } from '~/@types';
+import { ScoreTooltip } from '~/components';
 import { getMaxWPMAndAccuracy } from '~/utils/Profile';
 
 interface MaxScoresProps {

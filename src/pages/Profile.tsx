@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { MaxScores, MetaTags, Result, TestResult, UserTab } from '~/components';
+import { TestResult } from '~/@types';
+import { MaxScores, MetaTags, Result, UserTab } from '~/components';
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);

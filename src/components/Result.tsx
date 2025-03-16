@@ -1,4 +1,4 @@
-import { TestResult } from './TypingArea';
+import { TestResult } from "~/@types";
 
 interface ResultProps {
   title: string;

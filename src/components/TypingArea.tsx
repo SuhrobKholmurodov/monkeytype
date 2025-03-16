@@ -6,22 +6,12 @@ import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
 import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
+import { TestResult } from '~/@types';
 
 export interface TypedWordData {
   word: string;
   typed: string;
   isCorrect: boolean;
-}
-
-export interface TestResult {
-  type: 'time' | 'words';
-  duration: number;
-  wpm: number;
-  accuracy: number;
-  correct: number;
-  incorrect: number;
-  time: number;
-  completionTime: string;
 }
 
 export const TypingArea = () => {
