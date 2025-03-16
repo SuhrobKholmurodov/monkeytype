@@ -1,4 +1,4 @@
-import { TestResult } from '~/components'
+import { TestResult } from "~/@types"
 
 export const getJoinDateDifference = (joinDate: string): string => {
   const joinDateObj = new Date(joinDate)
