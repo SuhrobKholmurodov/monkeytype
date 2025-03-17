@@ -23,11 +23,8 @@ export const Profile = () => {
       <MaxScores pastResults={pastResults} />
       {pastResults.length > 0 ? (
         <>
-          <Result
-            title="Your Results Table"
-            results={pastResults}
-          />
           <ResultsChart results={pastResults} />
+          <Result title="Your Results Table" results={pastResults} />
         </>
       ) : (
         <p className="text-gray-400">
