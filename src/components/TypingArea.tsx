@@ -279,6 +279,11 @@ export const TypingArea = () => {
               <div className="w-full flex items-center justify-center mb-4">
                 <button
                   onClick={getRandomWords}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      getRandomWords();
+                    }
+                  }}
                   className="flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
                 >
                   <RotateCw size={16} />
