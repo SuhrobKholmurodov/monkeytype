@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TestResult } from '~/@types';
-import { MaxScores, MetaTags, Result, UserTab } from '~/components';
+import { MaxScores, MetaTags, Result, UserTab, ResultsChart } from '~/components';
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
@@ -22,10 +22,13 @@ export const Profile = () => {
       <UserTab />
       <MaxScores pastResults={pastResults} />
       {pastResults.length > 0 ? (
-        <Result
-        title="Your Results Table"
-        results={pastResults} 
-      />
+        <>
+          <Result
+            title="Your Results Table"
+            results={pastResults}
+          />
+          <ResultsChart results={pastResults} />
+        </>
       ) : (
         <p className="text-gray-400">
           No past results found. Complete a typing test to see your results here!
