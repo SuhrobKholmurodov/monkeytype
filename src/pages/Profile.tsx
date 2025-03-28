@@ -19,8 +19,10 @@ export const Profile = () => {
         description="Manage your Monkeytype account. View your typing test history, update your profile, and track your progress."
         keywords="Monkeytype account, typing test history, profile settings, typing progress, typing statistics"
       />
-      <UserTab />
-      <MaxScores pastResults={pastResults} />
+      <div className="mt-[85px] gap-[20px] flex items-center justify-between">
+        <UserTab />
+        <MaxScores pastResults={pastResults} />
+      </div>
       {pastResults.length > 0 ? (
         <>
           <ResultsChart results={pastResults} />
