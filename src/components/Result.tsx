@@ -1,12 +1,13 @@
-import { TestResult } from "~/@types";
+import { TestResult } from '~/@types';
+import { Trophy } from 'lucide-react';
 
 interface ResultProps {
   title: string;
-  results: TestResult[]; 
+  results: TestResult[];
 }
 
 export const Result = ({ title, results }: ResultProps) => {
-  if (results.length === 0) return null; 
+  if (results.length === 0) return null;
 
   return (
     <div className="mt-5">
@@ -25,26 +26,35 @@ export const Result = ({ title, results }: ResultProps) => {
             </tr>
           </thead>
           <tbody>
-            {results.map((result, index) => (
-              <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
-                <td className="p-3 border border-gray-700">
-                  <div className="flex items-center gap-1">
-                    <div className="text-[20px] font-bold">{result.duration}</div>
-                    <div className="text-gray-400">
-                      {result.type === 'time' ? 'Seconds' : 'Words'}
+            {results.map((result, index) => {
+              const typeAndDur = results.filter(
+                (el) => el.type === result.type && el.duration === result.duration,
+              );
+              const maxWpm = Math.max(...typeAndDur.map((el) => el.wpm));
+              return (
+                <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
+                  <td className="p-3 border border-gray-700">
+                    <div className="flex items-center gap-1">
+                      <div className="text-[20px] font-bold">{result.duration}</div>
+                      <div className="flex items-center justify-between w-full text-gray-400">
+                        <p>{result.type === 'time' ? 'Seconds' : 'Words'}</p>
+                        <p>
+                          {result.wpm === maxWpm && <Trophy className="w-4 h-4 text-yellow-400" />}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="p-3 border border-gray-700">{result.wpm}</td>
-                <td className="p-3 border border-gray-700">{result.accuracy}%</td>
-                <td className="p-3 border border-gray-700">{result.correct}</td>
-                <td className="p-3 border border-gray-700">
-                  {result.incorrect === 0 ? '-' : result.incorrect}
-                </td>
-                <td className="p-3 border border-gray-700">{result.time}s</td>
-                <td className="p-3 border border-gray-700">{result.completionTime}</td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="p-3 border border-gray-700">{result.wpm}</td>
+                  <td className="p-3 border border-gray-700">{result.accuracy}%</td>
+                  <td className="p-3 border border-gray-700">{result.correct}</td>
+                  <td className="p-3 border border-gray-700">
+                    {result.incorrect === 0 ? '-' : result.incorrect}
+                  </td>
+                  <td className="p-3 border border-gray-700">{result.time}s</td>
+                  <td className="p-3 border border-gray-700">{result.completionTime}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
