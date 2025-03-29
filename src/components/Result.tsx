@@ -1,5 +1,6 @@
 import { TestResult } from '~/@types';
 import { Trophy } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 interface ResultProps {
   title: string;
@@ -7,6 +8,7 @@ interface ResultProps {
 }
 
 export const Result = ({ title, results }: ResultProps) => {
+  const location = useLocation();
   if (results.length === 0) return null;
 
   return (
@@ -39,7 +41,7 @@ export const Result = ({ title, results }: ResultProps) => {
                       <div className="flex items-center justify-between w-full text-gray-400">
                         <p>{result.type === 'time' ? 'Seconds' : 'Words'}</p>
                         <p>
-                          {result.wpm === maxWpm && <Trophy className="w-4 h-4 text-yellow-400" />}
+                          {result.wpm === maxWpm && location.pathname === "/profile" && <Trophy className="w-4 h-4 text-yellow-400" />}
                         </p>
                       </div>
                     </div>
