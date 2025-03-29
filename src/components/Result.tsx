@@ -32,7 +32,18 @@ export const Result = ({ title, results }: ResultProps) => {
               const typeAndDur = results.filter(
                 (el) => el.type === result.type && el.duration === result.duration,
               );
-              const maxWpm = Math.max(...typeAndDur.map((el) => el.wpm));
+              const bestRes = typeAndDur.reduce((best, current) => {
+                if (current.wpm > best.wpm) {
+                  return current;
+                } else if (current.wpm === best.wpm) {
+                  return current.completionTime > best.completionTime ? current : best;
+                }
+                return best;
+              });
+              const isBestCurRes =
+                result.wpm === bestRes.wpm &&
+                result.completionTime === bestRes.completionTime;
+
               return (
                 <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
                   <td className="p-3 border border-gray-700">
@@ -41,7 +52,9 @@ export const Result = ({ title, results }: ResultProps) => {
                       <div className="flex items-center justify-between w-full text-gray-400">
                         <p>{result.type === 'time' ? 'Seconds' : 'Words'}</p>
                         <p>
-                          {result.wpm === maxWpm && location.pathname === "/profile" && <Trophy className="w-4 h-4 text-yellow-400" />}
+                          {isBestCurRes && location.pathname === '/profile' && (
+                            <Trophy className="w-4 h-4 text-yellow-400" />
+                          )}
                         </p>
                       </div>
                     </div>
