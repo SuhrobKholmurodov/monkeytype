@@ -22,7 +22,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
               type === 'time' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
             }`}
-            onClick={() => onChange('time', duration)}
+            onClick={() => onChange('time', duration)}  
           >
             <Clock />
             <p className="font-bold">time</p>

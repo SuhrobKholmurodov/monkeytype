@@ -8,12 +8,12 @@ interface GameModeModalProps {
   currentValue?: number;
 }
 
-export const GameModeModal = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  type,
-  currentValue,
+export const GameModeModal = ({ 
+  isOpen, 
+  onClose, 
+  onSubmit, 
+  type, 
+  currentValue 
 }: GameModeModalProps) => {
   const [value, setValue] = useState(currentValue?.toString() || '');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,13 +45,13 @@ export const GameModeModal = ({
   if (!isOpen) return null;
 
   return (
-    <div
+    <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      onClick={onClose}
+      onClick={onClose} 
     >
-      <div
+      <div 
         className="bg-gray-800 p-6 rounded-lg w-96 max-w-[90%]"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} 
       >
         <h2 className="text-xl font-bold mb-4 text-[#e2b714]">
           Custom {type === 'time' ? 'Time' : 'Words'}
