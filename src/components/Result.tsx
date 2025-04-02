@@ -59,14 +59,9 @@ export const Result = ({ title, results }: ResultProps) => {
                           ) : null}
                         </p>
                         <p>
-                          {isBestCurRes &&
-                            location.pathname === '/profile' &&
-                            ((result.type === 'time' &&
-                              [15, 30, 60, 120].includes(result.duration)) ||
-                              (result.type === 'words' &&
-                                [10, 25, 50, 100].includes(result.duration))) && (
-                              <Trophy className="w-4 h-4 text-yellow-400" />
-                            )}
+                          {isBestCurRes && location.pathname === '/profile' && (
+                            <Trophy className="w-4 h-4 text-yellow-400" />
+                          )}
                         </p>
                       </div>
                     </div>
