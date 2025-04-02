@@ -4,7 +4,7 @@ interface GameModeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (value: number) => void;
-  type: 'time' | 'words';
+  type: 'time' | 'words' | 'quote';
   currentValue?: number;
 }
 

@@ -8,6 +8,17 @@ import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
 import { TestResult } from '~/@types';
 
+import { quotesArray } from '~/constants';
+
+const quoteSizes = {
+  short: quotesArray.filter((el) => el.split(' ').length <= 15),
+  medium: quotesArray.filter((el) => {
+    const words = el.split(' ').length;
+    return words > 15 && words <= 30;
+  }),
+  long: quotesArray.filter((el) => el.split(' ').length > 30),
+};
+
 export interface TypedWordData {
   word: string;
   typed: string;
@@ -25,9 +36,11 @@ export const TypingArea = () => {
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeType, setActiveType] = useState<'time' | 'words'>('time');
+  const [activeType, setActiveType] = useState<'time' | 'words' | 'quote'>('time');
   const [activeDuration, setActiveDuration] = useState(15);
   const [activeWordsCount, setActiveWordsCount] = useState(10);
+  const [activeQuoteSize, setActiveQuoteSize] = useState<'short' | 'medium' | 'long'>('short');
+  const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -55,7 +68,7 @@ export const TypingArea = () => {
   useEffect(() => {
     if (finished && startTime && endTime) {
       const newResult: TestResult = {
-        type: activeType,
+        type: activeType === 'quote' ? 'time' : activeType,
         duration: activeType === 'time' ? activeDuration : activeWordsCount,
         wpm: wpm,
         accuracy: accuracy,
@@ -120,8 +133,28 @@ export const TypingArea = () => {
   }, [activeType, started, finished]);
 
   function getRandomWords() {
-    const mixed = [...wordsArray].sort(() => 0.5 - Math.random());
-    setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
+    if (activeType === 'quote') {
+      const size = activeQuoteSize || 'medium';
+      const availableQuotes = quoteSizes[size];
+      if (!availableQuotes || availableQuotes.length === 0) {
+        console.warn(`No ${size} quotes available. Using medium instead.`);
+        const fallbackQuotes = quoteSizes.medium;
+        const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+        const words = randomQuote.split(' ');
+        setWords(words);
+        setQuoteWordCount(words.length);
+      } else {
+        const randomQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
+        const words = randomQuote.split(' ');
+        setWords(words);
+        setQuoteWordCount(words.length);
+      }
+    } else {
+      const mixed = [...wordsArray].sort(() => 0.5 - Math.random());
+      setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
+      setQuoteWordCount(0);
+    }
+
     setCurrentWordIndex(0);
     setTypedWord('');
     setTypedWords([]);
@@ -153,7 +186,10 @@ export const TypingArea = () => {
           { word: words[currentWordIndex], typed: typedWord, isCorrect },
         ]);
 
-        if (activeType === 'words' && currentWordIndex >= activeWordsCount - 1) {
+        if (
+          (activeType === 'words' && currentWordIndex >= activeWordsCount - 1) ||
+          (activeType === 'quote' && currentWordIndex >= words.length - 1)
+        ) {
           setEndTime(new Date());
           setFinished(true);
         } else if (currentWordIndex < words.length - 1) {
@@ -201,13 +237,20 @@ export const TypingArea = () => {
   const wpm = calculateWPM(startTime, endTime, typedWords);
   const accuracy = calculateAccuracy(typedWords);
 
-  const handleFilterChange = (type: 'time' | 'words', value: number) => {
+  const handleFilterChange = (type: 'time' | 'words' | 'quote', value: number | string) => {
     if (type === 'time') {
       setActiveType('time');
-      setActiveDuration(value);
-    } else {
+      setActiveDuration(value as number);
+      setQuoteWordCount(0);
+    } else if (type === 'words') {
       setActiveType('words');
-      setActiveWordsCount(value);
+      setActiveWordsCount(value as number);
+      setQuoteWordCount(0);
+    } else {
+      setActiveType('quote');
+      const size = (value as 'short' | 'medium' | 'long') || 'medium';
+      setActiveQuoteSize(size);
+      getRandomWords();
     }
   };
 
@@ -230,6 +273,7 @@ export const TypingArea = () => {
               <Filter
                 type={activeType}
                 duration={activeDuration}
+                quoteSize={activeQuoteSize}
                 wordsCount={activeWordsCount}
                 onChange={handleFilterChange}
               />
@@ -238,7 +282,9 @@ export const TypingArea = () => {
                   <div className="text-3xl text-[#e2b714] font-[600]">
                     {activeType === 'time'
                       ? timeLeft
-                      : currentWordIndex + 1 + '/' + activeWordsCount}
+                      : activeType === 'words'
+                      ? currentWordIndex + 1 + '/' + activeWordsCount
+                      : currentWordIndex + 1 + '/' + quoteWordCount}
                   </div>
                 </div>
               </div>
@@ -329,7 +375,7 @@ export const TypingArea = () => {
                   title="Detailed Results"
                   results={[
                     {
-                      type: activeType,
+                      type: activeType === 'quote' ? 'time' : activeType,
                       duration: activeType === 'time' ? activeDuration : activeWordsCount,
                       wpm: wpm,
                       accuracy: accuracy,

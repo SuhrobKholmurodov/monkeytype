@@ -5,13 +5,14 @@ import HandymanIcon from '@mui/icons-material/Handyman';
 import { GameModeModal } from './GameModeModal';
 
 interface FilterProps {
-  type: 'time' | 'words';
+  type: 'time' | 'words' | 'quote';
   duration: number;
   wordsCount: number;
-  onChange: (type: 'time' | 'words', value: number) => void;
+  quoteSize: 'short' | 'medium' | 'long';
+  onChange: (type: 'time' | 'words' | 'quote', value: number | string) => void;
 }
 
-export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) => {
+export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: FilterProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -20,9 +21,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
         <div className="flex rounded-lg bg-gray-800 items-center p-3 gap-6">
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'time' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+              type === 'time' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
             }`}
-            onClick={() => onChange('time', duration)}  
+            onClick={() => onChange('time', duration)}
           >
             <Clock />
             <p className="font-bold">time</p>
@@ -30,7 +31,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
           <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
             }`}
             onClick={() => onChange('words', wordsCount)}
           >
@@ -40,9 +41,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
           <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+              type === 'quote' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
             }`}
-            onClick={() => onChange('words', wordsCount)}
+            onClick={() => onChange('quote', quoteSize)}
           >
             <MessageSquareQuote />
             <p className="font-[700] mt-[-5px]">quote</p>
@@ -54,7 +55,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 15 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+                  duration === 15
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => onChange('time', 15)}
               >
@@ -63,7 +66,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 30 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+                  duration === 30
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => onChange('time', 30)}
               >
@@ -72,7 +77,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 60 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+                  duration === 60
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => onChange('time', 60)}
               >
@@ -81,7 +88,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 120 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+                  duration === 120
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => onChange('time', 120)}
               >
@@ -91,7 +100,64 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   isModalOpen || ![15, 30, 60, 120].includes(duration)
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => setIsModalOpen(true)}
+              >
+                <HandymanIcon fontSize="small" />
+              </p>
+            </>
+          ) : type === 'words' ? (
+            <>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  wordsCount === 10
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('words', 10)}
+              >
+                10
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  wordsCount === 25
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('words', 25)}
+              >
+                25
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  wordsCount === 50
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('words', 50)}
+              >
+                50
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  wordsCount === 100
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('words', 100)}
+              >
+                100
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  isModalOpen || ![10, 25, 50, 100].includes(wordsCount)
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
                     : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
@@ -103,49 +169,35 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 10 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
-                }`}
-                onClick={() => onChange('words', 10)}
-              >
-                10
-              </p>
-              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
-              <p
-                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 25 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
-                }`}
-                onClick={() => onChange('words', 25)}
-              >
-                25
-              </p>
-              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
-              <p
-                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 50 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
-                }`}
-                onClick={() => onChange('words', 50)}
-              >
-                50
-              </p>
-              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
-              <p
-                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 100 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
-                }`}
-                onClick={() => onChange('words', 100)}
-              >
-                100
-              </p>
-              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
-              <p
-                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  isModalOpen || ![10, 25, 50, 100].includes(wordsCount)
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg'
+                  quoteSize === 'short'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
                     : ''
                 }`}
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => onChange('quote', 'short')}
               >
-                <HandymanIcon fontSize="small" />
+                short
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  quoteSize === 'medium'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('quote', 'medium')}
+              >
+                medium
+              </p>
+              <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+              <p
+                className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
+                  quoteSize === 'long'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    : ''
+                }`}
+                onClick={() => onChange('quote', 'long')}
+              >
+                long
               </p>
             </>
           )}
