@@ -1,3 +1,4 @@
+export * from './GameModeModal'
 export * from './Filter'
 export * from './Header'
 export * from './HeaderTooltip'
