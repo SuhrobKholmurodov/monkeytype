@@ -200,3 +200,32 @@ export const wordsArray: string[] = [
   'help',
   'line'
 ]
+
+
+export const quotesArray: string[] = [
+  "The only way to do great work is to love what you do.",
+  "Life is what happens when you're busy making other plans.",
+  "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+  "Do not watch the clock; do what it does. Keep going.",
+  "If you want to lift yourself up, lift up someone else.",
+  "The best revenge is massive success.",
+  "You must be the change you wish to see in the world.",
+  "It always seems impossible until it's done.",
+  "The only limit to our realization of tomorrow is our doubts of today.",
+  "Happiness is not something ready-made. It comes from your own actions.",
+  "The greatest glory in living lies not in never falling, but in rising every time we fall. That is the true test of character.",
+  "In three words I can sum up everything I've learned about life: It goes on, no matter what struggles you face.",
+  "Twenty years from now you will be more disappointed by the things you didn’t do than by the ones you did do.",
+  "Our lives begin to end the day we become silent about things that matter. Speak up, even if your voice shakes.",
+  "The future belongs to those who believe in the beauty of their dreams and have the courage to chase them relentlessly.",
+  "Don’t judge each day by the harvest you reap but by the seeds that you plant for tomorrow’s growth.",
+  "What lies behind us and what lies before us are tiny matters compared to what lies within us—our will, our spirit, our fight.",
+  "If you look at what you have in life, you’ll always have more. If you look at what you don’t have, you’ll never have enough.",
+  "I can’t change the direction of the wind, but I can adjust my sails to always reach my destination, no matter the storm.",
+  "The man who moves a mountain begins by carrying away small stones—persistence beats talent when talent doesn’t work hard.",
+  "Life is a series of natural and spontaneous changes. Don’t resist them; that only creates sorrow. Let reality be reality. Let things flow naturally forward in whatever way they like, because the only constant in life is change, and fighting it will only make you tired and unhappy in the long run.",
+  "Success is stumbling from failure to failure with no loss of enthusiasm. You have to keep trying, keep believing, and keep moving forward, because every wrong attempt discarded is another step forward toward something greater—something you might not even see coming until it suddenly makes sense.",
+  "The biggest risk is not taking any risk. In a world that’s changing quickly, the only strategy that is guaranteed to fail is not taking chances. You have to be willing to fail, to be wrong, to embarrass yourself, because if you’re not failing, you’re not pushing your limits hard enough.",
+  "Your time is limited, so don’t waste it living someone else’s life. Don’t be trapped by dogma—which is living with the results of other people’s thinking. Don’t let the noise of others’ opinions drown out your own inner voice. Have the courage to follow your heart and intuition.",
+  "I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel. Kindness echoes through time, and the smallest act of compassion can change someone’s entire day—or even their life—without you ever realizing it."
+]
