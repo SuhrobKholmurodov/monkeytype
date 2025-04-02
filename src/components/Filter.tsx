@@ -203,7 +203,6 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
           )}
         </div>
       </div>
-
       <GameModeModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

@@ -1,5 +1,5 @@
 export interface TestResult {
-  type: 'time' | 'words';
+  type: 'time' | 'words' | 'quote';
   duration: number;
   wpm: number;
   accuracy: number;
@@ -7,4 +7,5 @@ export interface TestResult {
   incorrect: number;
   time: number;
   completionTime: string;
+  quoteSize?: 'short' | 'medium' | 'long'; 
 }

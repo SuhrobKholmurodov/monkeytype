@@ -67,15 +67,17 @@ export const TypingArea = () => {
 
   useEffect(() => {
     if (finished && startTime && endTime) {
-      const newResult: TestResult = {
-        type: activeType === 'quote' ? 'time' : activeType,
-        duration: activeType === 'time' ? activeDuration : activeWordsCount,
+      const newResult = {
+        type: activeType === 'quote' ? 'quote' : activeType,
+        duration:
+          activeType === 'quote' ? 0 : activeType === 'time' ? activeDuration : activeWordsCount,
         wpm: wpm,
         accuracy: accuracy,
         correct: typedWords.filter((w) => w.isCorrect).length,
         incorrect: typedWords.filter((w) => !w.isCorrect).length,
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
         completionTime: formatCompletionTime(new Date()),
+        quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
       };
 
       const savedResults = localStorage.getItem('typingTestResults');
@@ -241,10 +243,12 @@ export const TypingArea = () => {
       setActiveType('time');
       setActiveDuration(value as number);
       setQuoteWordCount(0);
+      getRandomWords();
     } else if (type === 'words') {
       setActiveType('words');
       setActiveWordsCount(value as number);
       setQuoteWordCount(0);
+      getRandomWords();
     } else {
       setActiveType('quote');
       const size = (value as 'short' | 'medium' | 'long') || 'medium';
@@ -374,8 +378,13 @@ export const TypingArea = () => {
                   title="Detailed Results"
                   results={[
                     {
-                      type: activeType === 'quote' ? 'time' : activeType,
-                      duration: activeType === 'time' ? activeDuration : activeWordsCount,
+                      type: activeType === 'quote' ? 'quote' : activeType,
+                      duration:
+                        activeType === 'quote'
+                          ? 0
+                          : activeType === 'time'
+                          ? activeDuration
+                          : activeWordsCount,
                       wpm: wpm,
                       accuracy: accuracy,
                       correct: typedWords.filter((w) => w.isCorrect).length,
@@ -385,6 +394,7 @@ export const TypingArea = () => {
                           ? Math.round((endTime.getTime() - startTime.getTime()) / 1000)
                           : 0,
                       completionTime: formatCompletionTime(new Date()),
+                      quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
                     },
                   ]}
                 />

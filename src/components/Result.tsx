@@ -47,22 +47,25 @@ export const Result = ({ title, results }: ResultProps) => {
                 <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
                   <td className="p-3 border border-gray-700">
                     <div className="flex items-center gap-1">
-                      <div className="text-[20px] font-bold">{result.duration}</div>
+                      <div className="text-[20px] font-bold">
+                        {result.type === 'quote' ? 'Quote' : result.duration}
+                      </div>
                       <div className="flex items-center justify-between w-full text-gray-400">
-                        <p>
-                          {result.type === 'time' ? 'Seconds' : 'Words'}
-                          {(result.type === 'time' &&
-                            ![15, 30, 60, 120].includes(result.duration)) ||
-                          (result.type === 'words' &&
-                            ![10, 25, 50, 100].includes(result.duration)) ? (
-                            <span className="ml-2 text-yellow-400">• Custom</span>
-                          ) : null}
+                        <p className="mt-[3px]">
+                          {result.type === 'time'
+                            ? 'Seconds'
+                            : result.type === 'words'
+                            ? 'Words'
+                            : `${'| ' + result.quoteSize}` || 'medium'}
+                          {result.type !== 'quote' &&
+                            ![15, 30, 60, 120].includes(result.duration) &&
+                            ![10, 25, 50, 100].includes(result.duration) && (
+                              <span className="ml-2 text-yellow-400">• Custom</span>
+                            )}
                         </p>
-                        <p>
-                          {isBestCurRes && location.pathname === '/profile' && (
-                            <Trophy className="w-4 h-4 text-yellow-400" />
-                          )}
-                        </p>
+                        {isBestCurRes && location.pathname === '/profile' && (
+                          <Trophy className="w-4 h-4 text-yellow-400" />
+                        )}
                       </div>
                     </div>
                   </td>
