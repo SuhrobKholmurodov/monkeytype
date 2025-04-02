@@ -23,7 +23,10 @@ export const ResultsChart = ({ results }: ResultsChartProps) => {
     return {
       name: `${index + 1}`,
       wpm: result.wpm,
-      type: `${result.type} ${result.duration}${isCustom ? ' (Custom)' : ''}`,
+      type:
+        result.type === 'quote'
+          ? `Quote ${result.quoteSize || 'medium'}`
+          : `${result.type} ${result.duration}${isCustom ? ' (Custom)' : ''}`,
       accuracy: result.accuracy,
       time: result.time,
       completionTime: result.completionTime,
