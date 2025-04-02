@@ -143,6 +143,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
         onClose={() => setIsModalOpen(false)}
         onSubmit={(value) => onChange(type, value)}
         type={type}
+        currentValue={type === 'time' ? duration : wordsCount}
       />
     </>
   );
