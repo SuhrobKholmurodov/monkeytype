@@ -80,7 +80,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                  duration === 120 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  ![15, 30, 60, 120].includes(duration)
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
               >
@@ -127,7 +129,9 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                  duration === 120 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  ![10, 25, 50, 100].includes(wordsCount)
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                    : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
               >
