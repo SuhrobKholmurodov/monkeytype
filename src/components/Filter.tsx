@@ -21,7 +21,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
         <div className="flex rounded-lg bg-gray-800 items-center p-3 gap-6">
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'time' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
+              type === 'time' ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
             }`}
             onClick={() => onChange('time', duration)}
           >
@@ -31,7 +31,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
           <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
+              type === 'words' ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
             }`}
             onClick={() => onChange('words', wordsCount)}
           >
@@ -41,7 +41,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
           <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'quote' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg' : ''
+              type === 'quote' ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
             }`}
             onClick={() => onChange('quote', quoteSize)}
           >
@@ -56,7 +56,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   duration === 15
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('time', 15)}
@@ -67,7 +67,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   duration === 30
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('time', 30)}
@@ -78,7 +78,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   duration === 60
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('time', 60)}
@@ -89,7 +89,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   duration === 120
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('time', 120)}
@@ -100,7 +100,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   isModalOpen || ![15, 30, 60, 120].includes(duration)
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
@@ -113,7 +113,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   wordsCount === 10
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('words', 10)}
@@ -124,7 +124,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   wordsCount === 25
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('words', 25)}
@@ -135,7 +135,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   wordsCount === 50
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('words', 50)}
@@ -146,7 +146,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   wordsCount === 100
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('words', 100)}
@@ -157,7 +157,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   isModalOpen || ![10, 25, 50, 100].includes(wordsCount)
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
@@ -170,7 +170,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   quoteSize === 'short'
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('quote', 'short')}
@@ -181,7 +181,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   quoteSize === 'medium'
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('quote', 'medium')}
@@ -192,7 +192,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   quoteSize === 'long'
-                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b713] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => onChange('quote', 'long')}
