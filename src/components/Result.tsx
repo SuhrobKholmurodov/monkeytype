@@ -41,8 +41,7 @@ export const Result = ({ title, results }: ResultProps) => {
                 return best;
               });
               const isBestCurRes =
-                result.wpm === bestRes.wpm &&
-                result.completionTime === bestRes.completionTime;
+                result.wpm === bestRes.wpm && result.completionTime === bestRes.completionTime;
 
               return (
                 <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
@@ -50,11 +49,24 @@ export const Result = ({ title, results }: ResultProps) => {
                     <div className="flex items-center gap-1">
                       <div className="text-[20px] font-bold">{result.duration}</div>
                       <div className="flex items-center justify-between w-full text-gray-400">
-                        <p>{result.type === 'time' ? 'Seconds' : 'Words'}</p>
                         <p>
-                          {isBestCurRes && location.pathname === '/profile' && (
-                            <Trophy className="w-4 h-4 text-yellow-400" />
-                          )}
+                          {result.type === 'time' ? 'Seconds' : 'Words'}
+                          {(result.type === 'time' &&
+                            ![15, 30, 60, 120].includes(result.duration)) ||
+                          (result.type === 'words' &&
+                            ![10, 25, 50, 100].includes(result.duration)) ? (
+                            <span className="ml-2 text-yellow-400">• Custom</span>
+                          ) : null}
+                        </p>
+                        <p>
+                          {isBestCurRes &&
+                            location.pathname === '/profile' &&
+                            ((result.type === 'time' &&
+                              [15, 30, 60, 120].includes(result.duration)) ||
+                              (result.type === 'words' &&
+                                [10, 25, 50, 100].includes(result.duration))) && (
+                              <Trophy className="w-4 h-4 text-yellow-400" />
+                            )}
                         </p>
                       </div>
                     </div>
