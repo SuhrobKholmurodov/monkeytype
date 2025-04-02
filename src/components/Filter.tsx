@@ -80,7 +80,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                  ![15, 30, 60, 120].includes(duration)
+                  isModalOpen || ![15, 30, 60, 120].includes(duration)
                     ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
@@ -129,7 +129,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer font-bold py-[5px] px-[12px] ${
-                  ![10, 25, 50, 100].includes(wordsCount)
+                  isModalOpen || ![10, 25, 50, 100].includes(wordsCount)
                     ? 'bg-gray-700 text-[#e2b714] rounded-lg'
                     : ''
                 }`}
