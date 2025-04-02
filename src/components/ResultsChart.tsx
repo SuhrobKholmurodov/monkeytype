@@ -15,14 +15,21 @@ interface ResultsChartProps {
 }
 
 export const ResultsChart = ({ results }: ResultsChartProps) => {
-  const chartData = results.map((result, index) => ({
-    name: `${index + 1}`,
-    wpm: result.wpm,
-    type: `${result.type} ${result.duration}`,
-    accuracy: result.accuracy,
-    time: result.time,
-    completionTime: result.completionTime,
-  }));
+  const chartData = results.map((result, index) => {
+    const isCustom =
+      (result.type === 'time' && ![15, 30, 60, 120].includes(result.duration)) ||
+      (result.type === 'words' && ![10, 25, 50, 100].includes(result.duration));
+
+    return {
+      name: `${index + 1}`,
+      wpm: result.wpm,
+      type: `${result.type} ${result.duration}${isCustom ? ' (Custom)' : ''}`,
+      accuracy: result.accuracy,
+      time: result.time,
+      completionTime: result.completionTime,
+      isCustom,
+    };
+  });
 
   return (
     <div className="mt-8">
