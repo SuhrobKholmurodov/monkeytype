@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, MessageSquareQuote } from 'lucide-react';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import { GameModeModal } from './GameModeModal';
@@ -16,11 +16,11 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
 
   return (
     <>
-      <div className="flex items-center justify-between px-[180px] mb-[50px]">
-        <div className="flex rounded-lg bg-gray-800 items-center p-3 gap-4">
+      <div className="flex items-center justify-between px-[140px] mb-[50px]">
+        <div className="flex rounded-lg bg-gray-800 items-center p-3 gap-6">
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'time' ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+              type === 'time' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
             }`}
             onClick={() => onChange('time', duration)}
           >
@@ -30,12 +30,22 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
           <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
           <div
             className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'words' ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
             }`}
             onClick={() => onChange('words', wordsCount)}
           >
             <TextFormatIcon />
-            <p className="font-bold">words</p>
+            <p className="font-[700] mt-[-5px]">words</p>
+          </div>
+          <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
+          <div
+            className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
+              type === 'words' ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
+            }`}
+            onClick={() => onChange('words', wordsCount)}
+          >
+            <MessageSquareQuote />
+            <p className="font-[700] mt-[-5px]">quote</p>
           </div>
         </div>
 
@@ -44,7 +54,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 15 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  duration === 15 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 15)}
               >
@@ -53,7 +63,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 30 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  duration === 30 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 30)}
               >
@@ -62,7 +72,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 60 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  duration === 60 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 60)}
               >
@@ -71,7 +81,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 120 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  duration === 120 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 120)}
               >
@@ -81,7 +91,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   isModalOpen || ![15, 30, 60, 120].includes(duration)
-                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
@@ -93,7 +103,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 10 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  wordsCount === 10 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 10)}
               >
@@ -102,7 +112,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 25 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  wordsCount === 25 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 25)}
               >
@@ -111,7 +121,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 50 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  wordsCount === 50 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 50)}
               >
@@ -120,7 +130,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <div className="h-6 w-2 bg-gray-600 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 100 ? 'bg-gray-700 text-[#e2b714] rounded-lg' : ''
+                  wordsCount === 100 ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 100)}
               >
@@ -130,7 +140,7 @@ export const Filter = ({ type, duration, wordsCount, onChange }: FilterProps) =>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
                   isModalOpen || ![10, 25, 50, 100].includes(wordsCount)
-                    ? 'bg-gray-700 text-[#e2b714] rounded-lg'
+                    ? 'bg-gray-700 text-[#e2b714] hover:text-[#e2b714] rounded-lg'
                     : ''
                 }`}
                 onClick={() => setIsModalOpen(true)}
