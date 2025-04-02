@@ -134,27 +134,26 @@ export const TypingArea = () => {
 
   function getRandomWords() {
     if (activeType === 'quote') {
-      const size = activeQuoteSize || 'medium';
-      const availableQuotes = quoteSizes[size];
+      const currentSize = activeQuoteSize || 'short';
+      const availableQuotes = quoteSizes[currentSize];
+
       if (!availableQuotes || availableQuotes.length === 0) {
-        console.warn(`No ${size} quotes available. Using medium instead.`);
-        const fallbackQuotes = quoteSizes.medium;
-        const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
-        const words = randomQuote.split(' ');
-        setWords(words);
-        setQuoteWordCount(words.length);
-      } else {
-        const randomQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
-        const words = randomQuote.split(' ');
-        setWords(words);
-        setQuoteWordCount(words.length);
+        setWords([]);
+        setQuoteWordCount(0);
+        return;
       }
+
+      const randomIndex = Math.floor(Math.random() * availableQuotes.length);
+      const selectedQuote = availableQuotes[randomIndex];
+      const words = selectedQuote.split(' ');
+
+      setWords(words);
+      setQuoteWordCount(words.length);
     } else {
       const mixed = [...wordsArray].sort(() => 0.5 - Math.random());
       setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
       setQuoteWordCount(0);
     }
-
     setCurrentWordIndex(0);
     setTypedWord('');
     setTypedWords([]);
