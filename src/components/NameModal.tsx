@@ -38,14 +38,14 @@ export const NameModal = ({ isOpen, onClose, onNameSet }: NameModalProps) => {
 
   return (
     <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center z-50'>
-      <div className='relative bg-white p-6 sm:p-4 rounded-lg shadow-lg text-center w-11/12 max-w-sm transition-all overflow-hidden'>
+      <div className='relative dark:bg-gray-700 bg-white p-6 sm:p-4 rounded-lg shadow-lg text-center w-11/12 max-w-sm transition-all overflow-hidden'>
         <div
-          className='absolute top-0 left-0 w-full h-full bg-[#22375d]'
+          className='absolute top-0 left-0 w-full h-full dark:bg-gray-900 bg-[#22375d]'
           style={{
             clipPath: 'polygon(0 0, 9% 0, 58% 44%, 6% 100%, 0 100%, 0% 50%)'
           }}
         ></div>
-        <h2 className='text-2xl text-black mb-4 relative z-10'>Typing Test!</h2>
+        <h2 className='text-2xl text-black dark:text-white mb-4 relative z-10'>Typing Test!</h2>
         <form onSubmit={handleSubmit} className='relative z-10'>
           <input
             type='text'

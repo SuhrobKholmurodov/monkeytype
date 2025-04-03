@@ -78,7 +78,7 @@ export const Header = () => {
           }}
           title={
             <div className="flex flex-col">
-              <div className="flex rounded-t-[12px] bg-gray-700 dark:bg-gray-400 hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
+              <div className="flex rounded-t-[12px] bg-gray-700 dark:bg-gray-400 hover:bg-gray-600 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
                 <Settings size={18} />
                 <p className="font-bold">Account settings</p>
               </div>
@@ -87,7 +87,7 @@ export const Header = () => {
               </div>
               <Link
                 to={'/profile'}
-                className="flex hover:bg-gray-700 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex hover:bg-gray-600 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <Globe size={18} />
                 <p className="font-bold">Public profile</p>
@@ -97,7 +97,7 @@ export const Header = () => {
                 <a
                   href="https://github.com/SuhrobKholmurodov/monkeytype"
                   target="_blank"
-                  className="flex hover:bg-gray-700 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
+                  className="flex hover:bg-gray-600 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
                 >
                   <Github size={18} />
                   <p className="font-bold">Source code</p>
@@ -105,7 +105,7 @@ export const Header = () => {
               </div>
               <div
                 onClick={handleSignOut}
-                className="flex border-t bg-gray-700 dark:bg-gray-400 dark:border-gray-500 border-gray-400 rounded-b-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex border-t bg-gray-700 dark:bg-gray-400 dark:border-gray-500 border-gray-400 rounded-b-[12px] hover:bg-gray-600 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <LogOut size={18} />
                 <p className="font-bold">Sign out</p>
