@@ -4,9 +4,10 @@ import { Loader2 } from 'lucide-react'
 interface NameModalProps {
   isOpen: boolean
   onClose: () => void
+  onNameSet: () => void
 }
 
-export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
+export const NameModal = ({ isOpen, onClose, onNameSet }: NameModalProps) => {
   const [localName, setLocalName] = useState('')
   const [isLoading, setIsLoading] = useState(false) 
 
@@ -26,6 +27,7 @@ export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
         localStorage.setItem('userJoinDate', currentDate)
       }
       setIsLoading(false) 
+      onNameSet()
       onClose() 
     }, 1000) 
   }

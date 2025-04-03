@@ -10,6 +10,16 @@ export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleNameSet = () => {
+    setUserName(localStorage.getItem('userName') || '');
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem('userName')) {
+      setIsModalOpen(true);
+    }
+  }, []);
+
   useEffect(() => {
     const currentName = localStorage.getItem('userName') || '';
     if (currentName !== userName) {
@@ -67,22 +77,23 @@ export const Header = () => {
           }}
           title={
             <div className="flex flex-col">
+              <div className="flex rounded-t-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
+                <Settings size={18} />
+                <p className="font-bold">Account settings</p>
+              </div>
               <Link
                 to={'/profile'}
-                className="flex rounded-t-[12px] hover:bg-gray-700 hover:duration-300 px-2 py-[6px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <Globe size={18} />
                 <p className="font-bold">Public profile</p>
               </Link>
-              <div className="flex hover:bg-gray-700 hover:duration-300 px-[10px] py-[6px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
-                <Settings size={18} />
-                <p className="font-bold">Account settings</p>
-              </div>
+
               <div>
                 <a
                   href="https://github.com/SuhrobKholmurodov/monkeytype"
                   target="_blank"
-                  className="flex hover:bg-gray-700 hover:duration-300 px-2 py-[6px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
+                  className="flex hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
                 >
                   <Github size={18} />
                   <p className="font-bold">Source code</p>
@@ -90,7 +101,7 @@ export const Header = () => {
               </div>
               <div
                 onClick={handleSignOut}
-                className="flex rounded-b-[12px] hover:bg-gray-700 hover:duration-300 px-2 py-[6px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex border-t border-gray-400 rounded-b-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <LogOut size={18} />
                 <p className="font-bold">Sign out</p>
@@ -123,7 +134,11 @@ export const Header = () => {
           </div>
         </Tooltip>
       </div>
-      <NameModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <NameModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onNameSet={handleNameSet}
+      />
     </header>
   );
 };

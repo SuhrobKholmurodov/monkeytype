@@ -29,7 +29,7 @@ export const Profile = () => {
           <Result title="Your Results Table" results={pastResults} />
         </>
       ) : (
-        <p className="text-gray-400">
+        <p className="text-gray-200 text-[25px] text-center mt-[70px]">
           No past results found. Complete a typing test to see your results here!
         </p>
       )}
