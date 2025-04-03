@@ -51,7 +51,7 @@ export const NameModal = ({ isOpen, onClose }: NameModalProps) => {
             onChange={e => setLocalName(e.target.value)}
             placeholder='Enter your name'
             autoFocus
-            className='p-3 mb-4 w-full rounded-md border border-gray-300 text-base focus:outline-none focus:ring-1 focus:ring-[#6d93d9]'
+            className='p-3 mb-4 w-full rounded-md border text-black border-gray-300 text-base focus:outline-none focus:ring-1 focus:ring-[#6d93d9]'
             disabled={isLoading} 
           />
           <button
