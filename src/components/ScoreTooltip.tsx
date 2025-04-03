@@ -28,7 +28,7 @@ export const ScoreTooltip = ({
       slotProps={{
         tooltip: {
           style: {
-            backgroundColor: '#1F2960',
+            backgroundColor: '#1f2930',
             color: 'white',
             fontSize: '14px',
             borderRadius: '8px',
@@ -37,7 +37,7 @@ export const ScoreTooltip = ({
         },
         arrow: {
           style: {
-            color: '#1F2960'
+            color: '#1f2930'
           }
         }
       }}
