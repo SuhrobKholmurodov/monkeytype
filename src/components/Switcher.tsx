@@ -14,10 +14,10 @@ export const Switcher = () => {
 
   return (
     <div
-      className="hover:bg-gray-700 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center"
+      className="hover:bg-gray-600 bg-gray-700 dark:hover:bg-gray-100 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center"
       onClick={() => toggleDarkMode(!darkSide)}
     >
-      <div className='ml-[-1px]'>
+      <div className="ml-[-1px]">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: darkSide ? 0 : 1, scale: darkSide ? 0.8 : 1 }}
