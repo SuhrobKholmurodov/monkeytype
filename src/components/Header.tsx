@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 import { NameModal } from './NameModal';
+import { Switcher } from './Switcher';
 
 export const Header = () => {
   const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
@@ -80,6 +81,9 @@ export const Header = () => {
               <div className="flex rounded-t-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
                 <Settings size={18} />
                 <p className="font-bold">Account settings</p>
+              </div>
+              <div>
+              <Switcher />
               </div>
               <Link
                 to={'/profile'}
