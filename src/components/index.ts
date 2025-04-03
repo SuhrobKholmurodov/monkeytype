@@ -1,7 +1,6 @@
 export * from './GameModeModal'
 export * from './Filter'
 export * from './Header'
-export * from './HeaderTooltip'
 export * from './MaxScores'
 export * from './MetaTags'
 export * from './NameModal'
