@@ -50,7 +50,7 @@ export const GameModeModal = ({
       onClick={onClose} 
     >
       <div 
-        className="bg-gray-800 p-6 rounded-lg w-96 max-w-[90%]"
+        className="bg-gray-800 dark:bg-gray-300 p-6 rounded-lg w-96 max-w-[90%]"
         onClick={(e) => e.stopPropagation()} 
       >
         <h2 className="text-xl font-bold mb-4 text-[#e2b714]">
@@ -58,14 +58,14 @@ export const GameModeModal = ({
         </h2>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-2 text-gray-300">
+          <label className="block text-sm font-medium mb-2 dark:text-gray-800 text-gray-300">
             {type === 'time' ? 'Time in seconds' : 'Number of words'}
           </label>
           <input
             ref={inputRef}
             type="number"
             min="1"
-            className="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e2b714] text-white"
+            className="w-full p-3 dark:bg-gray-200 dark:text-gray-800 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e2b714] text-white"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -76,7 +76,7 @@ export const GameModeModal = ({
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition text-white font-medium"
+            className="px-4 py-2 bg-gray-700 dark:bg-gray-100 dark:text-gray-800 rounded-lg hover:bg-gray-600 transition text-white font-medium"
           >
             Cancel
           </button>
@@ -85,7 +85,7 @@ export const GameModeModal = ({
             disabled={!value || parseInt(value) <= 0}
             className={`px-4 py-2 rounded-lg transition font-bold ${
               !value || parseInt(value) <= 0
-                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                ? 'bg-gray-600 dark:bg-gray-50 dark:text-gray-300 text-gray-400 cursor-not-allowed'
                 : 'bg-[#e2b714] text-gray-900 hover:bg-[#d1a713]'
             }`}
           >

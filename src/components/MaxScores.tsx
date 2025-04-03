@@ -20,7 +20,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
     <div className="flex justify-between gap-[20px]">
       <div
         id="maxScoreBySeconds"
-        className="flex justify-between text-center text-gray-200 gap-[80px] bg-gray-800 p-4 rounded-lg"
+        className="flex justify-between text-center dark:text-gray-800 dark:bg-gray-300 text-gray-200 gap-[80px] bg-gray-800 p-4 rounded-lg"
       >
         {max15Seconds.maxWPM > 0 && max15Seconds.accuracy > 0 ? (
           <ScoreTooltip
@@ -81,7 +81,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
       </div>
       <div
         id="maxsScoreByWords"
-        className="flex justify-between text-center text-white gap-[80px] bg-gray-800 p-4 rounded-lg"
+        className="flex justify-between text-center text-white dark:text-gray-800 dark:bg-gray-300 gap-[80px] bg-gray-800 p-4 rounded-lg"
       >
         {max10Words.maxWPM > 0 && max10Words.accuracy > 0 ? (
           <ScoreTooltip

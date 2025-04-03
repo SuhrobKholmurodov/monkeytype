@@ -219,7 +219,7 @@ export const TypingArea = () => {
           return (
             <span
               key={idx}
-              className={typed ? (isCorrect ? 'text-green-500' : 'text-red-500') : ''}
+              className={typed ? (isCorrect ? 'text-green-500 dark:text-green-600' : 'text-red-500 dark:text-red-600') : ''}
             >
               {char}
             </span>
@@ -261,7 +261,7 @@ export const TypingArea = () => {
     <div>
       {showConfetti && <Confetti />}
       <div
-        className="fixed flex bg-gray-900 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden"
+        className="fixed flex bg-gray-900 dark:bg-gray-200 duration-300 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden"
         tabIndex={0}
         style={{ margin: 0, padding: 0 }}
         onKeyDown={handleKeyDown}
@@ -291,7 +291,7 @@ export const TypingArea = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-8 p-4 bg-gray-800 rounded-lg shadow-md">
+              <div className="mb-8 p-4 bg-gray-800 dark:text-gray-700 dark:bg-gray-300 rounded-lg shadow-md">
                 <div className="text-xl font-mono leading-relaxed space-y-1">
                   <div
                     className="flex flex-wrap h-[110px] gap-2 overflow-y-auto no-scrollbar"
@@ -312,7 +312,7 @@ export const TypingArea = () => {
                         key={index}
                         className={`px-1 h-8 ${
                           index === currentWordIndex
-                            ? 'bg-gray-700 rounded'
+                            ? 'bg-gray-700 dark:bg-gray-200 dark:text-gray-800 rounded'
                             : index < currentWordIndex
                             ? getCompletedWordClass(index)
                             : ''
@@ -333,7 +333,7 @@ export const TypingArea = () => {
                       getRandomWords();
                     }
                   }}
-                  className="flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
+                  className="flex dark:bg-gray-300 dark:text-gray-800 items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
                 >
                   <RotateCw size={16} />
                   Restart Test
@@ -368,7 +368,7 @@ export const TypingArea = () => {
 
               <button
                 onClick={getRandomWords}
-                className="flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
+                className="flex items-center gap-2 px-6 py-3 dark:bg-gray-300 dark:text-gray-800 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
               >
                 <RotateCw size={16} />
                 Restart Test

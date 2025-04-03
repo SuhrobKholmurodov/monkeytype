@@ -9,7 +9,7 @@ export const NotFound = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 flex flex-col justify-center items-center bg-gray-900 text-white p-6 overflow-hidden"
+      className="fixed inset-0 flex flex-col justify-center items-center dark:bg-gray-200 dark:text-gray-800 bg-gray-900 text-white p-6 overflow-hidden"
       style={{ margin: 0, padding: 0 }}
     >
       <MetaTags

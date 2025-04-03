@@ -13,18 +13,18 @@ export const Result = ({ title, results }: ResultProps) => {
 
   return (
     <div className="mt-5">
-      <h1 className="text-2xl font-bold mb-6 text-gray-200">{title}</h1>
+      <h1 className="text-2xl font-bold mb-6 dark:text-gray-800 text-gray-200">{title}</h1>
       <div className="w-full overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-800 text-gray-50">
-              <th className="p-3 border border-gray-700 text-left">Type</th>
-              <th className="p-3 border border-gray-700 text-left">WPM</th>
-              <th className="p-3 border border-gray-700 text-left">Accuracy</th>
-              <th className="p-3 border border-gray-700 text-left">Correct</th>
-              <th className="p-3 border border-gray-700 text-left">Incorrect</th>
-              <th className="p-3 border border-gray-700 text-left">Time</th>
-              <th className="p-3 border border-gray-700 text-left">Completed At</th>
+            <tr className="bg-gray-800 dark:bg-gray-300 dark:text-gray-700 text-gray-50">
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Type</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">WPM</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Accuracy</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Correct</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Incorrect</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Time</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Completed At</th>
             </tr>
           </thead>
           <tbody>
@@ -44,13 +44,13 @@ export const Result = ({ title, results }: ResultProps) => {
                 result.wpm === bestRes.wpm && result.completionTime === bestRes.completionTime;
 
               return (
-                <tr key={index} className="text-gray-200 hover:bg-gray-800 transition-colors">
-                  <td className="p-3 border border-gray-700">
+                <tr key={index} className="text-gray-200 dark:text-gray-800 dark:hover:bg-gray-300 hover:bg-gray-800 transition-colors">
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">
                     <div className="flex items-center gap-1">
                       <div className="text-[20px] font-bold">
                         {result.type === 'quote' ? 'Quote' : result.duration}
                       </div>
-                      <div className="flex items-center justify-between w-full text-gray-400">
+                      <div className="flex items-center justify-between w-full dark:text-gray-500 text-gray-400">
                         <p className="mt-[3px]">
                           {result.type === 'time'
                             ? 'Seconds'
@@ -60,7 +60,7 @@ export const Result = ({ title, results }: ResultProps) => {
                           {result.type !== 'quote' &&
                             ![15, 30, 60, 120].includes(result.duration) &&
                             ![10, 25, 50, 100].includes(result.duration) && (
-                              <span className="ml-2 text-yellow-400">• Custom</span>
+                              <span className="ml-2 dark:text-yellow-500 text-yellow-400">• Custom</span>
                             )}
                         </p>
                         {isBestCurRes && location.pathname === '/profile' && (
@@ -69,14 +69,14 @@ export const Result = ({ title, results }: ResultProps) => {
                       </div>
                     </div>
                   </td>
-                  <td className="p-3 border border-gray-700">{result.wpm}</td>
-                  <td className="p-3 border border-gray-700">{result.accuracy}%</td>
-                  <td className="p-3 border border-gray-700">{result.correct}</td>
-                  <td className="p-3 border border-gray-700">
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">{result.wpm}</td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">{result.accuracy}%</td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">{result.correct}</td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">
                     {result.incorrect === 0 ? '-' : result.incorrect}
                   </td>
-                  <td className="p-3 border border-gray-700">{result.time}s</td>
-                  <td className="p-3 border border-gray-700">{result.completionTime}</td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">{result.time}s</td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">{result.completionTime}</td>
                 </tr>
               );
             })}

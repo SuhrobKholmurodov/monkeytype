@@ -39,7 +39,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-gray-900 text-white py-4 px-[70px] flex justify-between items-center shadow-md z-50">
+    <header className="fixed top-0 left-0 w-full dark:bg-gray-200 dark:text-gray-900 duration-300 bg-gray-900 text-white py-4 px-[70px] flex justify-between items-center shadow-md z-50">
       <div className="flex flex-col items-start">
         <Link to={'/'} className="text-lg font-bold">
           Monkey Type
@@ -78,16 +78,16 @@ export const Header = () => {
           }}
           title={
             <div className="flex flex-col">
-              <div className="flex rounded-t-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
+              <div className="flex rounded-t-[12px] bg-gray-700 dark:bg-gray-400 hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2">
                 <Settings size={18} />
                 <p className="font-bold">Account settings</p>
               </div>
               <div>
-              <Switcher />
+                <Switcher />
               </div>
               <Link
                 to={'/profile'}
-                className="flex hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex hover:bg-gray-700 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <Globe size={18} />
                 <p className="font-bold">Public profile</p>
@@ -97,7 +97,7 @@ export const Header = () => {
                 <a
                   href="https://github.com/SuhrobKholmurodov/monkeytype"
                   target="_blank"
-                  className="flex hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
+                  className="flex hover:bg-gray-700 bg-gray-700 dark:bg-gray-400 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer gap-2"
                 >
                   <Github size={18} />
                   <p className="font-bold">Source code</p>
@@ -105,7 +105,7 @@ export const Header = () => {
               </div>
               <div
                 onClick={handleSignOut}
-                className="flex border-t border-gray-400 rounded-b-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
+                className="flex border-t bg-gray-700 dark:bg-gray-400 dark:border-gray-500 border-gray-400 rounded-b-[12px] hover:bg-gray-700 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] hover:cursor-pointer items-center gap-2"
               >
                 <LogOut size={18} />
                 <p className="font-bold">Sign out</p>
@@ -115,11 +115,8 @@ export const Header = () => {
           componentsProps={{
             tooltip: {
               style: {
-                backgroundColor: '#1f2937',
-                border: '6px solid #111827',
                 padding: '0px',
                 borderRadius: '15px',
-                color: 'white',
                 fontSize: '14px',
               },
             },
