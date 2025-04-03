@@ -13,7 +13,7 @@ export const Profile = () => {
   }, []);
 
   return (
-    <div className="p-6 overflow-y-scroll fixed inset-0 bg-gray-900">
+    <div className="py-6 px-[70px] overflow-y-scroll fixed inset-0 bg-gray-900">
       <MetaTags
         title="Account | Monkeytype"
         description="Manage your Monkeytype account. View your typing test history, update your profile, and track your progress."
