@@ -38,7 +38,10 @@ export const TypingArea = () => {
   const [finished, setFinished] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
-  const [pastResults, setPastResults] = useState<TestResult[]>([]);
+  const [pastResults, setPastResults] = useState<TestResult[]>(() => {
+    const saved = localStorage.getItem('typingTestResults');
+    return saved ? JSON.parse(saved) : [];
+  });
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeType, setActiveType] = useState<'time' | 'words' | 'quote'>('time');
   const [activeDuration, setActiveDuration] = useState(15);
@@ -48,14 +51,22 @@ export const TypingArea = () => {
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('typingTestLanguage') as Language | null;
+    if (savedLanguage) {
+      setSelectedLanguage(savedLanguage);
+    }
+  }, []);
 
   const handleLanguageChange = (lang: Language) => {
     setSelectedLanguage(lang);
+    localStorage.setItem('typingTestLanguage', lang);
     setIsModalOpen(false);
   };
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -82,6 +93,7 @@ export const TypingArea = () => {
     if (finished && startTime && endTime) {
       const newResult = {
         type: activeType === 'quote' ? 'quote' : activeType,
+        language: selectedLanguage,
         duration:
           activeType === 'quote' ? 0 : activeType === 'time' ? activeDuration : activeWordsCount,
         wpm: wpm,
@@ -129,6 +141,7 @@ export const TypingArea = () => {
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));
     }
   }, [finished]);
+
   useEffect(() => {
     if (activeType === 'time' && started && !finished) {
       const timer = setInterval(() => {
@@ -310,7 +323,7 @@ export const TypingArea = () => {
                 className="flex hover:text-gray-400 duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
               >
                 <GlobeIcon className="h-5 w-5" />
-                <p>{selectedLanguage}</p>
+                <p>{selectedLanguage === 'english' ? 'English' : 'Russian'}</p>
               </div>
               <LanguageModal
                 isOpen={isModalOpen}
