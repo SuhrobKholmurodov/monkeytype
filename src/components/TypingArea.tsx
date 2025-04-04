@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { GlobeIcon, RotateCw } from 'lucide-react';
-import { englishWordsArray } from '~/constants';
+import { englishWordsArray, russianWordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
@@ -8,20 +8,10 @@ import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
 import { TestResult } from '~/@types';
 
-import { englishQuotesArray } from '~/constants';
+import { englishQuotesArray, russianQuotesArray } from '~/constants';
 import LanguageModal from './LanguageModal';
-import { russianWordsArray } from '../constants/index';
 
 type Language = 'english' | 'russian';
-
-const quoteSizes = {
-  short: englishQuotesArray.filter((el) => el.split(' ').length <= 15),
-  medium: englishQuotesArray.filter((el) => {
-    const words = el.split(' ').length;
-    return words > 15 && words <= 30;
-  }),
-  long: englishQuotesArray.filter((el) => el.split(' ').length > 30),
-};
 
 export interface TypedWordData {
   word: string;
@@ -53,6 +43,21 @@ export const TypingArea = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
+
+  const quoteSizes = {
+    short: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
+      (el) => el.split(' ').length <= 15,
+    ),
+    medium: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
+      (el) => {
+        const words = el.split(' ').length;
+        return words > 15 && words <= 30;
+      },
+    ),
+    long: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
+      (el) => el.split(' ').length > 30,
+    ),
+  };
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('typingTestLanguage') as Language | null;
