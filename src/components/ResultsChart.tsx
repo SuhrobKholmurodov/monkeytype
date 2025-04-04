@@ -25,9 +25,11 @@ export const ResultsChart = ({ results }: ResultsChartProps) => {
       wpm: result.wpm,
       type:
         result.type === 'quote'
-          ? `Quote ${result.quoteSize || 'medium'}`
-          : `${result.type} ${result.duration}${isCustom ? ' (Custom)' : ''}${
-              result.language === 'english' ? ' | English' : ' | Russian'
+          ? `Quote ${result.quoteSize || 'medium'} | ${
+              result.language === 'english' ? 'English' : 'Russian'
+            }`
+          : `${result.type} ${result.duration}${isCustom ? ' (Custom)' : ''} | ${
+              result.language === 'english' ? 'English' : 'Russian'
             }`,
       accuracy: result.accuracy,
       time: result.time,
