@@ -8,4 +8,5 @@ export interface TestResult {
   time: number;
   completionTime: string;
   quoteSize?: 'short' | 'medium' | 'long'; 
+  language: 'english' | 'russian'; 
 }

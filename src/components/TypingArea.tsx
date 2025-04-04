@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { RotateCw } from 'lucide-react';
-import { wordsArray } from '~/constants';
+import { GlobeIcon, RotateCw } from 'lucide-react';
+import { englishWordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
@@ -8,15 +8,19 @@ import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
 import { TestResult } from '~/@types';
 
-import { quotesArray } from '~/constants';
+import { englishQuotesArray } from '~/constants';
+import LanguageModal from './LanguageModal';
+import { russianWordsArray } from '../constants/index';
+
+type Language = 'english' | 'russian';
 
 const quoteSizes = {
-  short: quotesArray.filter((el) => el.split(' ').length <= 15),
-  medium: quotesArray.filter((el) => {
+  short: englishQuotesArray.filter((el) => el.split(' ').length <= 15),
+  medium: englishQuotesArray.filter((el) => {
     const words = el.split(' ').length;
     return words > 15 && words <= 30;
   }),
-  long: quotesArray.filter((el) => el.split(' ').length > 30),
+  long: englishQuotesArray.filter((el) => el.split(' ').length > 30),
 };
 
 export interface TypedWordData {
@@ -43,6 +47,15 @@ export const TypingArea = () => {
   const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const handleLanguageChange = (lang: Language) => {
+    setSelectedLanguage(lang);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -134,6 +147,10 @@ export const TypingArea = () => {
     }
   }, [activeType, started, finished]);
 
+  useEffect(() => {
+    getRandomWords();
+  }, [selectedLanguage]);
+
   function getRandomWords() {
     if (activeType === 'quote') {
       const currentSize = activeQuoteSize || 'short';
@@ -152,7 +169,9 @@ export const TypingArea = () => {
       setWords(words);
       setQuoteWordCount(words.length);
     } else {
-      const mixed = [...wordsArray].sort(() => 0.5 - Math.random());
+      const mixed = (selectedLanguage === 'english' ? englishWordsArray : russianWordsArray)
+        .slice()
+        .sort(() => 0.5 - Math.random());
       setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
       setQuoteWordCount(0);
     }
@@ -219,7 +238,13 @@ export const TypingArea = () => {
           return (
             <span
               key={idx}
-              className={typed ? (isCorrect ? 'text-green-500 dark:text-green-600' : 'text-red-500 dark:text-red-600') : ''}
+              className={
+                typed
+                  ? isCorrect
+                    ? 'text-green-500 dark:text-green-600'
+                    : 'text-red-500 dark:text-red-600'
+                  : ''
+              }
             >
               {char}
             </span>
@@ -279,6 +304,19 @@ export const TypingArea = () => {
                 quoteSize={activeQuoteSize}
                 wordsCount={activeWordsCount}
                 onChange={handleFilterChange}
+              />
+              <div
+                onClick={toggleModal}
+                className="flex hover:text-gray-400 duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
+              >
+                <GlobeIcon className="h-5 w-5" />
+                <p>{selectedLanguage}</p>
+              </div>
+              <LanguageModal
+                isOpen={isModalOpen}
+                onClose={toggleModal}
+                selectedLanguage={selectedLanguage}
+                onLanguageChange={handleLanguageChange}
               />
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-4">
@@ -373,12 +411,13 @@ export const TypingArea = () => {
                 <RotateCw size={16} />
                 Restart Test
               </button>
-              <div className="w-full">
+              <div className="w-full mt-7">
                 <Result
                   title="Detailed Results"
                   results={[
                     {
                       type: activeType === 'quote' ? 'quote' : activeType,
+                      language: selectedLanguage,
                       duration:
                         activeType === 'quote'
                           ? 0

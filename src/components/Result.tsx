@@ -12,13 +12,14 @@ export const Result = ({ title, results }: ResultProps) => {
   if (results.length === 0) return null;
 
   return (
-    <div className="mt-5">
+    <div>
       <h1 className="text-2xl font-bold mb-6 dark:text-gray-800 text-gray-200">{title}</h1>
       <div className="w-full overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-800 dark:bg-gray-300 dark:text-gray-700 text-gray-50">
               <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Type</th>
+              <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Language</th>
               <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">WPM</th>
               <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Accuracy</th>
               <th className="p-3 border border-gray-700 dark:border-gray-400 text-left">Correct</th>
@@ -68,6 +69,9 @@ export const Result = ({ title, results }: ResultProps) => {
                         )}
                       </div>
                     </div>
+                  </td>
+                  <td className="p-3 border border-gray-700 dark:border-gray-400">
+                    {result.language === 'english' ? 'English' : 'Russian'}
                   </td>
                   <td className="p-3 border border-gray-700 dark:border-gray-400">{result.wpm}</td>
                   <td className="p-3 border border-gray-700 dark:border-gray-400">{result.accuracy}%</td>

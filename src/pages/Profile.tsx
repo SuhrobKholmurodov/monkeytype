@@ -26,7 +26,9 @@ export const Profile = () => {
       {pastResults.length > 0 ? (
         <>
           <ResultsChart results={pastResults} />
-          <Result title="Your Results Table" results={pastResults} />
+          <div className='mt-5'>
+            <Result title="Your Results Table" results={pastResults} />
+          </div>
         </>
       ) : (
         <p className="text-gray-200 text-[25px] text-center mt-[70px]">
