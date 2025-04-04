@@ -1,7 +1,6 @@
 import { XIcon, CheckIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-
-type Language = 'english' | 'russian';
+import { Language } from '~/@types';
 
 interface LanguageModalProps {
   isOpen: boolean;
@@ -57,11 +56,9 @@ export default function LanguageModal({
         >
           <XIcon className="h-5 w-5 dark:text-gray-900 dark:hover:text-gray-300 text-gray-100" />
         </button>
-
         <h3 className="text-lg font-bold dark:text-gray-900 text-gray-100 mb-4 pr-6">
           Select Language
         </h3>
-
         <div className="space-y-3">
           <button
             onClick={() => {
@@ -79,7 +76,6 @@ export default function LanguageModal({
               <CheckIcon className="h-5 w-5 dark:text-blue-600 text-blue-400" />
             )}
           </button>
-
           <button
             onClick={() => {
               onLanguageChange('russian');

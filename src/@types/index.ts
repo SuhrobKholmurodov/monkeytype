@@ -10,3 +10,5 @@ export interface TestResult {
   quoteSize?: 'short' | 'medium' | 'long'; 
   language: 'english' | 'russian'
 }
+
+export type Language = 'english' | 'russian';

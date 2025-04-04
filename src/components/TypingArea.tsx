@@ -6,12 +6,10 @@ import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
 import { Result } from './Result';
 import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
-import { TestResult } from '~/@types';
+import { Language, TestResult } from '~/@types';
 
 import { englishQuotesArray, russianQuotesArray } from '~/constants';
 import LanguageModal from './LanguageModal';
-
-type Language = 'english' | 'russian';
 
 export interface TypedWordData {
   word: string;
