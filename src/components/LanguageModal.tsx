@@ -1,4 +1,5 @@
-import { CheckIcon } from 'lucide-react';
+import { XIcon, CheckIcon } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 type Language = 'english' | 'russian';
 
@@ -15,40 +16,87 @@ export default function LanguageModal({
   selectedLanguage,
   onLanguageChange,
 }: LanguageModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="dark:bg-white bg-gray-800 rounded-lg p-6 w-64 shadow-xl">
-        <h3 className="text-lg font-bold dark:text-gray-900 text-gray-100 mb-4">Select Language</h3>
-
-        <div className="space-y-2">
-          {(['english', 'russian'] as Language[]).map((lang) => (
-            <div
-              key={lang}
-              onClick={() => onLanguageChange(lang)}
-              className={`flex items-center border border-gray-700 dark:border-gray-200 justify-between p-3 rounded-md cursor-pointer
-                ${
-                  selectedLanguage === lang
-                    ? 'dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200'
-                    : 'dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300'
-                }
-              `}
-            >
-              <span className="font-medium">{lang}</span>
-              {selectedLanguage === lang && (
-                <CheckIcon className="h-5 w-5  dark:text-blue-600 text-blue-400" />
-              )}
-            </div>
-          ))}
-        </div>
-
+      <div
+        ref={modalRef}
+        className="dark:bg-white bg-gray-800 rounded-lg p-6 w-[300px] shadow-xl relative"
+      >
         <button
           onClick={onClose}
-          className="mt-4 w-full py-2 dark:bg-gray-200 bg-gray-700 dark:hover:bg-gray-300 hover:bg-gray-600 rounded-md dark:text-gray-800 text-gray-200 font-medium transition"
+          className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-500 dark:hover:bg-gray-700 transition-colors"
+          aria-label="Close language selector"
         >
-          Close
+          <XIcon className="h-5 w-5 dark:text-gray-900 dark:hover:text-gray-300 text-gray-100" />
         </button>
+
+        <h3 className="text-lg font-bold dark:text-gray-900 text-gray-100 mb-4 pr-6">
+          Select Language
+        </h3>
+
+        <div className="space-y-3">
+          <button
+            onClick={() => {
+              onLanguageChange('english');
+              onClose();
+            }}
+            className={`w-full flex items-center justify-between p-3 rounded-md cursor-pointer border ${
+              selectedLanguage === 'english'
+                ? 'dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200'
+                : 'border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300'
+            }`}
+          >
+            <span className="font-medium">English</span>
+            {selectedLanguage === 'english' && (
+              <CheckIcon className="h-5 w-5 dark:text-blue-600 text-blue-400" />
+            )}
+          </button>
+
+          <button
+            onClick={() => {
+              onLanguageChange('russian');
+              onClose();
+            }}
+            className={`w-full flex items-center justify-between p-3 rounded-md cursor-pointer border ${
+              selectedLanguage === 'russian'
+                ? 'dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200'
+                : 'border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300'
+            }`}
+          >
+            <span className="font-medium">Russian</span>
+            {selectedLanguage === 'russian' && (
+              <CheckIcon className="h-5 w-5 dark:text-blue-600 text-blue-400" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
