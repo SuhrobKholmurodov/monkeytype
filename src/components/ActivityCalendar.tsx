@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Heatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -12,7 +13,7 @@ type ActivityCalendarProps = {
   values: ContributionValue[];
 };
 
-export const ActivityCalendar = ({ values } : ActivityCalendarProps) => {
+export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   const endDate = new Date();
   const startDate = new Date();
   startDate.setFullYear(endDate.getFullYear() - 1);
@@ -32,7 +33,7 @@ export const ActivityCalendar = ({ values } : ActivityCalendarProps) => {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -43,23 +44,23 @@ export const ActivityCalendar = ({ values } : ActivityCalendarProps) => {
           startDate={startDate}
           endDate={endDate}
           values={values}
-          classForValue={(value: ContributionValue | null) => {
+          classForValue={(value) => {
             if (!value) return getColorClass(0);
             return getColorClass(value.count);
           }}
           showWeekdayLabels={true}
           gutterSize={2}
           weekdayLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
-          transformDayElement={(element: React.ReactElement, value: ContributionValue | null) => {
-            const tooltipTitle = value && value.date
-              ? `${value.count} contributions on ${formatDate(new Date(value.date))}`
-              : 'No contributions';
+          transformDayElement={(element, value, index) => {
+            const tooltipTitle =
+              value && value.date
+                ? `${value.count} contributions on ${formatDate(new Date(value.date))}`
+                : 'No contributions';
 
             return (
-              <Tooltip title={tooltipTitle} arrow>
-                {React.cloneElement(element, {
-                  ...element.props,
-                  className: `${element.props.className} rounded-sm`
+              <Tooltip key={index} title={tooltipTitle} arrow>
+                {React.cloneElement(element as React.ReactElement<any>, {
+                  className: `${(element as any).props.className || ''} rounded-sm`,
                 })}
               </Tooltip>
             );
