@@ -15,6 +15,7 @@ type ActivityCalendarProps = {
 
 export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   const endDate = new Date();
+  endDate.setDate(endDate.getDate() + 1);
   const startDate = new Date();
   startDate.setFullYear(endDate.getFullYear() - 1);
 
@@ -52,12 +53,13 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
           gutterSize={2}
           weekdayLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
           transformDayElement={(element, value, index) => {
-            const tooltipTitle =
-              value && value.date
-                ? `${
-                    value.count === 0 ? 'No ' : value.count
-                  } test on ${formatDate(new Date(value.date))}`
-                : 'No test';
+            const tooltipTitle = !value
+              ? 'No test'
+              : value.count === 0
+              ? `No test on ${formatDate(new Date(value.date))}`
+              : `${value.count} test${value.count > 1 ? 's' : ''} on ${formatDate(
+                  new Date(value.date),
+                )}`;
             return (
               <Tooltip
                 key={index}

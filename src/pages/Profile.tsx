@@ -17,22 +17,20 @@ export const Profile = () => {
     }
   }, []);
 
+
   const generateData = (): ContributionValue[] => {
-    const savedActivity = localStorage.getItem('activityData');
-    const parsed: Record<string, { count: number }> = savedActivity
-      ? JSON.parse(savedActivity)
-      : {};
     const endDate = new Date();
     const startDate = new Date();
     startDate.setFullYear(endDate.getFullYear() - 1);
+
     const days = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
     return Array.from({ length: days }, (_, i) => {
       const date = new Date(startDate);
       date.setDate(startDate.getDate() + i);
-      const formattedDate = date.toISOString().split('T')[0];
+      const count = Math.random() > 0.7 ? Math.floor(Math.random() * 20) : 0;
       return {
-        date: formattedDate,
-        count: parsed[formattedDate]?.count || 0,
+        date: date.toISOString().split('T')[0],
+        count: count,
       };
     });
   };

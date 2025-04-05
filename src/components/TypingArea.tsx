@@ -141,22 +141,6 @@ export const TypingArea = () => {
         }
       }
 
-      const currentDate = newResult.date;
-      const savedActivity = localStorage.getItem('activityData');
-      const activityData: { day: string; count: number }[] = savedActivity
-        ? JSON.parse(savedActivity)
-        : [];
-
-      const existingEntry = activityData.find((entry) => entry.day === currentDate);
-
-      if (existingEntry) {
-        existingEntry.count += 1;
-      } else {
-        activityData.push({ day: currentDate, count: 1 });
-      }
-
-      localStorage.setItem('activityData', JSON.stringify(activityData));
-
       setPastResults(updatedResults);
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));
     }
