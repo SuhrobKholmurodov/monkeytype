@@ -38,7 +38,7 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   };
 
   return (
-    <div className="p-4 border rounded-md border-gray-600">
+    <div className="pt-3 pr-6 pb-3 border rounded-md border-gray-600">
       <div>
         <Heatmap
           startDate={startDate}
@@ -54,20 +54,42 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
           transformDayElement={(element, value, index) => {
             const tooltipTitle =
               value && value.date
-                ? `${value.count} contributions on ${formatDate(new Date(value.date))}`
+                ? `${
+                    value.count === 0 ? 'No ' : value.count
+                  } contributions on ${formatDate(new Date(value.date))}`
                 : 'No contributions';
 
             return (
-              <Tooltip key={index} title={tooltipTitle} arrow>
+              <Tooltip
+                key={index}
+                title={tooltipTitle}
+                arrow
+                slotProps={{
+                  tooltip: {
+                    style: {
+                      backgroundColor: 'black',
+                      color: 'white',
+                      fontSize: '14px',
+                      borderRadius: '5px',
+                      padding: '8px',
+                    },
+                  },
+                  arrow: {
+                    style: {
+                      color: 'black',
+                    },
+                  },
+                }}
+              >
                 {React.cloneElement(element as React.ReactElement<any>, {
-                  className: `${(element as any).props.className || ''} rounded-sm`,
+                  className: `${(element as any).props.className || ''} rounded-md`,
                 })}
               </Tooltip>
             );
           }}
         />
       </div>
-      <div className="flex items-center justify-end gap-2 mt-[-40px] text-xs text-gray-500">
+      <div className="flex items-center justify-end gap-2 mt-[-50px] text-xs text-gray-500">
         <span>Less</span>
         <div className="flex space-x-[5px]">
           <div className="w-3 h-3 dark:bg-gray-300 bg-gray-700 rounded-sm"></div>
