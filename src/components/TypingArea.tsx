@@ -1,16 +1,15 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { englishWordsArray, russianWordsArray } from '~/constants';
-import { Filter } from './Filter';
-import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
-import { Result } from './Result';
 import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
+import { Filter } from './Filter';
+import { Result } from './Result';
+import { WordDisplay } from './WordDisplay';
 import { Language, TestResult } from '~/@types';
 import { RestartButton } from './RestartButton';
-import { LanguageSelector } from './LanguageSelector';
-import { WordDisplay } from './WordDisplay';
 import { ResultsSummary } from './ResultsSummary';
-import { getQuoteSizes } from '~/utils/QuoteSize';
+import { LanguageSelector } from './LanguageSelector';
+import { englishWordsArray, russianWordsArray } from '~/constants';
+import { calculateAccuracy, calculateWPM, getQuoteSizes } from '~/utils';
 
 export interface TypedWordData {
   word: string;

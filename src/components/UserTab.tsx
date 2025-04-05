@@ -3,7 +3,7 @@ import { Pencil, UserRound } from 'lucide-react';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import { toast } from 'react-toastify';
-import { getJoinDateDifference } from '~/utils/Profile';
+import { getJoinDateDifference } from '~/utils';
 
 export const UserTab = () => {
   const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
