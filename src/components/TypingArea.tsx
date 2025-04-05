@@ -106,6 +106,7 @@ export const TypingArea = () => {
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
         completionTime: formatCompletionTime(new Date()),
         quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
+        date: new Date().toISOString().split('T')[0],
       };
 
       const savedResults = localStorage.getItem('typingTestResults');
@@ -139,6 +140,22 @@ export const TypingArea = () => {
           }, 5000);
         }
       }
+
+      const currentDate = newResult.date;
+      const savedActivity = localStorage.getItem('activityData');
+      const activityData: { day: string; count: number }[] = savedActivity
+        ? JSON.parse(savedActivity)
+        : [];
+
+      const existingEntry = activityData.find((entry) => entry.day === currentDate);
+
+      if (existingEntry) {
+        existingEntry.count += 1;
+      } else {
+        activityData.push({ day: currentDate, count: 1 });
+      }
+
+      localStorage.setItem('activityData', JSON.stringify(activityData));
 
       setPastResults(updatedResults);
       localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));

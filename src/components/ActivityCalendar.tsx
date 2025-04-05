@@ -56,9 +56,8 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
               value && value.date
                 ? `${
                     value.count === 0 ? 'No ' : value.count
-                  } contributions on ${formatDate(new Date(value.date))}`
-                : 'No contributions';
-
+                  } test on ${formatDate(new Date(value.date))}`
+                : 'No test';
             return (
               <Tooltip
                 key={index}
