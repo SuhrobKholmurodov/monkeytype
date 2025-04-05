@@ -9,12 +9,12 @@ interface LanguageModalProps {
   onLanguageChange: (lang: Language) => void;
 }
 
-export default function LanguageModal({
+export const LanguageModal = ({
   isOpen,
   onClose,
   selectedLanguage,
   onLanguageChange,
-}: LanguageModalProps) {
+}: LanguageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -96,4 +96,4 @@ export default function LanguageModal({
       </div>
     </div>
   );
-}
+};

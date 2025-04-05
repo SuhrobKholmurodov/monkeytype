@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { GlobeIcon } from 'lucide-react';
 import { englishWordsArray, russianWordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
@@ -9,8 +8,8 @@ import { toast } from 'react-toastify';
 import { Language, TestResult } from '~/@types';
 
 import { englishQuotesArray, russianQuotesArray } from '~/constants';
-import LanguageModal from './LanguageModal';
 import { RestartButton } from './RestartButton';
+import { LanguageSelector } from './LanguageSelector';
 
 export interface TypedWordData {
   word: string;
@@ -39,7 +38,6 @@ export const TypingArea = () => {
   const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
 
@@ -68,9 +66,7 @@ export const TypingArea = () => {
   const handleLanguageChange = (lang: Language) => {
     setSelectedLanguage(lang);
     localStorage.setItem('typingTestLanguage', lang);
-    setIsModalOpen(false);
   };
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -323,16 +319,7 @@ export const TypingArea = () => {
                 wordsCount={activeWordsCount}
                 onChange={handleFilterChange}
               />
-              <div
-                onClick={toggleModal}
-                className="flex hover:text-gray-400 duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
-              >
-                <GlobeIcon className="h-5 w-5" />
-                <p>{selectedLanguage === 'english' ? 'English' : 'Russian'}</p>
-              </div>
-              <LanguageModal
-                isOpen={isModalOpen}
-                onClose={toggleModal}
+              <LanguageSelector
                 selectedLanguage={selectedLanguage}
                 onLanguageChange={handleLanguageChange}
               />
