@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { GlobeIcon, RotateCw } from 'lucide-react';
+import { GlobeIcon } from 'lucide-react';
 import { englishWordsArray, russianWordsArray } from '~/constants';
 import { Filter } from './Filter';
 import { calculateAccuracy, calculateWPM } from '~/utils/Typing';
@@ -10,6 +10,7 @@ import { Language, TestResult } from '~/@types';
 
 import { englishQuotesArray, russianQuotesArray } from '~/constants';
 import LanguageModal from './LanguageModal';
+import { RestartButton } from './RestartButton';
 
 export interface TypedWordData {
   word: string;
@@ -381,18 +382,7 @@ export const TypingArea = () => {
               </div>
 
               <div className="w-full flex items-center justify-center mb-4">
-                <button
-                  onClick={getRandomWords}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      getRandomWords();
-                    }
-                  }}
-                  className="flex dark:bg-gray-300 dark:text-gray-800 items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
-                >
-                  <RotateCw size={16} />
-                  Restart Test
-                </button>
+                <RestartButton onRestart={getRandomWords} />
               </div>
               {(!started || finished) && pastResults[0] && (
                 <Result title="Last Test Result" results={[pastResults[0]]} />
@@ -421,13 +411,7 @@ export const TypingArea = () => {
                 </div>
               </div>
 
-              <button
-                onClick={getRandomWords}
-                className="flex items-center gap-2 px-6 py-3 dark:bg-gray-300 dark:text-gray-800 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-md transition-colors duration-200"
-              >
-                <RotateCw size={16} />
-                Restart Test
-              </button>
+              <RestartButton onRestart={getRandomWords} />
               <div className="w-full mt-7">
                 <Result
                   title="Detailed Results"

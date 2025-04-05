@@ -39,7 +39,7 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   };
 
   return (
-    <div className="pt-3 pr-6 pb-3 border rounded-md border-gray-600">
+    <div className="pt-3 pr-6 pb-3 border rounded-md dark:border-[#c1c4ca] border-gray-600">
       <div>
         <Heatmap
           startDate={startDate}
