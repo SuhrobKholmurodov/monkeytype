@@ -6,12 +6,11 @@ import { Result } from './Result';
 import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
 import { Language, TestResult } from '~/@types';
-
-import { englishQuotesArray, russianQuotesArray } from '~/constants';
 import { RestartButton } from './RestartButton';
 import { LanguageSelector } from './LanguageSelector';
 import { WordDisplay } from './WordDisplay';
 import { ResultsSummary } from './ResultsSummary';
+import { getQuoteSizes } from '~/utils/QuoteSize';
 
 export interface TypedWordData {
   word: string;
@@ -40,24 +39,9 @@ export const TypingArea = () => {
   const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
-
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
 
-  const quoteSizes = {
-    short: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-      (el) => el.split(' ').length <= 15,
-    ),
-    medium: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-      (el) => {
-        const words = el.split(' ').length;
-        return words > 15 && words <= 30;
-      },
-    ),
-    long: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-      (el) => el.split(' ').length > 30,
-    ),
-  };
-
+  const quoteSizes = getQuoteSizes(selectedLanguage);
   useEffect(() => {
     const savedLanguage = localStorage.getItem('typingTestLanguage') as Language | null;
     if (savedLanguage) {
