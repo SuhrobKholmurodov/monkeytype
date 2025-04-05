@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { TestResult } from '~/@types';
-import { MaxScores, MetaTags, Result, UserTab, ResultsChart } from '~/components';
+import { MaxScores, MetaTags, Result, UserTab, ResultsChart, ActivityCalendar } from '~/components';
+
+type ContributionValue = {
+  date: string;
+  count: number;
+};
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
@@ -11,6 +16,23 @@ export const Profile = () => {
       setPastResults(JSON.parse(savedResults));
     }
   }, []);
+
+  const generateData = (): ContributionValue[] => {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setFullYear(endDate.getFullYear() - 1);
+
+    const days = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    return Array.from({ length: days }, (_, i) => {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      const count = Math.random() > 0.7 ? Math.floor(Math.random() * 20) : 0;
+      return {
+        date: date.toISOString().split('T')[0],
+        count: count,
+      };
+    });
+  };
 
   return (
     <div className="py-6 px-[70px] overflow-y-scroll fixed inset-0 dark:bg-gray-200 bg-gray-900">
@@ -23,10 +45,13 @@ export const Profile = () => {
         <UserTab />
         <MaxScores pastResults={pastResults} />
       </div>
+      <div className='mt-6'>
+        <ActivityCalendar values={generateData()} />
+      </div>
       {pastResults.length > 0 ? (
         <>
           <ResultsChart results={pastResults} />
-          <div className='mt-5'>
+          <div className="mt-5">
             <Result title="Your Results Table" results={pastResults} />
           </div>
         </>

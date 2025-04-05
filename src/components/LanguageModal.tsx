@@ -51,10 +51,10 @@ export default function LanguageModal({
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-500 dark:hover:bg-gray-700 transition-colors"
+          className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-500 dark:hover:bg-gray-300 transition-colors"
           aria-label="Close language selector"
         >
-          <XIcon className="h-5 w-5 dark:text-gray-900 dark:hover:text-gray-300 text-gray-100" />
+          <XIcon className="h-5 w-5 dark:text-gray-900 dark:hover:text-gray-600 text-gray-100" />
         </button>
         <h3 className="text-lg font-bold dark:text-gray-900 text-gray-100 mb-4 pr-6">
           Select Language

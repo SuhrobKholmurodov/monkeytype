@@ -14,7 +14,7 @@ export const Switcher = () => {
 
   return (
     <div
-      className="hover:bg-gray-600 bg-gray-700 dark:bg-gray-300 dark:text-gray-800 dark:hover:bg-gray-100 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] dark:hover:text-[#e2b714] hover:cursor-pointer items-center"
+      className="hover:bg-gray-600 bg-gray-700 dark:bg-gray-400 dark:text-gray-800 dark:hover:bg-gray-100 hover:duration-300 px-3 py-[10px] hover:text-[#e2b714] dark:hover:text-[#e2b714] hover:cursor-pointer items-center"
       onClick={() => toggleDarkMode(!darkSide)}
     >
       <div className="ml-[-1px]">
