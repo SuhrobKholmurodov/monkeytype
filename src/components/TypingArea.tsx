@@ -10,6 +10,7 @@ import { ResultsSummary } from './ResultsSummary';
 import { LanguageSelector } from './LanguageSelector';
 import { englishWordsArray, russianWordsArray } from '~/constants';
 import { calculateAccuracy, calculateWPM, getQuoteSizes } from '~/utils';
+import { ProgressIndicator } from './ProgressIndicator';
 
 export interface TypedWordData {
   word: string;
@@ -272,24 +273,19 @@ export const TypingArea = () => {
                 selectedLanguage={selectedLanguage}
                 onLanguageChange={handleLanguageChange}
               />
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-4">
-                  <div className="text-3xl text-[#e2b714] font-[600]">
-                    {activeType === 'time'
-                      ? timeLeft
-                      : activeType === 'words'
-                      ? currentWordIndex + 1 + '/' + activeWordsCount
-                      : currentWordIndex + 1 + '/' + quoteWordCount}
-                  </div>
-                </div>
-              </div>
+              <ProgressIndicator
+                activeType={activeType}
+                timeLeft={timeLeft}
+                currentWordIndex={currentWordIndex}
+                activeWordsCount={activeWordsCount}
+                quoteWordCount={quoteWordCount}
+              />
               <WordDisplay
                 words={words}
                 currentWordIndex={currentWordIndex}
                 typedWord={typedWord}
                 typedWords={typedWords}
               />
-
               <div className="w-full flex items-center justify-center mb-4">
                 <RestartButton onRestart={getRandomWords} />
               </div>
