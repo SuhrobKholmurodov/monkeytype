@@ -178,9 +178,17 @@ export const TypingArea = () => {
       const wordArray = selectedLanguage === 'english' ? englishWordsArray : russianWordsArray;
       let mixed = wordArray.slice().sort(() => 0.5 - Math.random());
 
-      if (includeNumbers) {
+      if (includeNumbers && mixed.length > 1) {
+        const firstNumPos = Math.floor(Math.random() * (mixed.length - 1)) + 1;
+        let secondNumPos = 0;
+        do {
+          secondNumPos = Math.floor(Math.random() * (mixed.length - 1)) + 1;
+        } while (secondNumPos === firstNumPos);
         mixed = mixed.map((el, index) => {
-          if (index % 5 === 0) {
+          if (index === firstNumPos || index === secondNumPos) {
+            return Math.floor(Math.random() * 1000).toString();
+          }
+          if (index !== 0 && Math.random() < 0.25) {
             return Math.floor(Math.random() * 1000).toString();
           }
           return el;
