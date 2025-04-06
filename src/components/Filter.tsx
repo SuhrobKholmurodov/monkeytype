@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Clock, MessageSquareQuote } from 'lucide-react';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import HandymanIcon from '@mui/icons-material/Handyman';
+import NumbersIcon from '@mui/icons-material/Numbers';
 import { GameModeModal } from './GameModeModal';
 
 interface FilterProps {
@@ -9,44 +10,72 @@ interface FilterProps {
   duration: number;
   wordsCount: number;
   quoteSize: 'short' | 'medium' | 'long';
+  includeNumbers: boolean;
   onChange: (type: 'time' | 'words' | 'quote', value: number | string) => void;
+  onToggleNumbers: (include: boolean) => void;
 }
 
-export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: FilterProps) => {
+export const Filter = ({
+  type,
+  duration,
+  wordsCount,
+  quoteSize,
+  includeNumbers,
+  onChange,
+  onToggleNumbers,
+}: FilterProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <div className="flex items-center dark:text-gray-900 justify-between px-[140px] mb-[50px]">
-        <div className="flex rounded-lg dark:bg-gray-300 bg-gray-800 items-center p-3 gap-6">
-          <div
-            className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'time' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
-            }`}
-            onClick={() => onChange('time', duration)}
-          >
-            <Clock />
-            <p className="font-bold">time</p>
-          </div>
-          <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
-          <div
-            className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'words' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
-            }`}
-            onClick={() => onChange('words', wordsCount)}
-          >
-            <TextFormatIcon />
-            <p className="font-[700] mt-[-5px]">words</p>
-          </div>
-          <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
-          <div
-            className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
-              type === 'quote' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
-            }`}
-            onClick={() => onChange('quote', quoteSize)}
-          >
-            <MessageSquareQuote />
-            <p className="font-[700] mt-[-5px]">quote</p>
+      <div
+        style={{ padding: type === 'quote' ? '0 180px 0px 180px' : '0 50px 0px 50px' }}
+        className="flex items-center dark:text-gray-900 justify-between mb-[50px]"
+      >
+        <div className="flex items-center gap-5">
+          {type !== 'quote' && (
+            <div className="flex rounded-lg bg-gray-800 dark:bg-gray-300 items-center p-3 gap-2">
+              <div
+                className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
+                  includeNumbers ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
+                }`}
+                onClick={() => onToggleNumbers(!includeNumbers)}
+              >
+                <NumbersIcon fontSize="small" />
+                <p className="font-[700]">numbers</p>
+              </div>
+            </div>
+          )}
+          <div className="flex rounded-lg dark:bg-gray-300 bg-gray-800 items-center p-3 gap-6">
+            <div
+              className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
+                type === 'time' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
+              }`}
+              onClick={() => onChange('time', duration)}
+            >
+              <Clock />
+              <p className="font-bold">time</p>
+            </div>
+            <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
+            <div
+              className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
+                type === 'words' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
+              }`}
+              onClick={() => onChange('words', wordsCount)}
+            >
+              <TextFormatIcon />
+              <p className="font-[700] mt-[-5px]">words</p>
+            </div>
+            <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
+            <div
+              className={`flex items-center hover:text-gray-400 duration-100 py-[5px] px-[12px] gap-2 cursor-pointer ${
+                type === 'quote' ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
+              }`}
+              onClick={() => onChange('quote', quoteSize)}
+            >
+              <MessageSquareQuote />
+              <p className="font-[700] mt-[-5px]">quote</p>
+            </div>
           </div>
         </div>
 
@@ -55,9 +84,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 15
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  duration === 15 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 15)}
               >
@@ -66,9 +93,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 30
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  duration === 30 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 30)}
               >
@@ -77,9 +102,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 60
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  duration === 60 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 60)}
               >
@@ -88,9 +111,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  duration === 120
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  duration === 120 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('time', 120)}
               >
@@ -112,9 +133,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
             <>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 10
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  wordsCount === 10 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 10)}
               >
@@ -123,9 +142,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 25
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  wordsCount === 25 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 25)}
               >
@@ -134,9 +151,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 50
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  wordsCount === 50 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 50)}
               >
@@ -145,9 +160,7 @@ export const Filter = ({ type, duration, wordsCount, quoteSize, onChange }: Filt
               <div className="h-6 w-2 bg-gray-600 dark:bg-gray-50 rounded-md"></div>
               <p
                 className={`cursor-pointer hover:text-gray-400 duration-100 font-bold py-[5px] px-[12px] ${
-                  wordsCount === 100
-                    ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg'
-                    : ''
+                  wordsCount === 100 ? 'bg-gray-700 dark:bg-gray-100 text-[#e2b714] rounded-lg' : ''
                 }`}
                 onClick={() => onChange('words', 100)}
               >

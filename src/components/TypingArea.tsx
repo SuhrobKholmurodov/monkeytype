@@ -40,6 +40,12 @@ export const TypingArea = () => {
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
+  const [includeNumbers, setIncludeNumbers] = useState(false);
+
+  const handleToggleNumbers = (include: boolean) => {
+    setIncludeNumbers(include);
+    getRandomWords();
+  };
 
   const quoteSizes = getQuoteSizes(selectedLanguage);
   useEffect(() => {
@@ -169,9 +175,18 @@ export const TypingArea = () => {
       setWords(words);
       setQuoteWordCount(words.length);
     } else {
-      const mixed = (selectedLanguage === 'english' ? englishWordsArray : russianWordsArray)
-        .slice()
-        .sort(() => 0.5 - Math.random());
+      const wordArray = selectedLanguage === 'english' ? englishWordsArray : russianWordsArray;
+      let mixed = wordArray.slice().sort(() => 0.5 - Math.random());
+
+      if (includeNumbers) {
+        mixed = mixed.map((el, index) => {
+          if (index % 5 === 0) {
+            return Math.floor(Math.random() * 1000).toString();
+          }
+          return el;
+        });
+      }
+
       setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
       setQuoteWordCount(0);
     }
@@ -268,6 +283,8 @@ export const TypingArea = () => {
                 quoteSize={activeQuoteSize}
                 wordsCount={activeWordsCount}
                 onChange={handleFilterChange}
+                includeNumbers={includeNumbers}
+                onToggleNumbers={handleToggleNumbers}
               />
               <LanguageSelector
                 selectedLanguage={selectedLanguage}
