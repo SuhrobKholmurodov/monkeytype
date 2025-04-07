@@ -1,40 +1,41 @@
-import { TestResult } from "~/@types"
+import { TestResult } from '~/@types';
 
 export const getJoinDateDifference = (joinDate: string): string => {
-  const joinDateObj = new Date(joinDate)
-  const currentDate = new Date()
-  const timeDifference = currentDate.getTime() - joinDateObj.getTime()
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+  const joinDateObj = new Date(joinDate);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - joinDateObj.getTime();
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
   if (daysDifference === 0) {
-    return 'today'
+    return 'today';
   } else if (daysDifference === 1) {
-    return 'yesterday'
+    return 'yesterday';
   } else {
-    return `${daysDifference} days ago`
+    return `${daysDifference} days ago`;
   }
-}
+};
 
 export const getMaxWPMAndAccuracy = (
   pastResults: TestResult[],
   duration: number,
-  type: 'time' | 'words'
-): { maxWPM: number; accuracy: number; completedAt: string } => {
+  type: 'time' | 'words',
+): { maxWPM: number; accuracy: number; completedAt: string; language: string } => {
   const filteredResults = pastResults.filter(
-    result => result.duration === duration && result.type === type
-  )
+    (result) => result.duration === duration && result.type === type,
+  );
 
   if (filteredResults.length === 0) {
-    return { maxWPM: 0, accuracy: 0, completedAt: '-' }
+    return { maxWPM: 0, accuracy: 0, completedAt: '-', language: '-' };
   }
 
   const maxResult = filteredResults.reduce((prev, current) =>
-    prev.wpm > current.wpm ? prev : current
-  )
+    prev.wpm > current.wpm ? prev : current,
+  );
 
   return {
     maxWPM: maxResult.wpm,
     accuracy: maxResult.accuracy,
-    completedAt: maxResult.completionTime
-  }
-}
+    language: maxResult.language,
+    completedAt: maxResult.completionTime,
+  };
+};

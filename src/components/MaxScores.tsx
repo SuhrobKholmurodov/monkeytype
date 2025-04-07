@@ -26,6 +26,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max15Seconds.maxWPM}
             accuracy={max15Seconds.accuracy}
+            language={max15Seconds.language}
             completedAt={max15Seconds.completedAt}
             label="15 seconds"
           />
@@ -40,6 +41,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max30Seconds.maxWPM}
             accuracy={max30Seconds.accuracy}
+            language={max30Seconds.language}
             completedAt={max30Seconds.completedAt}
             label="30 seconds"
           />
@@ -54,6 +56,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max60Seconds.maxWPM}
             accuracy={max60Seconds.accuracy}
+            language={max60Seconds.language}
             completedAt={max60Seconds.completedAt}
             label="60 seconds"
           />
@@ -68,6 +71,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max120Seconds.maxWPM}
             accuracy={max120Seconds.accuracy}
+            language={max120Seconds.language}
             completedAt={max120Seconds.completedAt}
             label="120 seconds"
           />
@@ -87,6 +91,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max10Words.maxWPM}
             accuracy={max10Words.accuracy}
+            language={max10Words.language}
             completedAt={max10Words.completedAt}
             label="10 words"
           />
@@ -101,6 +106,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max25Words.maxWPM}
             accuracy={max25Words.accuracy}
+            language={max25Words.language}
             completedAt={max25Words.completedAt}
             label="25 words"
           />
@@ -115,6 +121,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max50Words.maxWPM}
             accuracy={max50Words.accuracy}
+            language={max50Words.language}
             completedAt={max50Words.completedAt}
             label="50 words"
           />
@@ -129,6 +136,7 @@ export const MaxScores = ({ pastResults }: MaxScoresProps) => {
           <ScoreTooltip
             maxWPM={max100Words.maxWPM}
             accuracy={max100Words.accuracy}
+            language={max100Words.language}
             completedAt={max100Words.completedAt}
             label="100 words"
           />
