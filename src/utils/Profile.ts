@@ -10,8 +10,18 @@ export const getJoinDateDifference = (joinDate: string): string => {
     return 'today';
   } else if (daysDifference === 1) {
     return 'yesterday';
-  } else {
+  } else if (daysDifference < 7) {
     return `${daysDifference} days ago`;
+  } else if (daysDifference < 14) {
+    return 'a week ago';
+  } else if (daysDifference < 30) {
+    const weeks = Math.floor(daysDifference / 7);
+    return `${weeks} weeks ago`;
+  } else if (daysDifference < 60) {
+    return 'a month ago';
+  } else {
+    const months = Math.floor(daysDifference / 30);
+    return `${months} months ago`;
   }
 };
 
