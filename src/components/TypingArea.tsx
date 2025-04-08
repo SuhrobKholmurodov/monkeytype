@@ -32,21 +32,36 @@ export const TypingArea = () => {
     return saved ? JSON.parse(saved) : [];
   });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeType, setActiveType] = useState<'time' | 'words' | 'quote'>('time');
-  const [activeDuration, setActiveDuration] = useState(15);
-  const [activeWordsCount, setActiveWordsCount] = useState(10);
-  const [activeQuoteSize, setActiveQuoteSize] = useState<'short' | 'medium' | 'long'>('short');
+  const [activeType, setActiveType] = useState<'time' | 'words' | 'quote'>(() => {
+    const savedType = localStorage.getItem('typingTestType');
+    return savedType ? (savedType as 'time' | 'words' | 'quote') : 'time';
+  });
+  const [activeDuration, setActiveDuration] = useState(() => {
+    const savedDuration = localStorage.getItem('typingTestDuration');
+    return savedDuration ? parseInt(savedDuration) : 15;
+  });
+  const [activeWordsCount, setActiveWordsCount] = useState(() => {
+    const savedWordsCount = localStorage.getItem('typingTestWordsCount');
+    return savedWordsCount ? parseInt(savedWordsCount) : 10;
+  });
+  const [activeQuoteSize, setActiveQuoteSize] = useState<'short' | 'medium' | 'long'>(() => {
+    const savedQuoteSize = localStorage.getItem('typingTestQuoteSize');
+    return savedQuoteSize ? (savedQuoteSize as 'short' | 'medium' | 'long') : 'short';
+  });
+  const [includeNumbers, setIncludeNumbers] = useState(() => {
+    const savedIncludeNumbers = localStorage.getItem('typingTestIncludeNumbers');
+    return savedIncludeNumbers ? JSON.parse(savedIncludeNumbers) : false;
+  });
   const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
-  const [includeNumbers, setIncludeNumbers] = useState(false);
 
   const handleToggleNumbers = (include: boolean) => {
     setIncludeNumbers(include);
+    localStorage.setItem('typingTestIncludeNumbers', JSON.stringify(include));
     getRandomWords();
   };
-
   const quoteSizes = getQuoteSizes(selectedLanguage);
   useEffect(() => {
     const savedLanguage = localStorage.getItem('typingTestLanguage') as Language | null;
@@ -254,17 +269,23 @@ export const TypingArea = () => {
     if (type === 'time') {
       setActiveType('time');
       setActiveDuration(value as number);
+      localStorage.setItem('typingTestType', 'time');
+      localStorage.setItem('typingTestDuration', value.toString());
       setQuoteWordCount(0);
       getRandomWords();
     } else if (type === 'words') {
       setActiveType('words');
       setActiveWordsCount(value as number);
+      localStorage.setItem('typingTestType', 'words');
+      localStorage.setItem('typingTestWordsCount', value.toString());
       setQuoteWordCount(0);
       getRandomWords();
     } else {
       setActiveType('quote');
       const size = (value as 'short' | 'medium' | 'long') || 'medium';
       setActiveQuoteSize(size);
+      localStorage.setItem('typingTestType', 'quote');
+      localStorage.setItem('typingTestQuoteSize', size);
       getRandomWords();
     }
   };
