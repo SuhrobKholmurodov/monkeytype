@@ -9,30 +9,28 @@ type ContributionValue = {
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
+  const [today, setToday] = useState<string>('');
+  const [todayCount, setTodayCount] = useState<number>(0);
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
     if (savedResults) {
-      setPastResults(JSON.parse(savedResults));
+      const parsedResults = JSON.parse(savedResults);
+      setPastResults(parsedResults);
+      const today = new Date().toISOString().split('T')[0];
+      setToday(today);
+      const todayResults = parsedResults.filter((result: TestResult) => result.date === today);
+      setTodayCount(todayResults.length);
     }
   }, []);
 
-
   const generateData = (): ContributionValue[] => {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setFullYear(endDate.getFullYear() - 1);
-
-    const days = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    return Array.from({ length: days }, (_, i) => {
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + i);
-      const count = Math.random() > 0.7 ? Math.floor(Math.random() * 20) : 0;
-      return {
-        date: date.toISOString().split('T')[0],
-        count: count,
-      };
-    });
+    return [
+      {
+        date: today,
+        count: todayCount,
+      },
+    ];
   };
 
   return (
@@ -47,7 +45,8 @@ export const Profile = () => {
         <MaxScores pastResults={pastResults} />
       </div>
       <div className="mt-5">
-        <ActivityCalendar values={generateData()} />
+        {' '}
+        <ActivityCalendar values={generateData()} />{' '}
       </div>
       {pastResults.length > 0 ? (
         <>

@@ -9,6 +9,7 @@ export interface TestResult {
   completionTime: string;
   quoteSize?: 'short' | 'medium' | 'long'; 
   language: 'english' | 'russian'
+  date?: string
 }
 
 export type Language = 'english' | 'russian';
