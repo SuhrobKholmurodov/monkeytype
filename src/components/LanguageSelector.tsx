@@ -15,7 +15,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
     <>
       <div
         onClick={() => setIsModalOpen(true)}
-        className="flex hover:text-gray-400 duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
+        className="flex hover:text-gray-400 w-fit mx-auto duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
       >
         <GlobeIcon className="h-5 w-5" />
         <p>{selectedLanguage === 'english' ? 'English' : 'Russian'}</p>

@@ -116,11 +116,6 @@ export const TypingArea = () => {
       const savedResults = localStorage.getItem('typingTestResults');
       const pastResults = savedResults ? JSON.parse(savedResults) : [];
       const updatedResults = [newResult, ...pastResults];
-
-      // const today = new Date().toISOString().split('T')[0];
-      // const todayResults = updatedResults.filter((result: TestResult) => result.date === today);
-      // console.log('today', todayResults);
-
       const previousResultsOfSameType = pastResults.filter(
         (result: TestResult) =>
           result.type === activeType &&

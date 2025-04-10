@@ -15,18 +15,18 @@ type ActivityCalendarProps = {
 
 export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   const endDate = new Date();
-  endDate.setDate(endDate.getDate() + 1);
+  endDate.setDate(endDate.getDate());
   const startDate = new Date();
   startDate.setFullYear(endDate.getFullYear() - 1);
 
   const getColorClass = (count: number): string => {
     if (!count) return 'bg-gray-700 dark:bg-gray-300 dark:fill-gray-300 fill-gray-700';
-    if (count < 3) return 'bg-green-600 fill-green-600';
-    if (count < 6) return 'bg-green-500 fill-green-500';
-    if (count < 10) return 'bg-green-400 fill-green-400';
-    if (count < 15) return 'bg-green-300 fill-green-300';
-    if (count < 20) return 'bg-green-200 fill-green-200';
-    return 'bg-green-700 fill-green-700';
+    if (count < 3) return 'bg-green-700 fill-green-700';
+    if (count < 6) return 'bg-green-600 fill-green-600';
+    if (count < 10) return 'bg-green-500 fill-green-500';
+    if (count < 15) return 'bg-green-400 fill-green-400';
+    if (count < 20) return 'bg-green-300 fill-green-300';
+    return 'bg-green-800 fill-green-800';
   };
 
   const formatDate = (date: Date): string => {
