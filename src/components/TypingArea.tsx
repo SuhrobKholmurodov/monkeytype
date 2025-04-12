@@ -11,6 +11,7 @@ import { LanguageSelector } from './LanguageSelector';
 import { englishWordsArray, russianWordsArray } from '~/constants';
 import { calculateAccuracy, calculateWPM, getQuoteSizes } from '~/utils';
 import { ProgressIndicator } from './ProgressIndicator';
+import HttpsIcon from '@mui/icons-material/Https';
 
 export interface TypedWordData {
   word: string;
@@ -27,6 +28,7 @@ export const TypingArea = () => {
   const [finished, setFinished] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
+  const [capsLockOn, setCapsLockOn] = useState(false);
   const [pastResults, setPastResults] = useState<TestResult[]>(() => {
     const saved = localStorage.getItem('typingTestResults');
     return saved ? JSON.parse(saved) : [];
@@ -84,6 +86,24 @@ export const TypingArea = () => {
     if (containerRef.current) {
       containerRef.current.focus();
     }
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.getModifierState('CapsLock')) {
+        setCapsLockOn(true);
+      } else {
+        setCapsLockOn(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown as EventListener);
+    window.addEventListener('keyup', handleKeyDown as EventListener);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown as EventListener);
+      window.removeEventListener('keyup', handleKeyDown as EventListener);
+    };
   }, []);
 
   const formatCompletionTime = (date: Date): string => {
@@ -314,6 +334,14 @@ export const TypingArea = () => {
                 includeNumbers={includeNumbers}
                 onToggleNumbers={handleToggleNumbers}
               />
+              {capsLockOn && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 top-[175px] z-10">
+                  <div className="flex gap-3 items-center bg-yellow-400 bg-opacity-90 text-gray-800 px-4 py-3 rounded-md shadow-lg">
+                    <HttpsIcon />
+                    <span className='font-bold'>Caps Lock</span>
+                  </div>
+                </div>
+              )}
               <LanguageSelector
                 selectedLanguage={selectedLanguage}
                 onLanguageChange={handleLanguageChange}
