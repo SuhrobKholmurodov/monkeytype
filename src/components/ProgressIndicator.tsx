@@ -1,3 +1,5 @@
+import { formatTimeLeft } from '~/utils'; 
+
 interface ProgressIndicatorProps {
   activeType: 'time' | 'words' | 'quote';
   timeLeft: number;
@@ -17,7 +19,7 @@ export const ProgressIndicator = ({
     <div className="flex items-center gap-4">
       <div className="text-3xl text-[#e2b714] font-[600]">
         {activeType === 'time'
-          ? timeLeft
+          ? formatTimeLeft(timeLeft) 
           : activeType === 'words'
           ? `${currentWordIndex + 1}/${activeWordsCount}`
           : `${currentWordIndex + 1}/${quoteWordCount}`}

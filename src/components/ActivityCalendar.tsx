@@ -42,9 +42,10 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
     <div className="pt-3 pr-6 pb-3 border rounded-md dark:border-[#c1c4ca] border-gray-600">
       <div>
         <Heatmap
-          startDate={startDate}
           endDate={endDate}
           values={values}
+          startDate={startDate}
+          showMonthLabels={true}
           classForValue={(value) => {
             if (!value) return getColorClass(0);
             return getColorClass(value.count);

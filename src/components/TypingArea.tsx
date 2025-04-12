@@ -338,7 +338,7 @@ export const TypingArea = () => {
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-[175px] z-10">
                   <div className="flex gap-3 items-center bg-yellow-400 bg-opacity-90 text-gray-800 px-4 py-3 rounded-md shadow-lg">
                     <HttpsIcon />
-                    <span className='font-bold'>Caps Lock</span>
+                    <span className="font-bold">Caps Lock</span>
                   </div>
                 </div>
               )}
