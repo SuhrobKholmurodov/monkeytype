@@ -28,7 +28,7 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
     if (count < 10) return 'bg-green-500 fill-green-500';
     if (count < 15) return 'bg-green-400 fill-green-400';
     if (count < 20) return 'bg-green-300 fill-green-300';
-    return 'bg-green-800 fill-green-800';
+    return 'bg-green-200 fill-green-200';
   };
 
   const formatDate = (date: Date): string => {
