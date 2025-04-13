@@ -9,28 +9,31 @@ type ContributionValue = {
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
-  const [today, setToday] = useState<string>('');
-  const [todayCount, setTodayCount] = useState<number>(0);
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
     if (savedResults) {
       const parsedResults = JSON.parse(savedResults);
       setPastResults(parsedResults);
-      const today = new Date().toISOString().split('T')[0];
-      setToday(today);
-      const todayResults = parsedResults.filter((result: TestResult) => result.date === today);
-      setTodayCount(todayResults.length);
     }
   }, []);
 
   const generateData = (): ContributionValue[] => {
-    return [
-      {
-        date: today,
-        count: todayCount,
-      },
-    ];
+    const resultsByDate: Record<string, number> = {};
+    pastResults.forEach((result) => {
+      const date = result.date;
+      if (date) {
+        if (resultsByDate[date]) {
+          resultsByDate[date] += 1;
+        } else {
+          resultsByDate[date] = 1;
+        }
+      }
+    });
+    return Object.entries(resultsByDate).map(([date, count]) => ({
+      date,
+      count,
+    }));
   };
 
   return (
