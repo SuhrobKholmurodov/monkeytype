@@ -19,6 +19,8 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   const startDate = new Date();
   startDate.setFullYear(endDate.getFullYear() - 1);
 
+  const totalTests = values.reduce((sum, value) => sum + value.count, 0);
+
   const getColorClass = (count: number): string => {
     if (!count) return 'bg-gray-700 dark:bg-gray-300 dark:fill-gray-300 fill-gray-700';
     if (count < 3) return 'bg-green-700 fill-green-700';
@@ -91,16 +93,21 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
           }}
         />
       </div>
-      <div className="flex items-center justify-end gap-2 mt-[-50px] text-xs text-gray-500">
-        <span>Less</span>
-        <div className="flex space-x-[5px]">
-          <div className="w-3 h-3 dark:bg-gray-300 bg-gray-700 rounded-sm"></div>
-          <div className="w-3 h-3 bg-green-700 rounded-sm"></div>
-          <div className="w-3 h-3 bg-green-600 rounded-sm"></div>
-          <div className="w-3 h-3 bg-green-400 rounded-sm"></div>
-          <div className="w-3 h-3 bg-green-200 rounded-sm"></div>
+      <div className="flex items-center ml-[60px] justify-between mt-[-50px]">
+        <div className="text-center border px-6 dark:border-gray-300 py-1 rounded-md border-gray-500 text-lg font-medium text-gray-400">
+          {totalTests} test{totalTests !== 1 ? 's' : ''}
         </div>
-        <span>More</span>
+        <div className="flex items-center justify-end gap-2 text-xs text-gray-500">
+          <span>Less</span>
+          <div className="flex space-x-[5px]">
+            <div className="w-3 h-3 dark:bg-gray-300 bg-gray-700 rounded-sm"></div>
+            <div className="w-3 h-3 bg-green-700 rounded-sm"></div>
+            <div className="w-3 h-3 bg-green-600 rounded-sm"></div>
+            <div className="w-3 h-3 bg-green-400 rounded-sm"></div>
+            <div className="w-3 h-3 bg-green-200 rounded-sm"></div>
+          </div>
+          <span>More</span>
+        </div>
       </div>
     </div>
   );
