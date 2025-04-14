@@ -69,8 +69,8 @@ export const UserTab = () => {
       className="flex dark:bg-gray-300 justify-between bg-gray-800 p-4 h-[173px] w-[400px] rounded-lg"
     >
       <div className="flex gap-4">
-        <div className="p-8 h-[90px] text-gray-200 dark:bg-gray-400 dark:text-gray-800 bg-gray-900 rounded-full">
-          <UserRound size={30} />
+        <div className="p-4 h-[90px] text-gray-200 dark:bg-gray-400 dark:text-gray-800 bg-gray-900 rounded-full">
+          <UserRound size={60} />
         </div>
         <div className="flex flex-col">
           {isEditing ? (
@@ -83,11 +83,11 @@ export const UserTab = () => {
               className="bg-gray-700 dark:bg-gray-50 text-gray-50 dark:text-gray-700 font-[600] w-[180px] mt-[-2px] text-[24px] rounded-md pr-[3px] pt-[3px] pl-[2px] pb-[3px] focus:outline-none"
             />
           ) : (
-            <p className="font-[600] dark:text-gray-700 text-gray-50 text-[24px]">
+            <p className="font-[600] dark:text-gray-700 text-gray-50 text-[30px]">
               {userName || 'Your Name'}
             </p>
           )}
-          <div>
+          <div className='leading-5 font-medium text-[14px]'>
             <Tooltip
               title={
                 userJoinDate

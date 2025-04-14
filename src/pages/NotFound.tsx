@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { MetaTags } from '~/components';
-import { NotFoundContent } from '~/components/NotFoundContent';
+import { MetaTags, NotFoundContent } from '~/components';
 
 export const NotFound = () => {
   return (

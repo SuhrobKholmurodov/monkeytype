@@ -93,10 +93,31 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
           }}
         />
       </div>
+
       <div className="flex items-center ml-[60px] justify-between mt-[-50px]">
-        <div className="text-center border px-6 dark:border-gray-300 py-1 rounded-md border-gray-500 text-lg font-medium text-gray-400">
-          {totalTests} test{totalTests !== 1 ? 's' : ''}
-        </div>
+        <Tooltip
+          title="Total count of tests!"
+          arrow
+          placement="top"
+          componentsProps={{
+            tooltip: {
+              style: {
+                backgroundColor: 'black',
+                color: 'white',
+                fontSize: '14px',
+              },
+            },
+            arrow: {
+              style: {
+                color: 'black',
+              },
+            },
+          }}
+        >
+          <div className="text-center border px-6 dark:border-gray-300 py-1 rounded-md border-gray-500 text-lg font-medium text-gray-400">
+            {totalTests} test{totalTests !== 1 ? 's' : ''}
+          </div>
+        </Tooltip>
         <div className="flex items-center justify-end gap-2 text-xs text-gray-500">
           <span>Less</span>
           <div className="flex space-x-[5px]">
