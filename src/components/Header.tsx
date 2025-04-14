@@ -11,8 +11,24 @@ export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!localStorage.getItem('userName')) {
+      setIsModalOpen(true);
+    }
+
+    const interval = setInterval(() => {
+      const currentName = localStorage.getItem('userName') || '';
+      if (currentName !== userName) {
+        setUserName(currentName);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [userName]);
+
   const handleNameSet = () => {
-    setUserName(localStorage.getItem('userName') || '');
+    const currentName = localStorage.getItem('userName') || '';
+    setUserName(currentName);
   };
 
   useEffect(() => {

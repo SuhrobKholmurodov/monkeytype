@@ -60,9 +60,6 @@ export const UserTab = () => {
         draggable: true,
         progress: undefined,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
     }
   };
 
