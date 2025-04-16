@@ -52,7 +52,20 @@ export const WordDisplay = ({
   return (
     <div className="mb-8 p-4 bg-gray-800 dark:text-gray-700 dark:bg-gray-300 rounded-lg shadow-md">
       <div className="text-xl font-mono leading-relaxed space-y-1">
-        <div className="flex flex-wrap h-[110px] gap-2 overflow-y-auto no-scrollbar">
+        <div
+          className="flex flex-wrap h-[110px] gap-2 overflow-y-auto no-scrollbar"
+          ref={(el) => {
+            if (el && currentWordIndex >= 0) {
+              const currentWordElement = el.children[currentWordIndex] as HTMLElement;
+              if (currentWordElement) {
+                el.scrollTo({
+                  top: currentWordElement.offsetTop - el.offsetTop,
+                  behavior: 'smooth',
+                });
+              }
+            }
+          }}
+        >
           {words.map((word, index) => (
             <span
               key={index}

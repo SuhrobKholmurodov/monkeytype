@@ -114,7 +114,7 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
             },
           }}
         >
-          <div className="text-center border px-6 dark:border-gray-300 py-1 rounded-md border-gray-500 text-lg font-medium text-gray-400">
+          <div className="text-center hover:cursor-pointer border px-6 dark:border-gray-300 py-1 rounded-md border-gray-500 text-lg font-medium text-gray-400">
             {totalTests} test{totalTests !== 1 ? 's' : ''}
           </div>
         </Tooltip>
