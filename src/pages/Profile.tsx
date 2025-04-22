@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TestResult } from '~/@types';
 import { MaxScores, MetaTags, Result, UserTab, ResultsChart, ActivityCalendar } from '~/components';
 
-type ContributionValue = {
+export type ContributionValue = {
   date: string;
   count: number;
 };

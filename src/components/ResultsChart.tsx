@@ -33,8 +33,7 @@ export const ResultsChart = ({ results }: ResultsChartProps) => {
             }`,
       accuracy: result.accuracy,
       time: result.time,
-      completionTime: result.completionTime,
-      isCustom,
+      date: result.completionTime,
     };
   });
 
@@ -53,7 +52,7 @@ export const ResultsChart = ({ results }: ResultsChartProps) => {
             <Line type="monotone" dataKey="wpm" stroke="#3B82F6" name="wpm" />
             <Line type="monotone" dataKey="accuracy" stroke="#10B981" name="acc" />
             <Line type="monotone" dataKey="time" stroke="#EF4444" name="time" />
-            <Line type="monotone" dataKey="completionTime" stroke="#6D28D9" name="date" />
+            <Line type="monotone" dataKey="date" stroke="#6D28D9" name="date" />
           </LineChart>
         </ResponsiveContainer>
       </div>

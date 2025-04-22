@@ -66,12 +66,13 @@ export const UserTab = () => {
   return (
     <div
       id="UserTab"
-      className="flex dark:bg-gray-300 justify-between bg-gray-800 p-4 h-[173px] w-[400px] rounded-lg"
+      className="flex items-start dark:bg-gray-300 justify-between bg-gray-800 p-4 h-[173px] w-[400px] rounded-lg"
     >
       <div className="flex gap-4">
         <div className="p-4 h-[90px] text-gray-200 dark:bg-gray-400 dark:text-gray-800 bg-gray-900 rounded-full">
           <UserRound size={60} />
         </div>
+
         <div className="flex flex-col">
           {isEditing ? (
             <input
@@ -80,14 +81,14 @@ export const UserTab = () => {
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
               autoFocus
-              className="bg-gray-700 dark:bg-gray-50 text-gray-50 dark:text-gray-700 font-[600] w-[180px] mt-[-2px] text-[24px] rounded-md pr-[3px] pt-[3px] pl-[2px] pb-[3px] focus:outline-none"
+              className="bg-gray-700 dark:bg-gray-50 text-gray-50 pl-1 dark:text-gray-700 font-[600] w-[180px] text-[30px] rounded-md focus:outline-none"
             />
           ) : (
             <p className="font-[600] dark:text-gray-700 text-gray-50 text-[30px]">
               {userName || 'Your Name'}
             </p>
           )}
-          <div className='leading-5 font-medium text-[14px]'>
+          <div className="leading-5 font-medium text-[14px]">
             <Tooltip
               title={
                 userJoinDate
@@ -167,7 +168,8 @@ export const UserTab = () => {
           </div>
         </div>
       </div>
-      <div className="text-gray-300 dark:text-gray-800 cursor-pointer" onClick={handleEdit}>
+
+      <div className="text-gray-300 w-6 h-4 dark:text-gray-800 cursor-pointer" onClick={handleEdit}>
         <Tooltip
           title="Edit username"
           placement="right"

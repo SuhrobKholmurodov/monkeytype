@@ -3,11 +3,7 @@ import React from 'react';
 import Heatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Tooltip } from '@mui/material';
-
-type ContributionValue = {
-  date: string;
-  count: number;
-};
+import { ContributionValue } from '~/pages/Profile';
 
 type ActivityCalendarProps = {
   values: ContributionValue[];
