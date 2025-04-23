@@ -18,12 +18,16 @@ export const ActivityCalendar = ({ values }: ActivityCalendarProps) => {
   const totalTests = values.reduce((sum, value) => sum + value.count, 0);
 
   const getColorClass = (count: number): string => {
+    const maxTestsPerDay = Math.max(...values.map((el) => el.count));
     if (!count) return 'bg-gray-700 dark:bg-gray-300 dark:fill-gray-300 fill-gray-700';
-    if (count < 3) return 'bg-green-700 fill-green-700';
-    if (count < 6) return 'bg-green-600 fill-green-600';
-    if (count < 10) return 'bg-green-500 fill-green-500';
-    if (count < 15) return 'bg-green-400 fill-green-400';
-    if (count < 20) return 'bg-green-300 fill-green-300';
+
+    const level = Math.round((count / maxTestsPerDay) * 5);
+
+    if (level === 0) return 'bg-green-700 fill-green-700';
+    if (level === 1) return 'bg-green-600 fill-green-600';
+    if (level === 2) return 'bg-green-500 fill-green-500';
+    if (level === 3) return 'bg-green-400 fill-green-400';
+    if (level === 4) return 'bg-green-300 fill-green-300';
     return 'bg-green-200 fill-green-200';
   };
 
