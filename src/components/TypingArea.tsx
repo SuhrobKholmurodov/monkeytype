@@ -131,7 +131,7 @@ export const TypingArea = () => {
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
         completionTime: formatCompletionTime(new Date()),
         quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
-        date: new Date().toISOString().split('T')[0],
+        date: new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dushanbe' }),
       };
 
       const savedResults = localStorage.getItem('typingTestResults');
@@ -166,7 +166,7 @@ export const TypingArea = () => {
       }
 
       if (!localStorage.getItem('lastActiveDate')) {
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dushanbe' });
         localStorage.setItem('lastActiveDate', today);
         localStorage.setItem('currentStreak', '0');
         localStorage.setItem('maxStreak', '0');
