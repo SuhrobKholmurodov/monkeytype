@@ -50,8 +50,15 @@ export const Profile = () => {
     setPage(value);
   };
 
+  useEffect(() => {
+    const saved = localStorage.getItem('rowsPerPage');
+    if (saved) setRowsPerPage(Number(saved));
+  }, []);
+
   const handleRowsPerPageChange = (event: SelectChangeEvent) => {
-    setRowsPerPage(parseInt(event.target.value));
+    const value = parseInt(event.target.value);
+    localStorage.setItem('rowsPerPage', value.toString());
+    setRowsPerPage(value);
     setPage(1);
   };
 
