@@ -66,8 +66,8 @@ export const Result = ({ title, results }: ResultProps) => {
                           {result.type === 'time'
                             ? 'Seconds'
                             : result.type === 'words'
-                            ? 'Words'
-                            : `${'| ' + result.quoteSize}` || 'medium'}
+                              ? 'Words'
+                              : `${'| ' + result.quoteSize}` || 'medium'}
                           {result.type !== 'quote' &&
                             ![15, 30, 60, 120].includes(result.duration) &&
                             ![10, 25, 50, 100].includes(result.duration) && (

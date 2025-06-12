@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import { TestResult } from '~/@types';
-import { MaxScores, MetaTags, Result, UserTab, ResultsChart, ActivityCalendar } from '~/components';
+import {
+  MaxScores,
+  MetaTags,
+  Result,
+  UserTab,
+  ResultsChart,
+  ActivityCalendar,
+} from '~/components';
+import { Pagination, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 export type ContributionValue = {
   date: string;
@@ -9,6 +19,10 @@ export type ContributionValue = {
 
 export const Profile = () => {
   const [pastResults, setPastResults] = useState<TestResult[]>([]);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === 'dark';
 
   useEffect(() => {
     const savedResults = localStorage.getItem('typingTestResults');
@@ -23,11 +37,7 @@ export const Profile = () => {
     pastResults.forEach((result) => {
       const date = result.date;
       if (date) {
-        if (resultsByDate[date]) {
-          resultsByDate[date] += 1;
-        } else {
-          resultsByDate[date] = 1;
-        }
+        resultsByDate[date] = (resultsByDate[date] || 0) + 1;
       }
     });
     return Object.entries(resultsByDate).map(([date, count]) => ({
@@ -35,6 +45,22 @@ export const Profile = () => {
       count,
     }));
   };
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const handleRowsPerPageChange = (event: SelectChangeEvent) => {
+    setRowsPerPage(parseInt(event.target.value));
+    setPage(1);
+  };
+
+  const paginatedResults = pastResults.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
+  const totalPages = Math.ceil(pastResults.length / rowsPerPage);
 
   return (
     <div className="py-6 px-[70px] overflow-y-scroll fixed inset-0 dark:bg-gray-200 bg-gray-900">
@@ -48,14 +74,75 @@ export const Profile = () => {
         <MaxScores pastResults={pastResults} />
       </div>
       <div className="mt-5">
-        {' '}
-        <ActivityCalendar values={generateData()} />{' '}
+        <ActivityCalendar values={generateData()} />
       </div>
+
       {pastResults.length > 0 ? (
         <>
           <ResultsChart results={pastResults} />
           <div className="mt-5">
-            <Result title="Your Results Table" results={pastResults} />
+            <Result title="Your Results Table" results={paginatedResults} />
+          </div>
+          <div className="mt-6 flex flex-col items-center gap-4">
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <InputLabel id="rows-per-page-label" sx={{ color: 'white' }}>
+                Rows per page
+              </InputLabel>
+              <Select
+                labelId="rows-per-page-label"
+                value={rowsPerPage.toString()}
+                label="Rows per page"
+                onChange={handleRowsPerPageChange}
+                sx={{
+                  color: 'white',
+                  '.MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'gray',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white',
+                  },
+                  '.MuiSvgIcon-root': {
+                    color: 'white',
+                  },
+                }}
+              >
+                {[5, 10, 25, 50].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              color="primary"
+              variant="outlined"
+              shape="rounded"
+              siblingCount={1}
+              boundaryCount={1}
+              showFirstButton
+              showLastButton
+              sx={{
+                '& .MuiPaginationItem-root': {
+                  color: darkMode ? 'white' : 'gray',
+                  borderColor: 'gray',
+                },
+                '& .Mui-selected': {
+                  backgroundColor: darkMode ? '#4B5563' : '#cbd5e1',
+                  color: darkMode ? 'white' : 'black',
+                },
+                '& .MuiPaginationItem-root.Mui-selected:hover': {
+                  backgroundColor: darkMode ? '#6B7280' : '#e2e8f0',
+                },
+              }}
+            />
+
           </div>
         </>
       ) : (
