@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { TestResult } from '~/@types';
+import { useState, useEffect } from "react";
+import { TestResult } from "~/@types";
 import {
   MaxScores,
   MetaTags,
@@ -7,10 +7,16 @@ import {
   UserTab,
   ResultsChart,
   ActivityCalendar,
-} from '~/components';
-import { Pagination, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+} from "~/components";
+import {
+  Pagination,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export type ContributionValue = {
   date: string;
@@ -22,10 +28,10 @@ export const Profile = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const theme = useTheme();
-  const darkMode = theme.palette.mode === 'dark';
+  const darkMode = theme.palette.mode === "dark";
 
   useEffect(() => {
-    const savedResults = localStorage.getItem('typingTestResults');
+    const savedResults = localStorage.getItem("typingTestResults");
     if (savedResults) {
       const parsedResults = JSON.parse(savedResults);
       setPastResults(parsedResults);
@@ -51,13 +57,13 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem('rowsPerPage');
+    const saved = localStorage.getItem("rowsPerPage");
     if (saved) setRowsPerPage(Number(saved));
   }, []);
 
   const handleRowsPerPageChange = (event: SelectChangeEvent) => {
     const value = parseInt(event.target.value);
-    localStorage.setItem('rowsPerPage', value.toString());
+    localStorage.setItem("rowsPerPage", value.toString());
     setRowsPerPage(value);
     setPage(1);
   };
@@ -92,7 +98,12 @@ export const Profile = () => {
           </div>
           <div className="mt-6 flex flex-col items-center gap-4">
             <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel id="rows-per-page-label" sx={{ color: 'white' }}>
+              <InputLabel
+                id="rows-per-page-label"
+                sx={{
+                  color: darkMode ? "white" : "gray",
+                }}
+              >
                 Rows per page
               </InputLabel>
               <Select
@@ -101,18 +112,18 @@ export const Profile = () => {
                 label="Rows per page"
                 onChange={handleRowsPerPageChange}
                 sx={{
-                  color: 'white',
-                  '.MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'gray',
+                  color: darkMode ? "white" : "gray",
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "gray",
                   },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'white',
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "white",
                   },
-                  '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'white',
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "white",
                   },
-                  '.MuiSvgIcon-root': {
-                    color: 'white',
+                  ".MuiSvgIcon-root": {
+                    color: darkMode ? "white" : "gray",
                   },
                 }}
               >
@@ -136,25 +147,25 @@ export const Profile = () => {
               showFirstButton
               showLastButton
               sx={{
-                '& .MuiPaginationItem-root': {
-                  color: darkMode ? 'white' : 'gray',
-                  borderColor: 'gray',
+                "& .MuiPaginationItem-root": {
+                  color: darkMode ? "white" : "gray",
+                  borderColor: "gray",
                 },
-                '& .Mui-selected': {
-                  backgroundColor: darkMode ? '#4B5563' : '#cbd5e1',
-                  color: darkMode ? 'white' : 'black',
+                "& .Mui-selected": {
+                  backgroundColor: darkMode ? "#4B5563" : "#cbd5e1",
+                  color: darkMode ? "white" : "black",
                 },
-                '& .MuiPaginationItem-root.Mui-selected:hover': {
-                  backgroundColor: darkMode ? '#6B7280' : '#e2e8f0',
+                "& .MuiPaginationItem-root.Mui-selected:hover": {
+                  backgroundColor: darkMode ? "#6B7280" : "#e2e8f0",
                 },
               }}
             />
-
           </div>
         </>
       ) : (
         <p className="text-gray-200 text-[25px] text-center mt-[70px]">
-          No past results found. Complete a typing test to see your results here!
+          No past results found. Complete a typing test to see your results
+          here!
         </p>
       )}
     </div>
