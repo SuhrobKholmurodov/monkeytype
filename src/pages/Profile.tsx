@@ -76,7 +76,7 @@ export const Profile = () => {
   const totalPages = Math.ceil(pastResults.length / rowsPerPage);
 
   return (
-    <div className="py-6 px-[70px] overflow-y-scroll fixed inset-0 dark:bg-gray-200 bg-gray-900">
+    <div className="py-6 px-[70px] overflow-y-auto fixed inset-0 dark:bg-gray-200 bg-gray-900">
       <MetaTags
         title="Account | Monkeytype"
         description="Manage your Monkeytype account. View your typing test history, update your profile, and track your progress."
@@ -91,82 +91,93 @@ export const Profile = () => {
       </div>
 
       {pastResults.length > 0 ? (
-        <>
+        <div className="mt-5">
           <ResultsChart results={pastResults} />
           <div className="mt-5">
-            <div className="flex items-center justify-between mb-5">
-              <div className="text-2xl font-bold dark:text-gray-800 text-gray-200">
-                Your Past Results
-              </div>
-              <div className="flex flex-row items-center gap-4">
-                <FormControl size="small" sx={{ minWidth: 120 }}>
-                  <InputLabel
-                    id="rows-per-page-label"
+            <div className="sticky top-[60px] z-10 bg-gray-900 dark:bg-gray-200 py-4 rounded-lg mb-4"
+            // style={{
+            //   position: 'sticky',
+            //   top: 60,
+            //   zIndex: 10,
+            //   backgroundColor: darkMode ? '#1f2937' : '#111827',
+            //   padding: '16px 0',
+            //   marginBottom: '16px',
+            // }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="text-2xl font-bold dark:text-gray-800 text-gray-200">
+                  Your Past Results
+                </div>
+                <div className="flex flex-row items-center gap-4">
+                  <FormControl size="small" sx={{ minWidth: 120 }}>
+                    <InputLabel
+                      id="rows-per-page-label"
+                      sx={{
+                        color: darkMode ? "white" : "gray",
+                      }}
+                    >
+                      Rows per page
+                    </InputLabel>
+                    <Select
+                      labelId="rows-per-page-label"
+                      value={rowsPerPage.toString()}
+                      label="Rows per page"
+                      onChange={handleRowsPerPageChange}
+                      sx={{
+                        color: darkMode ? "white" : "gray",
+                        ".MuiOutlinedInput-notchedOutline": {
+                          borderColor: "gray",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "white",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "white",
+                        },
+                        ".MuiSvgIcon-root": {
+                          color: darkMode ? "white" : "gray",
+                        },
+                      }}
+                    >
+                      {[5, 10, 25, 50].map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <Pagination
+                    count={totalPages}
+                    page={page}
+                    onChange={handlePageChange}
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    siblingCount={1}
+                    boundaryCount={1}
+                    showFirstButton
+                    showLastButton
                     sx={{
-                      color: darkMode ? "white" : "gray",
-                    }}
-                  >
-                    Rows per page
-                  </InputLabel>
-                  <Select
-                    labelId="rows-per-page-label"
-                    value={rowsPerPage.toString()}
-                    label="Rows per page"
-                    onChange={handleRowsPerPageChange}
-                    sx={{
-                      color: darkMode ? "white" : "gray",
-                      ".MuiOutlinedInput-notchedOutline": {
+                      "& .MuiPaginationItem-root": {
+                        color: darkMode ? "white" : "gray",
                         borderColor: "gray",
                       },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
+                      "& .Mui-selected": {
+                        backgroundColor: darkMode ? "#4B5563" : "#cbd5e1",
+                        color: darkMode ? "white" : "black",
                       },
-                      "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                      ".MuiSvgIcon-root": {
-                        color: darkMode ? "white" : "gray",
+                      "& .MuiPaginationItem-root.Mui-selected:hover": {
+                        backgroundColor: darkMode ? "#6B7280" : "#e2e8f0",
                       },
                     }}
-                  >
-                    {[5, 10, 25, 50].map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <Pagination
-                  count={totalPages}
-                  page={page}
-                  onChange={handlePageChange}
-                  color="primary"
-                  variant="outlined"
-                  shape="rounded"
-                  siblingCount={1}
-                  boundaryCount={1}
-                  showFirstButton
-                  showLastButton
-                  sx={{
-                    "& .MuiPaginationItem-root": {
-                      color: darkMode ? "white" : "gray",
-                      borderColor: "gray",
-                    },
-                    "& .Mui-selected": {
-                      backgroundColor: darkMode ? "#4B5563" : "#cbd5e1",
-                      color: darkMode ? "white" : "black",
-                    },
-                    "& .MuiPaginationItem-root.Mui-selected:hover": {
-                      backgroundColor: darkMode ? "#6B7280" : "#e2e8f0",
-                    },
-                  }}
-                />
+                  />
+                </div>
               </div>
             </div>
             <Result title="" results={paginatedResults} />
           </div>
-        </>
+        </div>
       ) : (
         <p className="text-gray-200 text-[25px] text-center mt-[70px]">
           No past results found. Complete a typing test to see your results
