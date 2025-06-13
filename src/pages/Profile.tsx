@@ -94,72 +94,77 @@ export const Profile = () => {
         <>
           <ResultsChart results={pastResults} />
           <div className="mt-5">
-            <Result title="Your Results Table" results={paginatedResults} />
-          </div>
-          <div className="mt-6 flex flex-col items-center gap-4">
-            <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel
-                id="rows-per-page-label"
-                sx={{
-                  color: darkMode ? "white" : "gray",
-                }}
-              >
-                Rows per page
-              </InputLabel>
-              <Select
-                labelId="rows-per-page-label"
-                value={rowsPerPage.toString()}
-                label="Rows per page"
-                onChange={handleRowsPerPageChange}
-                sx={{
-                  color: darkMode ? "white" : "gray",
-                  ".MuiOutlinedInput-notchedOutline": {
-                    borderColor: "gray",
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "white",
-                  },
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "white",
-                  },
-                  ".MuiSvgIcon-root": {
-                    color: darkMode ? "white" : "gray",
-                  },
-                }}
-              >
-                {[5, 10, 25, 50].map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <div className="flex items-center justify-between mb-5">
+              <div className="text-2xl font-bold dark:text-gray-800 text-gray-200">
+                Your Past Results
+              </div>
+              <div className="flex flex-row items-center gap-4">
+                <FormControl size="small" sx={{ minWidth: 120 }}>
+                  <InputLabel
+                    id="rows-per-page-label"
+                    sx={{
+                      color: darkMode ? "white" : "gray",
+                    }}
+                  >
+                    Rows per page
+                  </InputLabel>
+                  <Select
+                    labelId="rows-per-page-label"
+                    value={rowsPerPage.toString()}
+                    label="Rows per page"
+                    onChange={handleRowsPerPageChange}
+                    sx={{
+                      color: darkMode ? "white" : "gray",
+                      ".MuiOutlinedInput-notchedOutline": {
+                        borderColor: "gray",
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      ".MuiSvgIcon-root": {
+                        color: darkMode ? "white" : "gray",
+                      },
+                    }}
+                  >
+                    {[5, 10, 25, 50].map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-            <Pagination
-              count={totalPages}
-              page={page}
-              onChange={handlePageChange}
-              color="primary"
-              variant="outlined"
-              shape="rounded"
-              siblingCount={1}
-              boundaryCount={1}
-              showFirstButton
-              showLastButton
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  color: darkMode ? "white" : "gray",
-                  borderColor: "gray",
-                },
-                "& .Mui-selected": {
-                  backgroundColor: darkMode ? "#4B5563" : "#cbd5e1",
-                  color: darkMode ? "white" : "black",
-                },
-                "& .MuiPaginationItem-root.Mui-selected:hover": {
-                  backgroundColor: darkMode ? "#6B7280" : "#e2e8f0",
-                },
-              }}
-            />
+                <Pagination
+                  count={totalPages}
+                  page={page}
+                  onChange={handlePageChange}
+                  color="primary"
+                  variant="outlined"
+                  shape="rounded"
+                  siblingCount={1}
+                  boundaryCount={1}
+                  showFirstButton
+                  showLastButton
+                  sx={{
+                    "& .MuiPaginationItem-root": {
+                      color: darkMode ? "white" : "gray",
+                      borderColor: "gray",
+                    },
+                    "& .Mui-selected": {
+                      backgroundColor: darkMode ? "#4B5563" : "#cbd5e1",
+                      color: darkMode ? "white" : "black",
+                    },
+                    "& .MuiPaginationItem-root.Mui-selected:hover": {
+                      backgroundColor: darkMode ? "#6B7280" : "#e2e8f0",
+                    },
+                  }}
+                />
+              </div>
+            </div>
+            <Result title="" results={paginatedResults} />
           </div>
         </>
       ) : (

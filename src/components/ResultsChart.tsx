@@ -45,28 +45,28 @@ export const ResultsChart = ({ results }: ResultsChartProps) => {
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4 dark:text-gray-800 text-gray-200">Your Progress Over Time</h2>
       <div className="mb-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-300 hover:border-blue-500 transition-all duration-300 group overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-400 dark:hover:border-blue-500 hover:border-blue-500 transition-all duration-300 group overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-400 dark:text-gray-800 uppercase tracking-wide">Avg WPM</div>
             <Zap className="w-4 h-4 text-blue-400 dark:text-blue-600 group-hover:scale-110 transition-transform" />
           </div>
           <div className="text-2xl font-bold text-blue-400 dark:text-blue-600 mt-2 transform group-hover:translate-y-[-2px] transition-transform">{avgWpm}</div>
         </div>
-        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-300 hover:border-green-500 transition-all duration-300 group overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-400 dark:hover:border-green-500 hover:border-green-500 transition-all duration-300 group overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-400 dark:text-gray-800 uppercase tracking-wide">Avg Accuracy</div>
             <Target className="w-4 h-4 text-green-400 dark:text-green-600 group-hover:scale-110 transition-transform" />
           </div>
           <div className="text-2xl font-bold text-green-400 dark:text-green-600 mt-2 transform group-hover:translate-y-[-2px] transition-transform">{avgAccuracy}%</div>
         </div>
-        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-300 hover:border-red-500 transition-all duration-300 group overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-400 dark:hover:border-red-500 hover:border-red-500 transition-all duration-300 group overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-400 dark:text-gray-800 uppercase tracking-wide">Avg Time</div>
             <Clock className="w-4 h-4 text-red-400 dark:text-red-600 group-hover:scale-110 transition-transform" />
           </div>
           <div className="text-2xl font-bold text-red-400 dark:text-red-600 mt-2 transform group-hover:translate-y-[-2px] transition-transform">{avgTime}s</div>
         </div>
-        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-300 hover:border-orange-500 transition-all duration-300 group overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-800 dark:from-gray-300 to-gray-900 dark:to-gray-400 p-4 rounded-lg border border-gray-700 dark:border-gray-400 dark:hover:border-orange-500 hover:border-orange-500 transition-all duration-300 group overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-400 dark:text-gray-800 uppercase tracking-wide">Best WPM</div>
             <Trophy className="w-4 h-4 text-orange-400 dark:text-orange-600 group-hover:scale-110 transition-transform" />

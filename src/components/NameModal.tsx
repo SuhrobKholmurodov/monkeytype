@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Loader2 } from 'lucide-react' 
+import { Loader2 } from 'lucide-react'
 
 interface NameModalProps {
   isOpen: boolean
@@ -9,11 +9,11 @@ interface NameModalProps {
 
 export const NameModal = ({ isOpen, onClose, onNameSet }: NameModalProps) => {
   const [localName, setLocalName] = useState('')
-  const [isLoading, setIsLoading] = useState(false) 
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true) 
+    setIsLoading(true)
 
     setTimeout(() => {
       localStorage.setItem('userName', localName)
@@ -26,10 +26,10 @@ export const NameModal = ({ isOpen, onClose, onNameSet }: NameModalProps) => {
         })
         localStorage.setItem('userJoinDate', currentDate)
       }
-      setIsLoading(false) 
+      setIsLoading(false)
       onNameSet()
-      onClose() 
-    }, 1000) 
+      onClose()
+    }, 1000)
   }
 
   if (!isOpen) {
@@ -54,12 +54,12 @@ export const NameModal = ({ isOpen, onClose, onNameSet }: NameModalProps) => {
             placeholder='Enter your name'
             autoFocus
             className='p-3 mb-4 w-full rounded-md border text-black border-gray-300 text-base focus:outline-none focus:ring-1 focus:ring-[#6d93d9]'
-            disabled={isLoading} 
+            disabled={isLoading}
           />
           <button
             type='submit'
             className='w-full p-3 bg-[#2c4779] text-white rounded-md font-semibold hover:bg-[#3f609c] focus:outline-none flex items-center justify-center'
-            disabled={isLoading} 
+            disabled={isLoading}
           >
             {isLoading ? (
               <>
