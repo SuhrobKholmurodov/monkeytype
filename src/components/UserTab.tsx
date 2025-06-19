@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, UserRound, Flame } from 'lucide-react';
+import { Pencil, UserRound, Flame, X } from 'lucide-react';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import { toast } from 'react-toastify';
@@ -37,9 +37,6 @@ export const UserTab = () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUserName = e.target.value.trim();
@@ -81,7 +78,7 @@ export const UserTab = () => {
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
               autoFocus
-              className="bg-gray-700 dark:bg-gray-50 text-gray-50 pl-1 dark:text-gray-700 font-[600] w-[180px] text-[30px] rounded-md focus:outline-none"
+              className="bg-gray-700 dark:bg-gray-100 text-gray-50 pl-1 dark:text-gray-700 font-[600] w-[180px] text-[30px] rounded-md focus:outline-none"
             />
           ) : (
             <p className="font-[600] dark:text-gray-700 text-gray-50 text-[30px]">
@@ -169,9 +166,9 @@ export const UserTab = () => {
         </div>
       </div>
 
-      <div className="text-gray-300 w-6 h-4 dark:text-gray-800 cursor-pointer" onClick={handleEdit}>
+      <div className="text-gray-300 w-6 h-4 dark:text-gray-800 cursor-pointer">
         <Tooltip
-          title="Edit username"
+          title={isEditing ? 'Cancel editing' : 'Edit username'}
           placement="right"
           arrow
           componentsProps={{
@@ -189,9 +186,16 @@ export const UserTab = () => {
             },
           }}
         >
-          <Pencil />
+          <div onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? (
+              <X />
+            ) : (
+              <Pencil />
+            )}
+          </div>
         </Tooltip>
       </div>
+
     </div>
   );
 };

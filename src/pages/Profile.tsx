@@ -95,14 +95,6 @@ export const Profile = () => {
           <ResultsChart results={pastResults} />
           <div className="mt-5">
             <div className="sticky top-[60px] z-10 bg-gray-900 dark:bg-gray-200 py-4 rounded-lg mb-4"
-            // style={{
-            //   position: 'sticky',
-            //   top: 60,
-            //   zIndex: 10,
-            //   backgroundColor: darkMode ? '#1f2937' : '#111827',
-            //   padding: '16px 0',
-            //   marginBottom: '16px',
-            // }}
             >
               <div className="flex items-center justify-between">
                 <div className="text-2xl font-bold dark:text-gray-800 text-gray-200">
