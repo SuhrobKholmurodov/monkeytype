@@ -262,6 +262,16 @@ export const TypingArea = () => {
       setStartTime(new Date());
     }
 
+    if (e.key === 'Backspace' && typedWord === '' && currentWordIndex > 0) {
+      const previousWord = typedWords[currentWordIndex - 1];
+      if (!previousWord.isCorrect) {
+        setCurrentWordIndex(currentWordIndex - 1);
+        setTypedWord(previousWord.typed);
+        setTypedWords(typedWords.slice(0, -1));
+      }
+      return;
+    }
+
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       if (typedWord.trim() !== '') {
@@ -288,7 +298,6 @@ export const TypingArea = () => {
       setTypedWord((prev) => prev + e.key);
     }
   };
-
   const wpm = calculateWPM(startTime, endTime, typedWords);
   const accuracy = calculateAccuracy(typedWords);
 
@@ -394,8 +403,8 @@ export const TypingArea = () => {
                         activeType === 'quote'
                           ? 0
                           : activeType === 'time'
-                          ? activeDuration
-                          : activeWordsCount,
+                            ? activeDuration
+                            : activeWordsCount,
                       wpm: wpm,
                       accuracy: accuracy,
                       correct: typedWords.filter((w) => w.isCorrect).length,
