@@ -1,17 +1,23 @@
-import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import Confetti from 'react-confetti';
-import { toast } from 'react-toastify';
-import { Filter } from './Filter';
-import { Result } from './Result';
-import { WordDisplay } from './WordDisplay';
-import { Language, TestResult } from '~/@types';
-import { RestartButton } from './RestartButton';
-import { ResultsSummary } from './ResultsSummary';
-import { LanguageSelector } from './LanguageSelector';
-import { englishWordsArray, russianWordsArray } from '~/constants';
-import { calculateAccuracy, calculateWPM, getQuoteSizes, updateStreakData } from '~/utils';
-import { ProgressIndicator } from './ProgressIndicator';
-import HttpsIcon from '@mui/icons-material/Https';
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import Confetti from "react-confetti";
+import { toast } from "react-toastify";
+import { Filter } from "./Filter";
+import { Result } from "./Result";
+import { WordDisplay } from "./WordDisplay";
+import { Language, TestResult } from "~/@types";
+import { RestartButton } from "./RestartButton";
+import { ResultsSummary } from "./ResultsSummary";
+import { LanguageSelector } from "./LanguageSelector";
+import { englishWordsArray, russianWordsArray } from "~/constants";
+import {
+  calculateAccuracy,
+  calculateWPM,
+  getQuoteSizes,
+  updateStreakData,
+} from "~/utils";
+import { ProgressIndicator } from "./ProgressIndicator";
+import HttpsIcon from "@mui/icons-material/Https";
 
 export interface TypedWordData {
   word: string;
@@ -22,7 +28,7 @@ export interface TypedWordData {
 export const TypingArea = () => {
   const [words, setWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [typedWord, setTypedWord] = useState('');
+  const [typedWord, setTypedWord] = useState("");
   const [typedWords, setTypedWords] = useState<TypedWordData[]>([]);
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -30,43 +36,53 @@ export const TypingArea = () => {
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [capsLockOn, setCapsLockOn] = useState(false);
   const [pastResults, setPastResults] = useState<TestResult[]>(() => {
-    const saved = localStorage.getItem('typingTestResults');
+    const saved = localStorage.getItem("typingTestResults");
     return saved ? JSON.parse(saved) : [];
   });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeType, setActiveType] = useState<'time' | 'words' | 'quote'>(() => {
-    const savedType = localStorage.getItem('typingTestType');
-    return savedType ? (savedType as 'time' | 'words' | 'quote') : 'time';
-  });
+  const [activeType, setActiveType] = useState<"time" | "words" | "quote">(
+    () => {
+      const savedType = localStorage.getItem("typingTestType");
+      return savedType ? (savedType as "time" | "words" | "quote") : "time";
+    }
+  );
   const [activeDuration, setActiveDuration] = useState(() => {
-    const savedDuration = localStorage.getItem('typingTestDuration');
+    const savedDuration = localStorage.getItem("typingTestDuration");
     return savedDuration ? parseInt(savedDuration) : 15;
   });
   const [activeWordsCount, setActiveWordsCount] = useState(() => {
-    const savedWordsCount = localStorage.getItem('typingTestWordsCount');
+    const savedWordsCount = localStorage.getItem("typingTestWordsCount");
     return savedWordsCount ? parseInt(savedWordsCount) : 10;
   });
-  const [activeQuoteSize, setActiveQuoteSize] = useState<'short' | 'medium' | 'long'>(() => {
-    const savedQuoteSize = localStorage.getItem('typingTestQuoteSize');
-    return savedQuoteSize ? (savedQuoteSize as 'short' | 'medium' | 'long') : 'short';
+  const [activeQuoteSize, setActiveQuoteSize] = useState<
+    "short" | "medium" | "long"
+  >(() => {
+    const savedQuoteSize = localStorage.getItem("typingTestQuoteSize");
+    return savedQuoteSize
+      ? (savedQuoteSize as "short" | "medium" | "long")
+      : "short";
   });
   const [includeNumbers, setIncludeNumbers] = useState(() => {
-    const savedIncludeNumbers = localStorage.getItem('typingTestIncludeNumbers');
+    const savedIncludeNumbers = localStorage.getItem(
+      "typingTestIncludeNumbers"
+    );
     return savedIncludeNumbers ? JSON.parse(savedIncludeNumbers) : false;
   });
   const [quoteWordCount, setQuoteWordCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(activeDuration);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>("english");
 
   const handleToggleNumbers = (include: boolean) => {
     setIncludeNumbers(include);
-    localStorage.setItem('typingTestIncludeNumbers', JSON.stringify(include));
+    localStorage.setItem("typingTestIncludeNumbers", JSON.stringify(include));
     getRandomWords();
   };
   const quoteSizes = getQuoteSizes(selectedLanguage);
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('typingTestLanguage') as Language | null;
+    const savedLanguage = localStorage.getItem(
+      "typingTestLanguage"
+    ) as Language | null;
     if (savedLanguage) {
       setSelectedLanguage(savedLanguage);
     }
@@ -74,11 +90,11 @@ export const TypingArea = () => {
 
   const handleLanguageChange = (lang: Language) => {
     setSelectedLanguage(lang);
-    localStorage.setItem('typingTestLanguage', lang);
+    localStorage.setItem("typingTestLanguage", lang);
   };
 
   useEffect(() => {
-    const savedResults = localStorage.getItem('typingTestResults');
+    const savedResults = localStorage.getItem("typingTestResults");
     if (savedResults) {
       setPastResults(JSON.parse(savedResults));
     }
@@ -88,31 +104,18 @@ export const TypingArea = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (e.getModifierState('CapsLock')) {
-        setCapsLockOn(true);
-      } else {
-        setCapsLockOn(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown as EventListener);
-    window.addEventListener('keyup', handleKeyDown as EventListener);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown as EventListener);
-      window.removeEventListener('keyup', handleKeyDown as EventListener);
-    };
-  }, []);
+  useHotkeys("capslock", (event) => {
+    const isOn = event.getModifierState("CapsLock");
+    setCapsLockOn(isOn);
+  });
 
   const formatCompletionTime = (date: Date): string => {
-    return date.toLocaleString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
+    return date.toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   };
 
@@ -120,65 +123,77 @@ export const TypingArea = () => {
     if (finished && startTime && endTime) {
       updateStreakData();
       const newResult = {
-        type: activeType === 'quote' ? 'quote' : activeType,
+        type: activeType === "quote" ? "quote" : activeType,
         language: selectedLanguage,
         duration:
-          activeType === 'quote' ? 0 : activeType === 'time' ? activeDuration : activeWordsCount,
+          activeType === "quote"
+            ? 0
+            : activeType === "time"
+            ? activeDuration
+            : activeWordsCount,
         wpm: wpm,
         accuracy: accuracy,
         correct: typedWords.filter((w) => w.isCorrect).length,
         incorrect: typedWords.filter((w) => !w.isCorrect).length,
         time: Math.round((endTime.getTime() - startTime.getTime()) / 1000),
         completionTime: formatCompletionTime(new Date()),
-        quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
-        date: new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dushanbe' }),
+        quoteSize: activeType === "quote" ? activeQuoteSize : undefined,
+        date: new Date().toLocaleDateString("en-CA", {
+          timeZone: "Asia/Dushanbe",
+        }),
       };
 
-      const savedResults = localStorage.getItem('typingTestResults');
+      const savedResults = localStorage.getItem("typingTestResults");
       const pastResults = savedResults ? JSON.parse(savedResults) : [];
       const updatedResults = [newResult, ...pastResults];
       const previousResultsOfSameType = pastResults.filter(
         (result: TestResult) =>
           result.type === activeType &&
-          result.duration === (activeType === 'time' ? activeDuration : activeWordsCount),
+          result.duration ===
+            (activeType === "time" ? activeDuration : activeWordsCount)
       );
 
       if (previousResultsOfSameType.length > 0) {
         const maxWPM = Math.max(
-          ...previousResultsOfSameType.map((result: TestResult) => result.wpm),
+          ...previousResultsOfSameType.map((result: TestResult) => result.wpm)
         );
         if (wpm > maxWPM) {
           setShowConfetti(true);
-          toast.success(`🎉 You broke your record! Previous: ${maxWPM} WPM, New: ${wpm} WPM`, {
-            position: 'top-center',
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: 'dark',
-            style: { width: '550px' },
-          });
+          toast.success(
+            `🎉 You broke your record! Previous: ${maxWPM} WPM, New: ${wpm} WPM`,
+            {
+              position: "top-center",
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+              style: { width: "550px" },
+            }
+          );
           setTimeout(() => {
             setShowConfetti(false);
           }, 5000);
         }
       }
 
-      if (!localStorage.getItem('lastActiveDate')) {
-        const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dushanbe' });
-        localStorage.setItem('lastActiveDate', today);
-        localStorage.setItem('currentStreak', '0');
-        localStorage.setItem('maxStreak', '0');
+      if (!localStorage.getItem("lastActiveDate")) {
+        const today = new Date().toLocaleDateString("en-CA", {
+          timeZone: "Asia/Dushanbe",
+        });
+        localStorage.setItem("lastActiveDate", today);
+        localStorage.setItem("currentStreak", "0");
+        localStorage.setItem("maxStreak", "0");
       }
 
       setPastResults(updatedResults);
-      localStorage.setItem('typingTestResults', JSON.stringify(updatedResults));
+      localStorage.setItem("typingTestResults", JSON.stringify(updatedResults));
     }
   }, [finished]);
 
   useEffect(() => {
-    if (activeType === 'time' && started && !finished) {
+    if (activeType === "time" && started && !finished) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
@@ -200,8 +215,8 @@ export const TypingArea = () => {
   }, [selectedLanguage]);
 
   function getRandomWords() {
-    if (activeType === 'quote') {
-      const currentSize = activeQuoteSize || 'short';
+    if (activeType === "quote") {
+      const currentSize = activeQuoteSize || "short";
       const availableQuotes = quoteSizes[currentSize];
 
       if (!availableQuotes || availableQuotes.length === 0) {
@@ -212,12 +227,13 @@ export const TypingArea = () => {
 
       const randomIndex = Math.floor(Math.random() * availableQuotes.length);
       const selectedQuote = availableQuotes[randomIndex];
-      const words = selectedQuote.split(' ');
+      const words = selectedQuote.split(" ");
 
       setWords(words);
       setQuoteWordCount(words.length);
     } else {
-      const wordArray = selectedLanguage === 'english' ? englishWordsArray : russianWordsArray;
+      const wordArray =
+        selectedLanguage === "english" ? englishWordsArray : russianWordsArray;
       let mixed = wordArray.slice().sort(() => 0.5 - Math.random());
 
       if (includeNumbers && mixed.length > 1) {
@@ -237,11 +253,11 @@ export const TypingArea = () => {
         });
       }
 
-      setWords(mixed.slice(0, activeType === 'words' ? activeWordsCount : 100));
+      setWords(mixed.slice(0, activeType === "words" ? activeWordsCount : 100));
       setQuoteWordCount(0);
     }
     setCurrentWordIndex(0);
-    setTypedWord('');
+    setTypedWord("");
     setTypedWords([]);
     setStarted(false);
     setFinished(false);
@@ -262,7 +278,7 @@ export const TypingArea = () => {
       setStartTime(new Date());
     }
 
-    if (e.key === 'Backspace' && typedWord === '' && currentWordIndex > 0) {
+    if (e.key === "Backspace" && typedWord === "" && currentWordIndex > 0) {
       const previousWord = typedWords[currentWordIndex - 1];
       if (!previousWord.isCorrect) {
         setCurrentWordIndex(currentWordIndex - 1);
@@ -272,9 +288,9 @@ export const TypingArea = () => {
       return;
     }
 
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (e.key === " " || e.key === "Enter") {
       e.preventDefault();
-      if (typedWord.trim() !== '') {
+      if (typedWord.trim() !== "") {
         const isCorrect = typedWord === words[currentWordIndex];
         setTypedWords([
           ...typedWords,
@@ -282,17 +298,18 @@ export const TypingArea = () => {
         ]);
 
         if (
-          (activeType === 'words' && currentWordIndex >= activeWordsCount - 1) ||
-          (activeType === 'quote' && currentWordIndex >= words.length - 1)
+          (activeType === "words" &&
+            currentWordIndex >= activeWordsCount - 1) ||
+          (activeType === "quote" && currentWordIndex >= words.length - 1)
         ) {
           setEndTime(new Date());
           setFinished(true);
         } else if (currentWordIndex < words.length - 1) {
           setCurrentWordIndex(currentWordIndex + 1);
-          setTypedWord('');
+          setTypedWord("");
         }
       }
-    } else if (e.key === 'Backspace') {
+    } else if (e.key === "Backspace") {
       setTypedWord((prev) => prev.slice(0, -1));
     } else if (e.key.length === 1) {
       setTypedWord((prev) => prev + e.key);
@@ -301,27 +318,30 @@ export const TypingArea = () => {
   const wpm = calculateWPM(startTime, endTime, typedWords);
   const accuracy = calculateAccuracy(typedWords);
 
-  const handleFilterChange = (type: 'time' | 'words' | 'quote', value: number | string) => {
-    if (type === 'time') {
-      setActiveType('time');
+  const handleFilterChange = (
+    type: "time" | "words" | "quote",
+    value: number | string
+  ) => {
+    if (type === "time") {
+      setActiveType("time");
       setActiveDuration(value as number);
-      localStorage.setItem('typingTestType', 'time');
-      localStorage.setItem('typingTestDuration', value.toString());
+      localStorage.setItem("typingTestType", "time");
+      localStorage.setItem("typingTestDuration", value.toString());
       setQuoteWordCount(0);
       getRandomWords();
-    } else if (type === 'words') {
-      setActiveType('words');
+    } else if (type === "words") {
+      setActiveType("words");
       setActiveWordsCount(value as number);
-      localStorage.setItem('typingTestType', 'words');
-      localStorage.setItem('typingTestWordsCount', value.toString());
+      localStorage.setItem("typingTestType", "words");
+      localStorage.setItem("typingTestWordsCount", value.toString());
       setQuoteWordCount(0);
       getRandomWords();
     } else {
-      setActiveType('quote');
-      const size = (value as 'short' | 'medium' | 'long') || 'medium';
+      setActiveType("quote");
+      const size = (value as "short" | "medium" | "long") || "medium";
       setActiveQuoteSize(size);
-      localStorage.setItem('typingTestType', 'quote');
-      localStorage.setItem('typingTestQuoteSize', size);
+      localStorage.setItem("typingTestType", "quote");
+      localStorage.setItem("typingTestQuoteSize", size);
       getRandomWords();
     }
   };
@@ -397,24 +417,27 @@ export const TypingArea = () => {
                   title="Detailed Results"
                   results={[
                     {
-                      type: activeType === 'quote' ? 'quote' : activeType,
+                      type: activeType === "quote" ? "quote" : activeType,
                       language: selectedLanguage,
                       duration:
-                        activeType === 'quote'
+                        activeType === "quote"
                           ? 0
-                          : activeType === 'time'
-                            ? activeDuration
-                            : activeWordsCount,
+                          : activeType === "time"
+                          ? activeDuration
+                          : activeWordsCount,
                       wpm: wpm,
                       accuracy: accuracy,
                       correct: typedWords.filter((w) => w.isCorrect).length,
                       incorrect: typedWords.filter((w) => !w.isCorrect).length,
                       time:
                         startTime && endTime
-                          ? Math.round((endTime.getTime() - startTime.getTime()) / 1000)
+                          ? Math.round(
+                              (endTime.getTime() - startTime.getTime()) / 1000
+                            )
                           : 0,
                       completionTime: formatCompletionTime(new Date()),
-                      quoteSize: activeType === 'quote' ? activeQuoteSize : undefined,
+                      quoteSize:
+                        activeType === "quote" ? activeQuoteSize : undefined,
                     },
                   ]}
                 />
