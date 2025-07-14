@@ -1,6 +1,7 @@
-import { XIcon, CheckIcon } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-import { Language } from '~/@types';
+import { XIcon, CheckIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { Language } from "~/@types";
 
 interface LanguageModalProps {
   isOpen: boolean;
@@ -19,27 +20,30 @@ export const LanguageModal = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
+
+  useHotkeys(
+    "esc",
+    () => {
+      if (isOpen) onClose();
+    },
+    [isOpen]
+  );
 
   if (!isOpen) return null;
 
@@ -62,33 +66,33 @@ export const LanguageModal = ({
         <div className="space-y-3">
           <button
             onClick={() => {
-              onLanguageChange('english');
+              onLanguageChange("english");
               onClose();
             }}
             className={`w-full flex items-center justify-between p-3 rounded-md cursor-pointer border ${
-              selectedLanguage === 'english'
-                ? 'dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200'
-                : 'border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300'
+              selectedLanguage === "english"
+                ? "dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200"
+                : "border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300"
             }`}
           >
             <span className="font-medium">English</span>
-            {selectedLanguage === 'english' && (
+            {selectedLanguage === "english" && (
               <CheckIcon className="h-5 w-5 dark:text-blue-600 text-blue-400" />
             )}
           </button>
           <button
             onClick={() => {
-              onLanguageChange('russian');
+              onLanguageChange("russian");
               onClose();
             }}
             className={`w-full flex items-center justify-between p-3 rounded-md cursor-pointer border ${
-              selectedLanguage === 'russian'
-                ? 'dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200'
-                : 'border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300'
+              selectedLanguage === "russian"
+                ? "dark:bg-blue-100 bg-blue-900 border-blue-900 dark:border-blue-100 dark:text-blue-800 text-blue-200"
+                : "border-gray-700 dark:border-gray-200 dark:hover:bg-gray-100 hover:bg-gray-700 dark:text-gray-700 text-gray-300"
             }`}
           >
             <span className="font-medium">Russian</span>
-            {selectedLanguage === 'russian' && (
+            {selectedLanguage === "russian" && (
               <CheckIcon className="h-5 w-5 dark:text-blue-600 text-blue-400" />
             )}
           </button>

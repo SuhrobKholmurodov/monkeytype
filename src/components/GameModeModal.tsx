@@ -1,25 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 interface GameModeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (value: number) => void;
-  type: 'time' | 'words' | 'quote';
+  type: "time" | "words" | "quote";
   currentValue?: number;
 }
 
-export const GameModeModal = ({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  type, 
-  currentValue 
+export const GameModeModal = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  type,
+  currentValue,
 }: GameModeModalProps) => {
-  const [value, setValue] = useState(currentValue?.toString() || '');
+  const [value, setValue] = useState(currentValue?.toString() || "");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setValue(currentValue?.toString() || '');
+    setValue(currentValue?.toString() || "");
   }, [isOpen, type, currentValue]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const GameModeModal = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSubmit();
     }
   };
@@ -45,21 +45,21 @@ export const GameModeModal = ({
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      onClick={onClose} 
+      onClick={onClose}
     >
-      <div 
+      <div
         className="bg-gray-800 dark:bg-gray-300 p-6 rounded-lg w-96 max-w-[90%]"
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-bold mb-4 text-[#e2b714]">
-          Custom {type === 'time' ? 'Time' : 'Words'}
+          Custom {type === "time" ? "Time" : "Words"}
         </h2>
 
         <div className="mb-6">
           <label className="block text-sm font-medium mb-2 dark:text-gray-800 text-gray-300">
-            {type === 'time' ? 'Time in seconds' : 'Number of words'}
+            {type === "time" ? "Time in seconds" : "Number of words"}
           </label>
           <input
             ref={inputRef}
@@ -69,7 +69,9 @@ export const GameModeModal = ({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={`Enter ${type === 'time' ? 'time (e.g. 45)' : 'words count (e.g. 75)'}`}
+            placeholder={`Enter ${
+              type === "time" ? "time (e.g. 45)" : "words count (e.g. 75)"
+            }`}
           />
         </div>
 
@@ -85,8 +87,8 @@ export const GameModeModal = ({
             disabled={!value || parseInt(value) <= 0}
             className={`px-4 py-2 rounded-lg transition font-bold ${
               !value || parseInt(value) <= 0
-                ? 'bg-gray-600 dark:bg-gray-50 dark:text-gray-300 text-gray-400 cursor-not-allowed'
-                : 'bg-[#e2b714] text-gray-900 hover:bg-[#d1a713]'
+                ? "bg-gray-600 dark:bg-gray-50 dark:text-gray-300 text-gray-400 cursor-not-allowed"
+                : "bg-[#e2b714] text-gray-900 hover:bg-[#d1a713]"
             }`}
           >
             Apply
