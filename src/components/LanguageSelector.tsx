@@ -14,15 +14,27 @@ export const LanguageSelector = ({
 }: LanguageSelectorProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const getLanguageLabel = (lang: Language) => {
+    switch (lang) {
+      case "english":
+        return "English";
+      case "russian":
+        return "Russian";
+      case "german":
+        return "German";
+      default:
+        return "Select Language";
+    }
+  };
   return (
     <>
       <div
         onClick={() => setIsModalOpen(true)}
-        className="flex hover:text-gray-400 w-fit mx-auto duration-300 font-bold hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900 items-center justify-center gap-3"
+        className="flex items-center justify-center gap-3 mx-auto font-bold duration-300 hover:text-gray-400 w-fit hover:dark:text-gray-600 hover:cursor-pointer dark:text-gray-900"
       >
-        <GlobeIcon className="h-5 w-5" />
-        <p>{selectedLanguage === "english" ? "English" : "Russian"}</p>
-        <ChevronDown className="h-4 w-4" />
+        <GlobeIcon className="w-5 h-5" />
+        <p>{getLanguageLabel(selectedLanguage)}</p>
+        <ChevronDown className="w-4 h-4" />
       </div>
       <LanguageModal
         isOpen={isModalOpen}

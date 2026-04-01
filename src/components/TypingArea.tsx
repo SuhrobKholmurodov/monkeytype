@@ -9,7 +9,11 @@ import { Language, TestResult } from "~/@types";
 import { RestartButton } from "./RestartButton";
 import { ResultsSummary } from "./ResultsSummary";
 import { LanguageSelector } from "./LanguageSelector";
-import { englishWordsArray, russianWordsArray } from "~/constants";
+import {
+  englishWordsArray,
+  germanWordsArray,
+  russianWordsArray,
+} from "~/constants";
 import {
   calculateAccuracy,
   calculateWPM,
@@ -44,7 +48,7 @@ export const TypingArea = () => {
     () => {
       const savedType = localStorage.getItem("typingTestType");
       return savedType ? (savedType as "time" | "words" | "quote") : "time";
-    }
+    },
   );
   const [activeDuration, setActiveDuration] = useState(() => {
     const savedDuration = localStorage.getItem("typingTestDuration");
@@ -64,7 +68,7 @@ export const TypingArea = () => {
   });
   const [includeNumbers, setIncludeNumbers] = useState(() => {
     const savedIncludeNumbers = localStorage.getItem(
-      "typingTestIncludeNumbers"
+      "typingTestIncludeNumbers",
     );
     return savedIncludeNumbers ? JSON.parse(savedIncludeNumbers) : false;
   });
@@ -81,7 +85,7 @@ export const TypingArea = () => {
   const quoteSizes = getQuoteSizes(selectedLanguage);
   useEffect(() => {
     const savedLanguage = localStorage.getItem(
-      "typingTestLanguage"
+      "typingTestLanguage",
     ) as Language | null;
     if (savedLanguage) {
       setSelectedLanguage(savedLanguage);
@@ -129,8 +133,8 @@ export const TypingArea = () => {
           activeType === "quote"
             ? 0
             : activeType === "time"
-            ? activeDuration
-            : activeWordsCount,
+              ? activeDuration
+              : activeWordsCount,
         wpm: wpm,
         accuracy: accuracy,
         correct: typedWords.filter((w) => w.isCorrect).length,
@@ -150,12 +154,12 @@ export const TypingArea = () => {
         (result: TestResult) =>
           result.type === activeType &&
           result.duration ===
-            (activeType === "time" ? activeDuration : activeWordsCount)
+            (activeType === "time" ? activeDuration : activeWordsCount),
       );
 
       if (previousResultsOfSameType.length > 0) {
         const maxWPM = Math.max(
-          ...previousResultsOfSameType.map((result: TestResult) => result.wpm)
+          ...previousResultsOfSameType.map((result: TestResult) => result.wpm),
         );
         if (wpm > maxWPM) {
           setShowConfetti(true);
@@ -170,7 +174,7 @@ export const TypingArea = () => {
               draggable: true,
               theme: "dark",
               style: { width: "550px" },
-            }
+            },
           );
           setTimeout(() => {
             setShowConfetti(false);
@@ -232,9 +236,14 @@ export const TypingArea = () => {
       setWords(words);
       setQuoteWordCount(words.length);
     } else {
-      const wordArray =
-        selectedLanguage === "english" ? englishWordsArray : russianWordsArray;
-      let mixed = wordArray.slice().sort(() => 0.5 - Math.random());
+      const wordArrays = {
+        english: englishWordsArray,
+        russian: russianWordsArray,
+        german: germanWordsArray,
+      };
+      let mixed = wordArrays[selectedLanguage]
+        .slice()
+        .sort(() => 0.5 - Math.random());
 
       if (includeNumbers && mixed.length > 1) {
         const firstNumPos = Math.floor(Math.random() * (mixed.length - 1)) + 1;
@@ -320,7 +329,7 @@ export const TypingArea = () => {
 
   const handleFilterChange = (
     type: "time" | "words" | "quote",
-    value: number | string
+    value: number | string,
   ) => {
     if (type === "time") {
       setActiveType("time");
@@ -350,7 +359,7 @@ export const TypingArea = () => {
     <div>
       {showConfetti && <Confetti />}
       <div
-        className="fixed flex bg-gray-900 dark:bg-gray-200 duration-300 inset-0 flex-col items-center outline-none text-gray-200 overflow-hidden"
+        className="fixed inset-0 flex flex-col items-center overflow-hidden text-gray-200 duration-300 bg-gray-900 outline-none dark:bg-gray-200"
         tabIndex={0}
         style={{ margin: 0, padding: 0 }}
         onKeyDown={handleKeyDown}
@@ -361,7 +370,7 @@ export const TypingArea = () => {
       >
         <div className="w-full max-w-7xl mt-[90px] h-full flex flex-col justify-between overflow-hidden">
           {!finished ? (
-            <div className="flex flex-col flex-grow overflow-y-auto p-6">
+            <div className="flex flex-col flex-grow p-6 overflow-y-auto">
               <Filter
                 type={activeType}
                 duration={activeDuration}
@@ -373,7 +382,7 @@ export const TypingArea = () => {
               />
               {capsLockOn && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-[175px] z-10">
-                  <div className="flex gap-3 items-center bg-yellow-400 bg-opacity-90 text-gray-800 px-4 py-3 rounded-md shadow-lg">
+                  <div className="flex items-center gap-3 px-4 py-3 text-gray-800 bg-yellow-400 rounded-md shadow-lg bg-opacity-90">
                     <HttpsIcon />
                     <span className="font-bold">Caps Lock</span>
                   </div>
@@ -396,7 +405,7 @@ export const TypingArea = () => {
                 typedWord={typedWord}
                 typedWords={typedWords}
               />
-              <div className="w-full flex items-center justify-center mb-4">
+              <div className="flex items-center justify-center w-full mb-4">
                 <RestartButton onRestart={getRandomWords} />
               </div>
               {(!started || finished) && pastResults[0] && (
@@ -404,7 +413,7 @@ export const TypingArea = () => {
               )}
             </div>
           ) : (
-            <div className="flex flex-col items-center flex-grow overflow-y-auto p-6">
+            <div className="flex flex-col items-center flex-grow p-6 overflow-y-auto">
               <ResultsSummary
                 wpm={wpm}
                 accuracy={accuracy}
@@ -423,8 +432,8 @@ export const TypingArea = () => {
                         activeType === "quote"
                           ? 0
                           : activeType === "time"
-                          ? activeDuration
-                          : activeWordsCount,
+                            ? activeDuration
+                            : activeWordsCount,
                       wpm: wpm,
                       accuracy: accuracy,
                       correct: typedWords.filter((w) => w.isCorrect).length,
@@ -432,7 +441,7 @@ export const TypingArea = () => {
                       time:
                         startTime && endTime
                           ? Math.round(
-                              (endTime.getTime() - startTime.getTime()) / 1000
+                              (endTime.getTime() - startTime.getTime()) / 1000,
                             )
                           : 0,
                       completionTime: formatCompletionTime(new Date()),

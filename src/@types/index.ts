@@ -1,5 +1,6 @@
+export type Language = "english" | "russian" | "german";
 export interface TestResult {
-  type: 'time' | 'words' | 'quote';
+  type: "time" | "words" | "quote";
   duration: number;
   wpm: number;
   accuracy: number;
@@ -7,9 +8,7 @@ export interface TestResult {
   incorrect: number;
   time: number;
   completionTime: string;
-  quoteSize?: 'short' | 'medium' | 'long'; 
-  language: 'english' | 'russian'
-  date?: string
+  quoteSize?: "short" | "medium" | "long";
+  language: Language;
+  date?: string;
 }
-
-export type Language = 'english' | 'russian';

@@ -1,17 +1,21 @@
-import { Language } from '~/@types';
-import { englishQuotesArray, russianQuotesArray } from '~/constants';
+import { Language } from "~/@types";
+import { englishQuotesArray, germanQuotesArray, russianQuotesArray } from "~/constants";
 
-export const getQuoteSizes = (selectedLanguage: Language) => ({
-  short: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-    (el) => el.split(' ').length <= 15,
-  ),
-  medium: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-    (el) => {
-      const words = el.split(' ').length;
-      return words > 15 && words <= 30;
-    },
-  ),
-  long: (selectedLanguage === 'english' ? englishQuotesArray : russianQuotesArray).filter(
-    (el) => el.split(' ').length > 30,
-  ),
-});
+export const getQuoteSizes = (selectedLanguage: Language) => {
+  const arrays = {
+    english: englishQuotesArray,
+    russian: russianQuotesArray,
+    german: germanQuotesArray,
+  };
+
+  const selectedArray = arrays[selectedLanguage] || englishQuotesArray;
+
+  return {
+    short: selectedArray.filter((el) => el.split(" ").length <= 15),
+    medium: selectedArray.filter((el) => {
+      const count = el.split(" ").length;
+      return count > 15 && count <= 30;
+    }),
+    long: selectedArray.filter((el) => el.split(" ").length > 30),
+  };
+};
